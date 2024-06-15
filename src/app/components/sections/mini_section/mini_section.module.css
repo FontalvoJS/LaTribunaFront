@@ -1,0 +1,21 @@
+#mini_section {
+  background-image: radial-gradient(circle farthest-corner at 48.4% 47.5%, #d09e333d 0%, #151515 90%);
+}
+#mini_section h3 {
+  padding: 3%;
+  font-size:2rem;
+  text-align: left;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0px 4px #2b1c0e;
+}
+#mini_section h3 b {
+  color: #ffd44f;
+}
+.logo_uefa {
+  background-image: url("/images/logos/uefa.png");
+  background-position: center;
+  height:100%;
+  background-repeat: no-repeat;
+  filter: brightness(0.5);
+}
