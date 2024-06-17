@@ -17,9 +17,10 @@
 }
 #principal_news:hover,
 .content_card:hover {
+  transition: 0.3s;
   box-shadow: 0 0px 9px 1px #ffe59634;
   cursor: pointer;
-  border:1px solid rgba(255, 255, 255, 0.132);
+  border: 1px solid rgba(255, 255, 255, 0.132);
 }
 #principal_new_title,
 .content_card_title {
@@ -46,7 +47,7 @@
 }
 .controls_alert span {
   margin-left: 5px;
-  color: rgb(250, 215, 215);
+  color: rgb(223 223 223);
   cursor: pointer;
 }
 .controls_alert {

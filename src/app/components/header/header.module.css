@@ -12,20 +12,23 @@
   padding: 0 15px;
   overflow-y: auto;
   position: fixed;
-  background: #0d0c0c;
+  background: #1a1e21;
   border-right: 1px solid #00000052;
   box-shadow: 1px 0px 8px 1px #0000009c;
+  animation: hide 1s alternate forwards ease-in-out infinite;
 }
-
+#hide_header {
+  animation: hide 1s alternate forwards ease-in-out infinite;
+}
 #header .profile img {
   margin: 15px auto;
   display: block;
   width: 120px;
-  border: 2px solid #edc430;
+  border: 2px solid #695c5c47;
 }
 
 #header .profile h1 {
-  font-size: 24px;
+  font-size: 35px;
   margin: 0;
   padding: 0;
   font-weight: 600;
@@ -36,7 +39,15 @@
 
 #header .profile h1 a,
 #header .profile h1 a:hover {
-  color: #fff;
+  color: transparent;
+  background: linear-gradient(
+    to right,
+    var(--bs-yellow) 27.3%,
+    #5e9cf7 33.3%,
+    #3184ff 57.6%,
+    #ff2a3e 82.6%
+  );
+  -webkit-background-clip: text;
   text-decoration: none;
 }
 #envivo {
@@ -74,23 +85,20 @@
   text-decoration: none;
 }
 .close_menu {
-  color: #695c5c;
+  color: #c5c5c5;
   float: right;
 }
 .iconLink {
   padding: 3%;
   border-radius: 27px;
-  color: #695c5c;
+  color: #c5c5c5;
 }
 .icons_span {
-  color: #ebcc5c;
+  color: #ffc107;
 }
 .icons_span_play {
   color: #ff4a4a;
   animation: title_match 1s infinite;
-}
-.stars {
-  animation: stars 2s alternate forwards;
 }
 @keyframes title_match {
   0% {
@@ -98,15 +106,5 @@
   }
   100% {
     opacity: 1;
-  }
-}
-@keyframes stars {
-  0% {
-    opacity: 0;
-    transform: rotate(360deg) translateX(-100px) scale(0.5);
-  }
-  100% {
-    opacity: 1;
-    transform: rotate(0deg) scale(1);
   }
 }

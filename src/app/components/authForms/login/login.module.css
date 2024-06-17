@@ -1,0 +1,248 @@
+.formUi {
+  /* Agrega los estilos que necesitas para este div */
+}
+
+.form {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 500px;
+  padding: 25px;
+  background-color: #161616;
+  box-shadow: 0px 15px 60px #000000a6;
+  border-radius: 3px;
+}
+/* checkbox settings 👇 */
+
+.ui-checkbox {
+  --primary-color: #1677ff;
+  --secondary-color: #fff;
+  --primary-hover-color: #4096ff;
+  /* checkbox */
+  --checkbox-diameter: 20px;
+  --checkbox-border-radius: 5px;
+  --checkbox-border-color: #d9d9d9;
+  --checkbox-border-width: 1px;
+  --checkbox-border-style: solid;
+  /* checkmark */
+  --checkmark-size: 1.2;
+}
+
+.ui-checkbox,
+.ui-checkbox *,
+.ui-checkbox *::before,
+.ui-checkbox *::after {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.ui-checkbox {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: var(--checkbox-diameter);
+  height: var(--checkbox-diameter);
+  border-radius: var(--checkbox-border-radius);
+  background: var(--secondary-color);
+  border: var(--checkbox-border-width) var(--checkbox-border-style)
+    var(--checkbox-border-color);
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+  cursor: pointer;
+  position: relative;
+}
+
+.ui-checkbox::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  -webkit-box-shadow: 0 0 0 calc(var(--checkbox-diameter) / 2.5)
+    var(--primary-color);
+  box-shadow: 0 0 0 calc(var(--checkbox-diameter) / 2.5) var(--primary-color);
+  border-radius: inherit;
+  opacity: 0;
+  -webkit-transition: all 0.5s cubic-bezier(0.12, 0.4, 0.29, 1.46);
+  -o-transition: all 0.5s cubic-bezier(0.12, 0.4, 0.29, 1.46);
+  transition: all 0.5s cubic-bezier(0.12, 0.4, 0.29, 1.46);
+}
+
+.ui-checkbox::before {
+  top: 40%;
+  left: 50%;
+  content: "";
+  position: absolute;
+  width: 4px;
+  height: 7px;
+  border-right: 2px solid var(--secondary-color);
+  border-bottom: 2px solid var(--secondary-color);
+  -webkit-transform: translate(-50%, -50%) rotate(45deg) scale(0);
+  -ms-transform: translate(-50%, -50%) rotate(45deg) scale(0);
+  transform: translate(-50%, -50%) rotate(45deg) scale(0);
+  opacity: 0;
+  -webkit-transition: all 0.1s cubic-bezier(0.71, -0.46, 0.88, 0.6),
+    opacity 0.1s;
+  -o-transition: all 0.1s cubic-bezier(0.71, -0.46, 0.88, 0.6), opacity 0.1s;
+  transition: all 0.1s cubic-bezier(0.71, -0.46, 0.88, 0.6), opacity 0.1s;
+}
+
+/* actions */
+
+.ui-checkbox:hover {
+  border-color: var(--primary-color);
+}
+
+.ui-checkbox:checked {
+  background: var(--primary-color);
+  border-color: transparent;
+}
+
+.ui-checkbox:checked::before {
+  opacity: 1;
+  -webkit-transform: translate(-50%, -50%) rotate(45deg)
+    scale(var(--checkmark-size));
+  -ms-transform: translate(-50%, -50%) rotate(45deg)
+    scale(var(--checkmark-size));
+  transform: translate(-50%, -50%) rotate(45deg) scale(var(--checkmark-size));
+  -webkit-transition: all 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46) 0.1s;
+  -o-transition: all 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46) 0.1s;
+  transition: all 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46) 0.1s;
+}
+
+.ui-checkbox:active:not(:checked)::after {
+  -webkit-transition: none;
+  -o-transition: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  transition: none;
+  opacity: 1;
+}
+.formBody {
+  position: absolute;
+  right: 25px;
+  left: 25px;
+  width: 230px;
+  margin: -156px auto 0 auto;
+  animation: changeForm 0.3s ease-in-out ;
+}
+@keyframes changeForm {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform:  scale(1);
+  }
+}
+.welcomeLines {
+  text-align: center;
+  line-height: 1;
+}
+
+.welcomeLine1 {
+  color: transparent;
+  background: linear-gradient(
+    to right,
+    var(--bs-yellow) 27.3%,
+    #5e9cf7 33.3%,
+    #3184ff 57.6%,
+    #ff2a3e 82.6%
+  );
+  -webkit-background-clip: text;
+  font-weight: 600;
+  font-size: 40px;
+}
+
+.welcomeLine2 {
+  color: #ededed;
+  font-size: 14px;
+  margin-top: 17px;
+}
+
+.inputArea {
+  margin-top: 40px;
+}
+
+.formInp {
+  padding: 11px 25px;
+  background: transparent;
+  border: 1px solid #e3e3e3;
+  line-height: 1;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.formInp:focus {
+  border: 1px solid #ffc107;
+}
+
+.formInp input {
+  width: 100%;
+  background: none;
+  font-size: 13.4px;
+  color: #ffc107;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.formInp input:focus {
+  outline: none;
+}
+
+.submitButtonCvr {
+  margin-top: 20px;
+}
+
+.submitButton {
+  display: block;
+  width: 100%;
+  color: #ffc107;
+  background-color: transparent;
+  font-weight: 600;
+  font-size: 14px;
+  margin: 0;
+  padding: 14px 13px 12px 13px;
+  border: 0;
+  outline: 1px solid #ffc107;
+  border-radius: 8px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all ease-in-out 0.3s;
+}
+
+.submitButton:hover {
+  transition: all ease-in-out 0.3s;
+  background-color: #ffc107;
+  color: #161616;
+  cursor: pointer;
+}
+
+.forgotPass {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.forgotPass a {
+  color: #868686;
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.rememberMe {
+  color: whitesmoke;
+  margin-bottom: 10px;
+}
+.rememberMeTag {
+  font-size: 13px;
+  position: relative;
+  left: 3px;
+  color: #cdcdcd;
+}
+.bar:after {
+  right: -38px;
+}

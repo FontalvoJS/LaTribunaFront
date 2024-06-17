@@ -30,7 +30,9 @@ body {
     padding-right: 12px;
   }
 }
-
+.modal-content {
+  background-color: transparent !important;
+}
 /*--------------------------------------------------------------
   # Navigation Menu
   --------------------------------------------------------------*/
@@ -74,7 +76,7 @@ body {
 .nav-menu li:hover > a {
   text-decoration: none;
   color: #ffffff;
-  font-weight: 600;
+  background: #1f2327;
 }
 
 .nav-menu a:hover i,

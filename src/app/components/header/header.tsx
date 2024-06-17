@@ -1,6 +1,9 @@
+'use client'; 
 import Image from "next/image";
 import styles from "./header.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { config } from '@fortawesome/fontawesome-svg-core';
+config.autoAddCss = false;
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import {
   faTwitter,
@@ -11,15 +14,14 @@ import {
   faSignInAlt,
   faPlayCircle,
   faCaretLeft,
-  faDiagramProject,
 } from "@fortawesome/free-solid-svg-icons";
-
+import { useLaTribunaAuthFormContext } from "@/app/context/authForm";
 export default function Header(): JSX.Element {
+  const { handleShowModalForm } = useLaTribunaAuthFormContext();
   return (
     <header id={styles.header}>
       <div className={styles.close_menu}>
         <FontAwesomeIcon
-          title="Cierra el panel"
           width={15}
           icon={faCaretLeft as IconProp}
         />
@@ -53,7 +55,7 @@ export default function Header(): JSX.Element {
 
         <nav id={styles.navbar} className="nav-menu navbar">
           <ul>
-            <li>
+            <li onClick={handleShowModalForm}>
               <a href="#about" className="nav-link scrollto active">
                 <span className={styles.icons_span}>
                   <FontAwesomeIcon width={14} icon={faSignInAlt as IconProp} />
@@ -82,7 +84,7 @@ export default function Header(): JSX.Element {
             </li> */}
             <li>
               <a href="#about" className="nav-link scrollto">
-                <span className={styles.stars}>✨</span>
+                <span>✨</span>
                 <span>
                   Artículos <strong>IA</strong>
                 </span>
@@ -90,7 +92,7 @@ export default function Header(): JSX.Element {
             </li>
             <li>
               <a href="#about" className="nav-link scrollto">
-                <span className={styles.stars}>✨</span>
+                <span>✨</span>
                 <span>
                   Predicciones
                   <strong> IA</strong>

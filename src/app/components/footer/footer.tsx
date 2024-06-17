@@ -4,7 +4,7 @@ export default function Footer(): JSX.Element {
     <footer id={styles.footer}>
       <div className="container">
         <div className={styles.copyright}>
-          Desarrollado por:
+          By:
           <strong> FontalvoJS</strong>
         </div>
       </div>

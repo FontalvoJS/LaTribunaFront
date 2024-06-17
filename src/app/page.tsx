@@ -1,24 +1,37 @@
-import Image from "next/image";
-import styles from "./page.module.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { config } from "@fortawesome/fontawesome-svg-core";
-config.autoAddCss = false;
+"use client";
 import Header from "./components/header/header";
 import Main from "./components/main/main";
 import Footer from "./components/footer/footer";
-import PrincipalSection, { FirstSectionContent } from "./components/sections/principal_sections";
+import PrincipalSection from "./components/sections/principal_sections";
 import MiniSection from "./components/sections/mini_section/mini_section";
 import News from "./components/sections/news/news";
+import CustomModal from "./components/modal/modal";
+import LoginForm, {
+  SignUpForm,
+  ResetPass,
+} from "./components/authForms/login/login";
+import { useLaTribunaAuthFormContext } from "./context/authForm";
 export default function Home(): JSX.Element {
+  const { showLoginForm, showSignupForm, showResetPasswordForm } =
+    useLaTribunaAuthFormContext();
   return (
     <>
       <Main>
         <Header />
-        <PrincipalSection>
-          <FirstSectionContent />
-        </PrincipalSection>
+        <PrincipalSection />
         <News />
         <MiniSection />
+        <CustomModal>
+          {showLoginForm ? (
+            <LoginForm />
+          ) : showSignupForm ? (
+            <SignUpForm />
+          ) : showResetPasswordForm ? (
+            <ResetPass />
+          ) : (
+            <LoginForm />
+          )}
+        </CustomModal>
       </Main>
       <Footer />
     </>
