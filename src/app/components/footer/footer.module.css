@@ -11,7 +11,7 @@
   bottom: 0;
   width: 300px;
   z-index: 9999;
-  background: #29343d;
+  background: rgba(33, 37, 41, 0.75);
 }
 
 #footer .copyright {

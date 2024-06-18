@@ -1,6 +1,12 @@
-'use client'; // Asegúrate de agregar esto al principio
+"use client"; // Asegúrate de agregar esto al principio
 
-import React, { createContext, useContext, useState, ReactNode, useMemo } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useMemo,
+} from "react";
 
 interface LaTribunaContextProps {
   showSideHeader: boolean;
@@ -8,13 +14,17 @@ interface LaTribunaContextProps {
   handleCloseSideHeader: () => void;
 }
 
-const LaTribunaContextSideHeader = createContext<LaTribunaContextProps | undefined>(undefined);
+const LaTribunaContextSideHeader = createContext<
+  LaTribunaContextProps | undefined
+>(undefined);
 
-export const LaTribunaProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [showSideHeader, setShowSideHeader] = useState(false);
+export const SideHeaderProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
+  const [showSideHeader, setShowSideHeader] = useState<boolean>(true);
 
-  const handleShowSideHeader = () => setShowSideHeader(true);
-  const handleCloseSideHeader = () => setShowSideHeader(false);
+  const handleShowSideHeader = (): void => setShowSideHeader(true);
+  const handleCloseSideHeader = (): void => setShowSideHeader(false);
 
   const value = useMemo(
     () => ({
@@ -32,10 +42,12 @@ export const LaTribunaProvider: React.FC<{ children: ReactNode }> = ({ children 
   );
 };
 
-export const useLaTribunaAuthFormContext = () => {
+export const useSideHeaderContext = () => {
   const context = useContext(LaTribunaContextSideHeader);
   if (!context) {
-    throw new Error('useLaTribunaAuthFormContext must be used within a LaTribunaProvider');
+    throw new Error(
+      "useSideHeaderContext must be used within a SideHeaderProvider"
+    );
   }
   return context;
 };

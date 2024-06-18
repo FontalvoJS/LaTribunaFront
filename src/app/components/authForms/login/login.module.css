@@ -1,14 +1,24 @@
 .formUi {
   /* Agrega los estilos que necesitas para este div */
 }
-
+.errors_tags {
+  font-size: 12px;
+  color: #ff3a4d;
+  position: relative;
+  left: 8px;
+}
+#rememberMe {
+  width: 11px;
+  position: relative;
+  top: 2px;
+}
 .form {
   display: grid;
   place-items: center;
   width: 100%;
   height: 500px;
   padding: 25px;
-  background-color: #161616;
+  background-color: #16191b;
   box-shadow: 0px 15px 60px #000000a6;
   border-radius: 3px;
 }
@@ -126,7 +136,7 @@
   left: 25px;
   width: 230px;
   margin: -156px auto 0 auto;
-  animation: changeForm 0.3s ease-in-out ;
+  animation: changeForm 0.3s ease-in-out;
 }
 @keyframes changeForm {
   0% {
@@ -135,7 +145,7 @@
   }
   100% {
     opacity: 1;
-    transform:  scale(1);
+    transform: scale(1);
   }
 }
 .welcomeLines {
@@ -170,7 +180,7 @@
 .formInp {
   padding: 11px 25px;
   background: transparent;
-  border: 1px solid #e3e3e3;
+  border: 1px solid #e3e3e352;
   line-height: 1;
   border-radius: 8px;
   margin-bottom: 10px;

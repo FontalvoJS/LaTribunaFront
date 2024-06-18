@@ -1,8 +1,8 @@
-'use client'; 
+"use client";
 import Image from "next/image";
 import styles from "./header.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { config } from '@fortawesome/fontawesome-svg-core';
+import { config } from "@fortawesome/fontawesome-svg-core";
 config.autoAddCss = false;
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import {
@@ -16,15 +16,39 @@ import {
   faCaretLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import { useLaTribunaAuthFormContext } from "@/app/context/authForm";
+import { useSideHeaderContext } from "@/app/context/sideHeader";
+import React, { useEffect } from "react";
 export default function Header(): JSX.Element {
   const { handleShowModalForm } = useLaTribunaAuthFormContext();
+  const { showSideHeader, handleCloseSideHeader, handleShowSideHeader } =
+    useSideHeaderContext();
+  const hideHeader = (): void => {
+    handleCloseSideHeader();
+  };
+  const showHeader = (): void => {
+    handleShowSideHeader();
+  };
+  const headerHanlder = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ): void => {
+    console.log(event.currentTarget.getAttribute("data-hidden"));
+    if (event.currentTarget.getAttribute("data-hidden") === "true") {
+      hideHeader();
+    } else {
+      showHeader();
+    }
+  };
   return (
-    <header id={styles.header}>
-      <div className={styles.close_menu}>
-        <FontAwesomeIcon
-          width={15}
-          icon={faCaretLeft as IconProp}
-        />
+    <header
+      id={styles.header}
+      className={showSideHeader ? styles.show_header : styles.hide_header}
+    >
+      <div
+        className={showSideHeader ? styles.close_menu : styles.open_menu}
+        data-hidden={showSideHeader}
+        onClick={headerHanlder}
+      >
+        <FontAwesomeIcon width={15} icon={faCaretLeft as IconProp} />
       </div>
       <div className="d-flex flex-column mt-5">
         <div className={styles.profile}>

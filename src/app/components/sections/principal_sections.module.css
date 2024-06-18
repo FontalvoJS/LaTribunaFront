@@ -37,8 +37,22 @@
   height: 60vh;
   max-height: 650px;
   box-shadow: 0px 1px 14px 2px #00000078;
+  animation: backgrounds 10s alternate infinite ease-in-out;
 }
-
+@keyframes backgrounds {
+  0% {
+    background-image: url(/images/backgrounds/estadio.jpg);
+    opacity: 0.8;
+  }
+  50% {
+    background-image: url(/images/backgrounds/hinchas2.jpg);
+    opacity: 0.8;
+  }
+  100% {
+    background-image: url(/images/backgrounds/person.jpg);
+    opacity: 0.8;
+  }
+}
 /* Aplicar filtro brightness solo al fondo de la primera sección */
 .section:first-of-type::before {
   content: "";

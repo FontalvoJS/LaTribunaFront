@@ -26,6 +26,9 @@ const LaTribunaContextAuthForm = createContext<
 export const LaTribunaProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
+  // user data states
+  const [user, setUser] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   // states
   const [showModalForm, setShowModalForm] = useState<boolean>(false);
   const [activeForm, setActiveForm] = useState<string>("login");
@@ -36,12 +39,13 @@ export const LaTribunaProvider: React.FC<{ children: ReactNode }> = ({
   // handlers
   const handleShowModalForm = (): void => setShowModalForm(true);
   const handleCloseModalForm = (): void => setShowModalForm(false);
+  const handleUser = (user: string): void => setUser(user);
+  const handlerPassword = (password: string): void => setPassword(password);
   const handlerForm = (activeForm: string): void => {
     setActiveForm(activeForm);
   };
   // effects
   useEffect(() => {
-    console.log(activeForm);
     switch (activeForm) {
       case "login":
         setShowLoginForm(true);
@@ -69,11 +73,21 @@ export const LaTribunaProvider: React.FC<{ children: ReactNode }> = ({
       showLoginForm,
       showSignupForm,
       showResetPasswordForm,
+      user,
+      password,
+      handleUser,
       handleShowModalForm,
       handleCloseModalForm,
       handlerForm,
     }),
-    [showModalForm, showLoginForm, showSignupForm, showResetPasswordForm]
+    [
+      showModalForm,
+      showLoginForm,
+      showSignupForm,
+      showResetPasswordForm,
+      user,
+      password,
+    ]
   );
 
   return (

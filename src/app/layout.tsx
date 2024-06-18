@@ -2,6 +2,7 @@
 import "./globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { LaTribunaProvider } from "./context/authForm";
+import { SideHeaderProvider } from "./context/sideHeader";
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -10,7 +11,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <LaTribunaProvider>
-        <body>{children}</body>
+        <SideHeaderProvider>
+          <body>{children}</body>
+        </SideHeaderProvider>
       </LaTribunaProvider>
     </html>
   );

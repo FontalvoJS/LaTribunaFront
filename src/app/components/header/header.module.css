@@ -3,7 +3,6 @@
 --------------------------------------------------------------*/
 #header {
   top: 0;
-  left: 0;
   bottom: 0;
   width: 300px;
   transition: all ease-in-out 0.5s;
@@ -12,19 +11,22 @@
   padding: 0 15px;
   overflow-y: auto;
   position: fixed;
-  background: #1a1e21;
+  background: #16191b;
   border-right: 1px solid #00000052;
   box-shadow: 1px 0px 8px 1px #0000009c;
-  animation: hide 1s alternate forwards ease-in-out infinite;
+  animation: hide 1s alternate forwards ease-in-out;
 }
-#hide_header {
-  animation: hide 1s alternate forwards ease-in-out infinite;
+.hide_header {
+  left: -300px !important;
+}
+.show_header {
+  left: 0 !important;
 }
 #header .profile img {
   margin: 15px auto;
   display: block;
   width: 120px;
-  border: 2px solid #695c5c47;
+  border: 2px solid #212427;
 }
 
 #header .profile h1 {
@@ -39,15 +41,7 @@
 
 #header .profile h1 a,
 #header .profile h1 a:hover {
-  color: transparent;
-  background: linear-gradient(
-    to right,
-    var(--bs-yellow) 27.3%,
-    #5e9cf7 33.3%,
-    #3184ff 57.6%,
-    #ff2a3e 82.6%
-  );
-  -webkit-background-clip: text;
+  color: white;
   text-decoration: none;
 }
 #envivo {
@@ -85,20 +79,35 @@
   text-decoration: none;
 }
 .close_menu {
-  color: #c5c5c5;
+  color: #464b4e;
   float: right;
+}
+.open_menu {
+  top: 30px;
+  position: fixed;
+  left: 50px;
+  color: #bfbfbf;
+  border: 1px solid;
+  padding: 7px;
+  border-radius: 5px;
+  background: #00000040;
+  transform: rotate(180deg);
 }
 .iconLink {
   padding: 3%;
   border-radius: 27px;
-  color: #c5c5c5;
+  color: #464b4e;
 }
 .icons_span {
-  color: #ffc107;
+  color: #b5b5b5;
+  position: relative;
+  bottom: 2px;
 }
 .icons_span_play {
   color: #ff4a4a;
   animation: title_match 1s infinite;
+  position: relative;
+  bottom: 2px;
 }
 @keyframes title_match {
   0% {
