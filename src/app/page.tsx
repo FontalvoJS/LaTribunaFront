@@ -11,12 +11,14 @@ import LoginForm, {
   ResetPass,
 } from "./components/authForms/login/login";
 import { useLaTribunaAuthFormContext } from "./context/authForm";
+import { ToastContainer, toast } from "react-toastify";
 export default function Home(): JSX.Element {
   const { showLoginForm, showSignupForm, showResetPasswordForm } =
     useLaTribunaAuthFormContext();
   return (
     <>
       <Main>
+        <ToastContainer position="top-right" draggable theme="dark" autoClose={5000} closeOnClick/>
         <Header />
         <PrincipalSection />
         <News />

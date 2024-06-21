@@ -2,7 +2,7 @@
 
 body {
   font-family: "Roboto", sans-serif;
-  background-color:#141414 !important
+  background-color: #141414 !important;
 }
 
 #main {
@@ -23,7 +23,9 @@ body {
   #main {
     margin-left: 0;
   }
-
+  .scrollto {
+    cursor: pointer !important;
+  }
   .container,
   .container-fluid {
     padding-left: 12px;

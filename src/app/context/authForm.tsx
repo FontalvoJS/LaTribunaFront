@@ -1,4 +1,5 @@
 "use client"; // Asegúrate de agregar esto al principio
+import { AuthContextProps } from "@/app/types/types";
 
 import React, {
   createContext,
@@ -9,18 +10,8 @@ import React, {
   useEffect,
 } from "react";
 
-interface LaTribunaContextProps {
-  showModalForm: boolean;
-  showLoginForm: boolean;
-  showSignupForm: boolean;
-  showResetPasswordForm: boolean;
-  handleShowModalForm: () => void;
-  handleCloseModalForm: () => void;
-  handlerForm: (activeForm: string) => void;
-}
-
 const LaTribunaContextAuthForm = createContext<
-  LaTribunaContextProps | undefined
+  AuthContextProps | undefined
 >(undefined);
 
 export const LaTribunaProvider: React.FC<{ children: ReactNode }> = ({
@@ -97,7 +88,7 @@ export const LaTribunaProvider: React.FC<{ children: ReactNode }> = ({
   );
 };
 
-export const useLaTribunaAuthFormContext = (): LaTribunaContextProps => {
+export const useLaTribunaAuthFormContext = (): AuthContextProps => {
   const context = useContext(LaTribunaContextAuthForm);
   if (!context) {
     throw new Error(

@@ -7,15 +7,10 @@ import React, {
   ReactNode,
   useMemo,
 } from "react";
-
-interface LaTribunaContextProps {
-  showSideHeader: boolean;
-  handleShowSideHeader: () => void;
-  handleCloseSideHeader: () => void;
-}
+import { SideHeaderContextProps } from "@/app/types/types";
 
 const LaTribunaContextSideHeader = createContext<
-  LaTribunaContextProps | undefined
+  SideHeaderContextProps | undefined
 >(undefined);
 
 export const SideHeaderProvider: React.FC<{ children: ReactNode }> = ({

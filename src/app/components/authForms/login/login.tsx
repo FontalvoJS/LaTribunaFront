@@ -1,12 +1,26 @@
 "use client";
 import styles from "./login.module.css";
+import { LoginService } from "@/app/services/auth";
 import { useLaTribunaAuthFormContext } from "@/app/context/authForm";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { UserDataLogin } from "@/app/types/types";
+import alertify from "@/app/notifications/toast/alert_service";
 import * as Yup from "yup";
+import { useState, useEffect } from "react";
+
 export default function LoginForm(): JSX.Element {
   const { handlerForm } = useLaTribunaAuthFormContext();
+  const [throttled, setThrottling] = useState<boolean>(false);
+  const [data, setData] = useState<UserDataLogin>({
+    email: "",
+    password: "",
+    remember: "false",
+  });
 
+  const executionHandler = () => {
+    setThrottling(true);
+  };
   const showSignUp = () => {
     handlerForm("signup");
   };
@@ -14,13 +28,39 @@ export default function LoginForm(): JSX.Element {
     handlerForm("reset");
   };
 
+  const onSubmit = async (data: UserDataLogin): Promise<void> => {
+    setData(data);
+    if (!throttled) {
+      executionHandler();
+    } else {
+      alertify.info("Espere mientra se termina de validar sus credenciales...");
+    }
+  };
+  useEffect(() => {
+    try {
+      const fetchData = async (data: UserDataLogin): Promise<void> => {
+        await LoginService(data);
+        setThrottling(false);
+      };
+      if (throttled) {
+        fetchData(data);
+      }
+    } catch (error) {
+      alertify.error(
+        "Ocurrio un error inesperado, por favor reporte al administrador. Error: " +
+          error
+      );
+    }
+  }, [throttled, data]);
+
   const validationSchema = Yup.object().shape({
-    user: Yup.string()
+    email: Yup.string()
       .required("El nombre o email es obligatorio")
       .min(4, "El nombre o email incompleto, por favor verifique"),
-    pass: Yup.string()
+    password: Yup.string()
       .required("La contraseña es obligatoria")
       .min(8, "La contraseña debe tener al menos 8 caracteres"),
+    remember: Yup.string(),
   });
   // Inicializa el hook de formulario con el esquema de validación
   const {
@@ -29,12 +69,12 @@ export default function LoginForm(): JSX.Element {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(validationSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+      remember: "false",
+    },
   });
-
-  // Función para manejar el envío del formulario
-  const onSubmit = (data: Object) => {
-    console.log(data);
-  };
 
   return (
     <div className={styles.formUi}>
@@ -56,7 +96,7 @@ export default function LoginForm(): JSX.Element {
           <div className={styles.inputArea}>
             <div className={styles.formInp}>
               <Controller
-                name="user"
+                name="email"
                 control={control}
                 render={({ field }) => (
                   <input
@@ -68,12 +108,12 @@ export default function LoginForm(): JSX.Element {
                 )}
               />
             </div>
-            {errors.user && (
-              <p className={styles.errors_tags}>{errors.user.message}</p>
+            {errors.email && (
+              <p className={styles.errors_tags}>{errors.email.message}</p>
             )}
             <div className={styles.formInp}>
               <Controller
-                name="pass"
+                name="password"
                 control={control}
                 render={({ field }) => (
                   <input
@@ -85,16 +125,22 @@ export default function LoginForm(): JSX.Element {
                 )}
               />
             </div>
-            {errors.pass && (
-              <p className={styles.errors_tags}>{errors.pass.message}</p>
+            {errors.password && (
+              <p className={styles.errors_tags}>{errors.password.message}</p>
             )}
           </div>
           <div className={styles.submitButtonCvr}>
             <label className={styles.rememberMe} htmlFor="rememberMe">
-              <input
-                type="checkbox"
-                id={"rememberMe"}
-                className={styles.checkbox + " " + styles.rememberMe}
+              <Controller
+                name="remember"
+                control={control}
+                render={({ field }) => (
+                  <input
+                    type="checkbox"
+                    id={"rememberMe"}
+                    className={styles.checkbox + " " + styles.rememberMe}
+                  />
+                )}
               />
               <span className={styles.rememberMeTag}>Recordarme</span>
             </label>

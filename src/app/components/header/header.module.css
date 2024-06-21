@@ -13,7 +13,7 @@
   position: fixed;
   background: #16191b;
   border-right: 1px solid #00000052;
-  box-shadow: 1px 0px 8px 1px #0000009c;
+  box-shadow: 1px 0px 8px 1px #00000054;
   animation: hide 1s alternate forwards ease-in-out;
 }
 .hide_header {
@@ -81,17 +81,18 @@
 .close_menu {
   color: #464b4e;
   float: right;
+  cursor: pointer;
 }
 .open_menu {
   top: 30px;
   position: fixed;
   left: 50px;
   color: #bfbfbf;
-  border: 1px solid;
   padding: 7px;
   border-radius: 5px;
   background: #00000040;
   transform: rotate(180deg);
+  cursor: pointer;
 }
 .iconLink {
   padding: 3%;

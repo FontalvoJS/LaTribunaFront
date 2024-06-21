@@ -1,8 +1,6 @@
-import { ReactNode, useEffect } from "react";
+import { useEffect } from "react";
 import { useSideHeaderContext } from "@/app/context/sideHeader";
-interface MainProps {
-  children: ReactNode;
-}
+import { MainProps } from "@/app/types/types";
 
 export default function Main({ children }: MainProps): JSX.Element {
   const { showSideHeader } = useSideHeaderContext();

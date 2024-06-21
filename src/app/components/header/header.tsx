@@ -31,7 +31,6 @@ export default function Header(): JSX.Element {
   const headerHanlder = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ): void => {
-    console.log(event.currentTarget.getAttribute("data-hidden"));
     if (event.currentTarget.getAttribute("data-hidden") === "true") {
       hideHeader();
     } else {
@@ -80,11 +79,36 @@ export default function Header(): JSX.Element {
         <nav id={styles.navbar} className="nav-menu navbar">
           <ul>
             <li onClick={handleShowModalForm}>
-              <a href="#about" className="nav-link scrollto active">
+              <a className="nav-link scrollto active">
                 <span className={styles.icons_span}>
                   <FontAwesomeIcon width={14} icon={faSignInAlt as IconProp} />
                 </span>
-                <span> Inicia sesión</span>
+                <span> Acceder al club </span>
+              </a>
+            </li>
+            <li>
+              <a href="#about" className="nav-link scrollto">
+                <span>
+                  Las <b>4</b> verdades | analisís y critica
+                </span>
+              </a>
+            </li>
+            <li>
+              <a href="#about" className="nav-link scrollto">
+                <span>Discusiones</span>
+              </a>
+            </li>
+            <li>
+              <a href="#about" className="nav-link scrollto">
+                <span>
+                  Predicciones por <b>IA</b>
+                  <strong></strong>
+                </span>
+              </a>
+            </li>
+            <li>
+              <a href="#about" className="nav-link scrollto">
+                <span>Contáctame</span>
               </a>
             </li>
             <li>
@@ -93,39 +117,6 @@ export default function Header(): JSX.Element {
                   <FontAwesomeIcon width={14} icon={faPlayCircle as IconProp} />
                 </span>
                 <span> Transmisiones</span>
-              </a>
-            </li>
-            {/* <li>
-              <a href="#about" className="nav-link scrollto">
-                <span className={styles.icons_span}>
-                  <FontAwesomeIcon
-                    width={14}
-                    icon={faDiagramProject as IconProp}
-                  />
-                </span>
-                <span>Foro</span>
-              </a>
-            </li> */}
-            <li>
-              <a href="#about" className="nav-link scrollto">
-                <span>✨</span>
-                <span>
-                  Artículos <strong>IA</strong>
-                </span>
-              </a>
-            </li>
-            <li>
-              <a href="#about" className="nav-link scrollto">
-                <span>✨</span>
-                <span>
-                  Predicciones
-                  <strong> IA</strong>
-                </span>
-              </a>
-            </li>
-            <li>
-              <a href="#about" className="nav-link scrollto">
-                <i className="bx bx-user"></i> <span>Contáctame</span>
               </a>
             </li>
           </ul>

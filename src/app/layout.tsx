@@ -1,6 +1,7 @@
 "use client";
 import "./globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "react-toastify/dist/ReactToastify.css";
 import { LaTribunaProvider } from "./context/authForm";
 import { SideHeaderProvider } from "./context/sideHeader";
 export default function RootLayout({
