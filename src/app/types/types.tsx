@@ -29,8 +29,19 @@ export interface UserDataLogin {
   password: string;
   remember?: string;
 }
+export interface UserDataSignup {
+  name: string;
+  email: string;
+  email_confirmation: string;
+  password: string;
+  password_confirmation: string;
+}
 export interface HeadersProps {
   headers?: Record<string, string>;
   method?: string;
   body?: string;
+}
+
+export interface forgotPass {
+  email: string;
 }

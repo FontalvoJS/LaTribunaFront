@@ -1,74 +1,51 @@
 "use client";
 import styles from "./login.module.css";
-import { LoginService } from "@/app/services/auth";
+import {
+  LoginService,
+  SignUpService,
+  forgotPassService,
+} from "@/app/services/auth";
 import { useLaTribunaAuthFormContext } from "@/app/context/authForm";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { UserDataLogin } from "@/app/types/types";
-import alertify from "@/app/notifications/toast/alert_service";
-import * as Yup from "yup";
+import { UserDataLogin, UserDataSignup, forgotPass } from "@/app/types/types";
+import { useThrottle } from "../../hooks/useThrottle";
 import { useState, useEffect } from "react";
+import {
+  loginValidator,
+  signupValidator,
+  forgotPassValidator,
+} from "@/app/validations/validations";
 
 export default function LoginForm(): JSX.Element {
   const { handlerForm } = useLaTribunaAuthFormContext();
-  const [throttled, setThrottling] = useState<boolean>(false);
   const [data, setData] = useState<UserDataLogin>({
     email: "",
     password: "",
     remember: "false",
   });
 
-  const executionHandler = () => {
-    setThrottling(true);
-  };
   const showSignUp = () => {
     handlerForm("signup");
   };
   const showResetPassword = () => {
     handlerForm("reset");
   };
-
   const onSubmit = async (data: UserDataLogin): Promise<void> => {
     setData(data);
-    if (!throttled) {
-      executionHandler();
-    } else {
-      alertify.info("Espere mientra se termina de validar sus credenciales...");
-    }
+    await LoginService(data);
   };
-  useEffect(() => {
-    try {
-      const fetchData = async (data: UserDataLogin): Promise<void> => {
-        await LoginService(data);
-        setThrottling(false);
-      };
-      if (throttled) {
-        fetchData(data);
-      }
-    } catch (error) {
-      alertify.error(
-        "Ocurrio un error inesperado, por favor reporte al administrador. Error: " +
-          error
-      );
-    }
-  }, [throttled, data]);
 
-  const validationSchema = Yup.object().shape({
-    email: Yup.string()
-      .required("El nombre o email es obligatorio")
-      .min(4, "El nombre o email incompleto, por favor verifique"),
-    password: Yup.string()
-      .required("La contraseña es obligatoria")
-      .min(8, "La contraseña debe tener al menos 8 caracteres"),
-    remember: Yup.string(),
-  });
-  // Inicializa el hook de formulario con el esquema de validación
+  const throttledSubmit = useThrottle((data: UserDataLogin): void => {
+    onSubmit(data);
+  }, 1000);
+
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(validationSchema),
+    resolver: yupResolver(loginValidator),
     defaultValues: {
       email: "",
       password: "",
@@ -78,11 +55,8 @@ export default function LoginForm(): JSX.Element {
 
   return (
     <div className={styles.formUi}>
-      <span>
-        <strong>X</strong>
-      </span>
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(throttledSubmit)}
         className={styles.form}
         style={{ height: "470px" }}
       >
@@ -162,24 +136,45 @@ export default function LoginForm(): JSX.Element {
 }
 export function SignUpForm(): JSX.Element {
   const { handlerForm } = useLaTribunaAuthFormContext();
-  const showLogin = () => {
+  const [data, setData] = useState<UserDataSignup>({
+    name: "",
+    email: "",
+    email_confirmation: "",
+    password: "",
+    password_confirmation: "",
+  });
+
+  const showLogin = (): void => {
     handlerForm("login");
   };
-  const showResetPassword = () => {
+  const showResetPassword = (): void => {
     handlerForm("reset");
   };
+  const onSubmit = async (data: UserDataSignup): Promise<void> => {
+    setData(data);
+    await SignUpService(data);
+  };
+  const throttledSubmit = useThrottle((data: UserDataSignup) => {
+    onSubmit(data);
+  }, 1000);
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(signupValidator),
+    defaultValues: {
+      name: "",
+      email: "",
+      email_confirmation: "",
+      password: "",
+      password_confirmation: "",
+    },
+  });
   return (
     <div className={styles.formUi}>
-      <span>
-        <strong>X</strong>
-      </span>
-      <form
-        action=""
-        method="post"
-        className={styles.form}
-        style={{ height: "520px" }}
-      >
-        <div className={styles.formBody} style={{ top: "40%" }}>
+      <form onSubmit={handleSubmit(throttledSubmit)} className={styles.form}>
+        <div className={styles.formBody}>
           <div className={styles.welcomeLines}>
             <div className={styles.welcomeLine1}>La Tribuna</div>
             <div className={styles.welcomeLine2}>
@@ -188,33 +183,94 @@ export function SignUpForm(): JSX.Element {
           </div>
           <div className={styles.inputArea}>
             <div className={styles.formInp}>
-              <input id="name" placeholder="Apodo" type="text" required />
+              <Controller
+                name="name"
+                control={control}
+                render={({ field }) => (
+                  <input
+                    {...field}
+                    placeholder="Nombre"
+                    type="text"
+                    className={styles.input}
+                  />
+                )}
+              />
             </div>
+            {errors.name && (
+              <p className={styles.errors_tags}>{errors.name.message}</p>
+            )}
             <div className={styles.formInp}>
-              <input
+              <Controller
                 name="email"
-                placeholder="Correo electrónico"
-                type="email"
-                required
+                control={control}
+                render={({ field }) => (
+                  <input
+                    {...field}
+                    placeholder="Correo electrónico"
+                    type="text"
+                    className={styles.input}
+                  />
+                )}
               />
             </div>
+            {errors.email && (
+              <p className={styles.errors_tags}>{errors.email.message}</p>
+            )}
             <div className={styles.formInp}>
-              <input
+              <Controller
                 name="email_confirmation"
-                placeholder="Confirma el correo electrónico"
-                type="email"
-                required
+                control={control}
+                render={({ field }) => (
+                  <input
+                    {...field}
+                    placeholder="Confirma correo electrónico"
+                    type="text"
+                    className={styles.input}
+                  />
+                )}
               />
             </div>
+            {errors.email_confirmation && (
+              <p className={styles.errors_tags}>
+                {errors.email_confirmation.message}
+              </p>
+            )}
             <div className={styles.formInp}>
-              <input placeholder="Contraseña" type="password" />
-            </div>
-            <div className={styles.formInp}>
-              <input
-                placeholder="Confirma la contraseña"
-                type="password_confirmation"
+              <Controller
+                name="password"
+                control={control}
+                render={({ field }) => (
+                  <input
+                    {...field}
+                    placeholder="Contraseña"
+                    type="password"
+                    className={styles.input}
+                  />
+                )}
               />
             </div>
+            {errors.password && (
+              <p className={styles.errors_tags}>{errors.password.message}</p>
+            )}
+            <div className={styles.formInp}>
+              <Controller
+                name="password_confirmation"
+                control={control}
+                render={({ field }) => (
+                  <input
+                    {...field}
+                    placeholder="Confirma contraseña"
+                    type="password"
+                    className={styles.input}
+                  />
+                )}
+              />
+            </div>
+            {errors.password_confirmation && (
+              <p className={styles.errors_tags}>
+                {errors.password_confirmation.message}
+              </p>
+            )}
           </div>
           <div className={styles.submitButtonCvr}>
             <button className={styles.submitButton}>Registrarme</button>
@@ -234,24 +290,38 @@ export function SignUpForm(): JSX.Element {
 }
 export function ResetPass(): JSX.Element {
   const { handlerForm } = useLaTribunaAuthFormContext();
+  const [data, setData] = useState<forgotPass>({
+    email: "",
+  });
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(forgotPassValidator),
+    defaultValues: {
+      email: "",
+    },
+  });
+
   const showLogin = () => {
     handlerForm("login");
   };
   const showSignUp = () => {
     handlerForm("signup");
   };
+
+  const onSubmit = async (data: forgotPass): Promise<void> => {
+    setData(data);
+    await forgotPassService(data);
+  };
+  const throttledSubmit = useThrottle((data: forgotPass): void => {
+    onSubmit(data);
+  }, 1000);
   return (
     <div className={styles.formUi}>
-      <span>
-        <strong>X</strong>
-      </span>
-      <form
-        action=""
-        method="post"
-        className={styles.form}
-        style={{ height: "450px" }}
-      >
-        <div className={styles.formBody} style={{ top: "50%" }}>
+      <form onSubmit={handleSubmit(throttledSubmit)} className={styles.form}>
+        <div className={styles.formBody}>
           <div className={styles.welcomeLines}>
             <div className={styles.welcomeLine1}>La Tribuna</div>
             <div className={styles.welcomeLine2}>
@@ -260,16 +330,21 @@ export function ResetPass(): JSX.Element {
           </div>
           <div className={styles.inputArea}>
             <div className={styles.formInp}>
-              <input
+              <Controller
                 name="email"
-                placeholder="Correo electrónico"
-                type="email"
-                required
+                control={control}
+                render={({ field }) => (
+                  <input
+                    {...field}
+                    placeholder="Correo electrónico"
+                    type="email"
+                  />
+                )}
               />
             </div>
-            <div className={styles.formInp}>
-              <input placeholder="Contraseña" type="password" />
-            </div>
+            {errors.email && (
+              <p className={styles.errors_tags}>{errors.email.message}</p>
+            )}
           </div>
           <div className={styles.submitButtonCvr}>
             <button className={styles.submitButton}>Recuperar</button>

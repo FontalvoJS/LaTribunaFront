@@ -28,7 +28,10 @@ export default function Header(): JSX.Element {
   const showHeader = (): void => {
     handleShowSideHeader();
   };
-  const headerHanlder = (
+  const showBarDetector = async (): Promise<void> => {
+    showHeader();
+  };
+  const headerHandler = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ): void => {
     if (event.currentTarget.getAttribute("data-hidden") === "true") {
@@ -44,8 +47,9 @@ export default function Header(): JSX.Element {
     >
       <div
         className={showSideHeader ? styles.close_menu : styles.open_menu}
+        onMouseOver={!showSideHeader ? showBarDetector : undefined}
         data-hidden={showSideHeader}
-        onClick={headerHanlder}
+        onClick={headerHandler}
       >
         <FontAwesomeIcon width={15} icon={faCaretLeft as IconProp} />
       </div>

@@ -86,13 +86,17 @@
 .open_menu {
   top: 30px;
   position: fixed;
-  left: 50px;
+  left: -50px;
   color: #bfbfbf;
   padding: 7px;
   border-radius: 5px;
-  background: #00000040;
+  background: #00000000;
   transform: rotate(180deg);
   cursor: pointer;
+  height: 96vh;
+  display: grid;
+  align-items: end;
+  width: 130px;
 }
 .iconLink {
   padding: 3%;

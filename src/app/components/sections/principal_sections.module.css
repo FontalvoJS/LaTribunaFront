@@ -21,7 +21,7 @@
   left: 37%;
   transform: translate(-50%, -50%);
   z-index: 1;
-  top: 20rem;
+  top: 15rem;
   font-size: 2.7rem;
   animation: principal_sections_title__vUXDt 2s alternate forwards;
   color: whitesmoke;
@@ -117,6 +117,32 @@
 @media (max-width: 1200px) {
   .logos_card {
     display: none;
+  }
+  .title_primary_section {
+    position: absolute;
+    left: 37%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    top: 19rem;
+    font-size: 2.7rem;
+    animation: principal_sections_title__vUXDt 2s alternate forwards;
+    color: whitesmoke;
+  }
+}
+@media (max-width: 768px) {
+  .title_primary_section {
+    top: 24%;
+    left: 0;
+    padding: 2.5%;
+    z-index: 1;
+    font-size: 2.5rem;
+    transform: none;
+    text-align: center;
+    animation: principal_sections_principal_sections_title__vUXDt__LLSTL 2s alternate forwards;
+    color: whitesmoke;
+  }
+  #never_ever {
+    font-size:33px;
   }
 }
 .section-title h2::after {
