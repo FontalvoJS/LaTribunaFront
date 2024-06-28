@@ -42,6 +42,16 @@ export interface HeadersProps {
   body?: string;
 }
 
-export interface forgotPass {
+export interface ForgotPass {
   email: string;
+}
+export interface ResetPass {
+  password: string;
+  password_confirmation: string;
+}
+export interface ChangePasswordProps {
+  email: string;
+  password: string;
+  password_confirmation: string;
+  token: string;
 }

@@ -4,6 +4,11 @@
   position: relative;
   left: 8px;
 }
+.reset_text {
+  color: #8f8f8f;
+    margin-top: 7%;
+    font-size: 12px;
+}
 #rememberMe {
   width: 11px;
   position: relative;

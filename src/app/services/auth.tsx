@@ -1,5 +1,10 @@
 import csrf_fetch from "./csrfToken";
-import { UserDataLogin, forgotPass, UserDataSignup } from "../types/types";
+import {
+  UserDataLogin,
+  ForgotPass,
+  UserDataSignup,
+  ResetPass,
+} from "../types/types";
 import alertify from "../notifications/toast/alert_service";
 
 const welcome = {
@@ -47,7 +52,7 @@ export const SignUpService = async (data: UserDataSignup): Promise<void> => {
     alertify.error(response?.data.message);
   }
 };
-export const forgotPassService = async (data: forgotPass): Promise<void> => {
+export const forgotPassService = async (data: ForgotPass): Promise<void> => {
   const endpoint = "forgot-password";
   const response = await csrf_fetch(endpoint, {
     method: "POST",
@@ -65,7 +70,7 @@ export const forgotPassService = async (data: forgotPass): Promise<void> => {
     alertify.error(response?.data.message);
   }
 };
-export const resetPassService = async (data: forgotPass): Promise<void> => {
+export const resetPassService = async (data: ResetPass): Promise<void> => {
   const endpoint = "reset-password";
   const response = await csrf_fetch(endpoint, {
     method: "POST",

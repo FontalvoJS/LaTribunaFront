@@ -8,9 +8,9 @@ import {
 import { useLaTribunaAuthFormContext } from "@/app/context/authForm";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { UserDataLogin, UserDataSignup, forgotPass } from "@/app/types/types";
+import { UserDataLogin, UserDataSignup, ForgotPass } from "@/app/types/types";
 import { useThrottle } from "../../hooks/useThrottle";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   loginValidator,
   signupValidator,
@@ -290,7 +290,7 @@ export function SignUpForm(): JSX.Element {
 }
 export function ResetPass(): JSX.Element {
   const { handlerForm } = useLaTribunaAuthFormContext();
-  const [data, setData] = useState<forgotPass>({
+  const [data, setData] = useState<ForgotPass>({
     email: "",
   });
   const {
@@ -311,11 +311,11 @@ export function ResetPass(): JSX.Element {
     handlerForm("signup");
   };
 
-  const onSubmit = async (data: forgotPass): Promise<void> => {
+  const onSubmit = async (data: ForgotPass): Promise<void> => {
     setData(data);
     await forgotPassService(data);
   };
-  const throttledSubmit = useThrottle((data: forgotPass): void => {
+  const throttledSubmit = useThrottle((data: ForgotPass): void => {
     onSubmit(data);
   }, 1000);
   return (
@@ -325,9 +325,10 @@ export function ResetPass(): JSX.Element {
           <div className={styles.welcomeLines}>
             <div className={styles.welcomeLine1}>La Tribuna</div>
             <div className={styles.welcomeLine2}>
-              Te enviaremos un correo para restablecer tu contraseña
+              Para amantes del futbol colombiano
             </div>
           </div>
+          <p className={styles.reset_text}>Recibirás un correo electronico para restablecer tu contraseña.</p>
           <div className={styles.inputArea}>
             <div className={styles.formInp}>
               <Controller
@@ -348,14 +349,6 @@ export function ResetPass(): JSX.Element {
           </div>
           <div className={styles.submitButtonCvr}>
             <button className={styles.submitButton}>Recuperar</button>
-          </div>
-          <div className={styles.forgotPass}>
-            <a href="#" style={{ float: "right" }} onClick={showSignUp}>
-              Registrarme
-            </a>
-            <a href="#" style={{ float: "left" }} onClick={showLogin}>
-              Ya tengo una!
-            </a>
           </div>
         </div>
       </form>

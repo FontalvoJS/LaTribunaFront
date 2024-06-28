@@ -5,7 +5,7 @@ import axios, {
   InternalAxiosRequestConfig,
 } from "axios";
 
-const baseURL: string = "api/";
+const baseURL: string = "http://localhost:3000/api/";
 let csrfToken: string = "";
 // Configurar instancia de Axios
 const axiosInstance = axios.create({
@@ -30,7 +30,7 @@ axiosInstance.interceptors.request.use(
 // Función para obtener el token CSRF desde Laravel y almacenarlo en la variable csrfToken
 const getCookie = async (): Promise<void> => {
   try {
-    const url = `sanctum/csrf-cookie`;
+    const url = `http://localhost:3000/api/sanctum/csrf-cookie`;
     await axiosInstance.get(url);
     const xsrfToken = document.cookie
       .split("; ")

@@ -7,16 +7,17 @@ import { passwordResetValidator } from "@/app/validations/validations";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, Controller } from "react-hook-form";
 import { useState } from "react";
-interface ChangePasswordProps {
-  password: string;
-  password_confirmation: string;
-}
+import { useThrottle } from "@/app/components/hooks/useThrottle";
+import { resetPassService } from "@/app/services/auth";
+import { ChangePasswordProps } from "@/app/types/types";
 export default function Page(): JSX.Element {
+  const params = useParams();
   const [data, setData] = useState<ChangePasswordProps>({
     password: "",
     password_confirmation: "",
+    token: String(params.token),
+    email: decodeURIComponent(String(params.email)),
   });
-  const params = useParams();
   const {
     control,
     handleSubmit,
@@ -26,22 +27,47 @@ export default function Page(): JSX.Element {
     defaultValues: {
       password: "",
       password_confirmation: "",
+      token: String(params.token),
+      email: decodeURIComponent(String(params.email)),
     },
   });
+  const throttledSubmit = useThrottle((data: ChangePasswordProps): void => {
+    onSubmit(data);
+  }, 1000);
   const onSubmit = async (data: ChangePasswordProps) => {
-    console.log(data);
+    setData(data);
+    await resetPassService(data);
   };
   return (
     <>
       <PrincipalSection />
       <div className="container">
         <div className="row">
-          <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div className="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
             <h1 className={local_styles.title}>
               Ingresa una nueva contraseña para recuperar tu cuenta
             </h1>
             <hr />
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(throttledSubmit)}>
+              <div className={form_styles.formInp}>
+                <Controller
+                  name="email"
+                  control={control}
+                  render={({ field }) => (
+                    <input
+                      {...field}
+                      placeholder="Ingresa tu correo"
+                      type="email"
+                      className={form_styles.input}
+                    />
+                  )}
+                />
+              </div>
+              {errors.email && (
+                <p className={form_styles.errors_tags}>
+                  {errors.email.message}
+                </p>
+              )}
               <div className={form_styles.formInp}>
                 <Controller
                   name="password"
@@ -49,7 +75,7 @@ export default function Page(): JSX.Element {
                   render={({ field }) => (
                     <input
                       {...field}
-                      placeholder="Contraseña"
+                      placeholder="Nueva contraseña"
                       type="password"
                       className={form_styles.input}
                     />

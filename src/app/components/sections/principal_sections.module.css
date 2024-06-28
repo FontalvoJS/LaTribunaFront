@@ -18,13 +18,12 @@
 }
 .title_primary_section {
   position: absolute;
-  left: 37%;
-  transform: translate(-50%, -50%);
   z-index: 1;
   top: 15rem;
   font-size: 2.7rem;
-  animation: principal_sections_title__vUXDt 2s alternate forwards;
+  animation: title 2s alternate forwards;
   color: whitesmoke;
+  padding: 2.5%;
 }
 
 #about {
@@ -94,7 +93,6 @@
     z-index: 10;
     width: 100%;
     top: 30%;
-    left: 4%;
   }
   .logos_card img {
     width: 8.5rem;
@@ -103,11 +101,10 @@
     filter: drop-shadow(0px 3px 0px #16151591);
   }
   .title_primary_section {
+    width: 100%;
     position: absolute;
-    left: 37%;
-    transform: translate(-50%, -50%);
     z-index: 1;
-    top: 28rem;
+    top: 20rem;
     font-size: 3rem;
     animation: title 2s alternate forwards;
     color: whitesmoke;
@@ -116,7 +113,14 @@
 
 @media (max-width: 1200px) {
   .logos_card {
-    display: none;
+    display: flex;
+    justify-content: center;
+  }
+  .logos_card img {
+    width: 100px;
+    height: 100px;
+    margin-left: 2%;
+    margin-right: 2%;
   }
   .title_primary_section {
     position: absolute;
@@ -125,24 +129,25 @@
     z-index: 1;
     top: 19rem;
     font-size: 2.7rem;
-    animation: principal_sections_title__vUXDt 2s alternate forwards;
+    animation: title 2s alternate forwards;
     color: whitesmoke;
   }
 }
 @media (max-width: 768px) {
   .title_primary_section {
-    top: 24%;
+    top: 35%;
     left: 0;
     padding: 2.5%;
     z-index: 1;
     font-size: 2.5rem;
     transform: none;
-    text-align: center;
-    animation: principal_sections_principal_sections_title__vUXDt__LLSTL 2s alternate forwards;
+    text-align: left;
+    animation: title 2s
+      alternate forwards;
     color: whitesmoke;
   }
   #never_ever {
-    font-size:33px;
+    font-size: 33px;
   }
 }
 .section-title h2::after {
