@@ -1,4 +1,3 @@
-import csrf_fetch from "./csrfToken";
 import {
   UserDataLogin,
   ForgotPass,
@@ -6,7 +5,29 @@ import {
   ResetPass,
 } from "../types/types";
 import alertify from "../notifications/toast/alert_service";
+import axios from "axios";
+import { AxiosError } from "axios";
 
+const custom_axios = axios.create({
+  baseURL: "http://localhost:3000/api/auth/", // Cambia esto a tu URL base
+  timeout: 10000,
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+  },
+});
+custom_axios.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 const welcome = {
   messages: [
     "¡Qué alegría tenerte de vuelta! 🤙",
@@ -18,66 +39,59 @@ const welcome = {
 const messageSelected =
   welcome.messages[Math.floor(Math.random() * welcome.messages.length)];
 
-export const LoginService = async (data: UserDataLogin): Promise<void> => {
+export const LoginService = async (
+  data: UserDataLogin
+): Promise<void | AxiosError> => {
   const endpoint = "login";
-  const response = await csrf_fetch(endpoint, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-    data: JSON.stringify(data),
-  });
-  if (response?.status === 200 && response.data.success === true) {
-    alertify.success(messageSelected);
-  } else {
-    alertify.error(response?.data.message);
+  try {
+    const response = await custom_axios(endpoint, {
+      method: "POST",
+      data: JSON.stringify(data),
+    });
+    if (response.status === 200) {
+      alertify.success(messageSelected);
+      localStorage.setItem("token", response.data.token);
+    }
+  } catch (error: any) {
+    if (error.response.status > 400) alertify.error(error.response.data.error);
   }
 };
 export const SignUpService = async (data: UserDataSignup): Promise<void> => {
-  const endpoint = "register";
-  const response = await csrf_fetch(endpoint, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-    data: JSON.stringify(data),
-  });
-  if (response?.status === 200) {
-    alertify.success(
-      "¡Gracias por registrarte, espera mientras cargamos todo!"
-    );
-  } else {
-    alertify.error(response?.data.message);
+  try {
+    const endpoint = "register";
+    const response = await custom_axios(endpoint, {
+      method: "POST",
+      data: JSON.stringify(data),
+    });
+    if (response.status === 201) {
+      alertify.success(
+        "¡Gracias por registrarte, espera mientras cargamos todo!"
+      );
+      localStorage.setItem("token", response.data.token);
+    }
+  } catch (error: any) {
+    console.log(error);
+    if (error.response.status > 400) alertify.error(error.response.data.error);
   }
 };
 export const forgotPassService = async (data: ForgotPass): Promise<void> => {
-  const endpoint = "forgot-password";
-  const response = await csrf_fetch(endpoint, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-    data: JSON.stringify(data),
-  });
-  if (response?.status === 200) {
-    alertify.success(
-      "Revisa el correo que te mandamos para restablecer tu contraseña"
-    );
-  } else {
-    alertify.error(response?.data.message);
+  try {
+    const endpoint = "forgot-password";
+    const response = await custom_axios(endpoint, {
+      method: "POST",
+      data: JSON.stringify(data),
+    });
+    if (response.status === 200) {
+      alertify.success(response.data.message);
+    }
+  } catch (error: any) {
+    if (error.response.status > 400) alertify.error(error.response.data.error);
   }
 };
 export const resetPassService = async (data: ResetPass): Promise<void> => {
   const endpoint = "reset-password";
-  const response = await csrf_fetch(endpoint, {
+  const response = await custom_axios(endpoint, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
     data: JSON.stringify(data),
   });
   if (response?.status === 200) {
@@ -86,3 +100,5 @@ export const resetPassService = async (data: ResetPass): Promise<void> => {
     alertify.error(response?.data.message);
   }
 };
+
+

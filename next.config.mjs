@@ -3,8 +3,8 @@ const nextConfig = {
     rewrites: () => {
         return [
             {
-                source: "/api/:path*",
-                destination: "http://Barrabrava.test/:path*",
+                source: "/api/auth/:path*",
+                destination: "http://localhost/beerclub_backend/public/api/auth/:path*",
             },
         ];
     }

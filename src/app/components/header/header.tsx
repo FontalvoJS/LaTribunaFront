@@ -92,9 +92,7 @@ export default function Header(): JSX.Element {
             </li>
             <li>
               <a href="#about" className="nav-link scrollto">
-                <span>
-                  Las <b>4</b> verdades | analisís y critica
-                </span>
+                <span>Analisis criticos</span>
               </a>
             </li>
             <li>
