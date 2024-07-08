@@ -65,7 +65,6 @@ export default function Page(): JSX.Element {
 
   const onSubmit = async (data: FormValues): Promise<void> => {
     if ((await UpdateProfileService(data)) === "redirect") {
-      handleLogout(true);
       router.push("/");
       return
     }
