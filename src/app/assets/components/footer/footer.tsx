@@ -1,16 +1,17 @@
-import { useEffect } from "react";
+'use client';
+import { useEffect, useRef } from "react";
 import styles from "./footer.module.css";
 import { useSideHeaderContext } from "@/app/assets/context/sideHeader";
 export default function Footer(): JSX.Element {
   const { showSideHeader } = useSideHeaderContext();
+  const footerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    if (!showSideHeader) {
-      const footer = document.getElementsByTagName("footer")[0];
-      footer.style.left = "-300px";
+    if (!showSideHeader && footerRef.current) {
+      footerRef.current.style.left = "0px";
     }
   });
   return (
-    <footer id={styles.footer}>
+    <footer ref={footerRef} id={styles.footer}>
       <div className="container">
         <div className={styles.copyright}>
           By:
