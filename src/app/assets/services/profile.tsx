@@ -1,3 +1,4 @@
+'use client';
 import { ProfileModifyProps } from "../types/types";
 import alertify from "../notifications/toast/alert_service";
 import { custom_axios } from "../services/custom_axios";

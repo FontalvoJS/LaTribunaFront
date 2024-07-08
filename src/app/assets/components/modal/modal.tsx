@@ -1,4 +1,3 @@
-"use client";
 import Modal from "react-bootstrap/Modal";
 import { useLaTribunaAuthFormContext } from "@/app/assets/context/auth";
 import { ModalProps } from "@/app/assets/types/types";

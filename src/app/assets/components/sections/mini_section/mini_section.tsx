@@ -1,3 +1,4 @@
+'use client';
 import styles from "./mini_section.module.css";
 import Image from "next/image";
 export default function MiniSection(): JSX.Element {

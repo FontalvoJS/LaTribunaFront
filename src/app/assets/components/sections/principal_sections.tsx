@@ -1,3 +1,4 @@
+'use client';
 import styles from "./principal_sections.module.css";
 import Image from "next/image";
 export default function PrincipalSection(): JSX.Element {

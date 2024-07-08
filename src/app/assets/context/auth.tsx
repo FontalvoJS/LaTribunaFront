@@ -1,4 +1,4 @@
-"use client"; // Asegúrate de agregar esto al principio
+"use client";
 import { AuthContextProps, User } from "@/app/assets/types/types";
 
 import React, {

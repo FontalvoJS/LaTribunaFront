@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import Image from "next/image";
 import styles from "./header.module.css";
 import Link from "next/link";
@@ -21,7 +21,6 @@ import {
 import { useLaTribunaAuthFormContext } from "@/app/assets/context/auth";
 import { useSideHeaderContext } from "@/app/assets/context/sideHeader";
 import { useSession } from "@/app/assets/context/session";
-import React from "react";
 export default function Header(): JSX.Element {
   const { handleShowModalForm } = useLaTribunaAuthFormContext();
   const { showSideHeader, handleCloseSideHeader, handleShowSideHeader } =
