@@ -1,13 +1,15 @@
 "use client";
 import "./globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 import "react-toastify/dist/ReactToastify.css";
-import { LaTribunaProvider } from "./context/authForm";
-import { SideHeaderProvider } from "./context/sideHeader";
-import Main from "./components/main/main";
+import { LaTribunaProvider } from "./assets/context/auth";
+import { SideHeaderProvider } from "./assets/context/sideHeader";
+import { SessionProvider } from "./assets/context/session";
+import Main from "./assets/components/main/main";
 import { ToastContainer } from "react-toastify";
-import Header from "./components/header/header";
-import Footer from "./components/footer/footer";
+import Header from "./assets/components/header/header";
+import Footer from "./assets/components/footer/footer";
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -18,17 +20,19 @@ export default function RootLayout({
       <body>
         <LaTribunaProvider>
           <SideHeaderProvider>
-            <Main>
-              <ToastContainer
-                draggable
-                theme="dark"
-                autoClose={3000}
-                closeOnClick
-              />
-              <Header />
-              {children}
-            </Main>
-            <Footer />
+            <SessionProvider>
+              <Main>
+                <ToastContainer
+                  draggable
+                  theme="dark"
+                  autoClose={3000}
+                  closeOnClick
+                />
+                <Header />
+                {children}
+              </Main>
+              <Footer />
+            </SessionProvider>
           </SideHeaderProvider>
         </LaTribunaProvider>
       </body>

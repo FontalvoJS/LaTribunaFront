@@ -1,15 +1,15 @@
 "use client";
 import { useParams } from "next/navigation";
-import form_styles from "@/app/components/authForms/login/login.module.css";
+import form_styles from "@/app/assets/components/authForms/login/login.module.css";
 import local_styles from "./page.module.css";
-import PrincipalSection from "@/app/components/sections/principal_sections";
-import { passwordResetValidator } from "@/app/validations/validations";
+import PrincipalSection from "@/app/assets/components/sections/principal_sections";
+import { passwordResetValidator } from "@/app/assets/validations/validations";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, Controller } from "react-hook-form";
 import { useState } from "react";
-import { useThrottle } from "@/app/components/hooks/useThrottle";
-import { resetPassService } from "@/app/services/auth";
-import { ChangePasswordProps } from "@/app/types/types";
+import { useThrottle } from "@/app/assets/components/hooks/useThrottle";
+import { resetPassService } from "@/app/assets/services/auth";
+import { ChangePasswordProps } from "@/app/assets/types/types";
 export default function Page(): JSX.Element {
   const params = useParams();
   const [data, setData] = useState<ChangePasswordProps>({
@@ -45,7 +45,7 @@ export default function Page(): JSX.Element {
         <div className="row">
           <div className="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
             <h1 className={local_styles.title}>
-              Ingresa una nueva contraseña para recuperar tu cuenta
+              Ingresa una nueva contraseña
             </h1>
             <hr />
             <form onSubmit={handleSubmit(throttledSubmit)}>
