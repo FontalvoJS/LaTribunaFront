@@ -1,0 +1,152 @@
+/*--------------------------------------------------------------
+# Header
+--------------------------------------------------------------*/
+#header {
+  top: 0;
+  bottom: 0;
+  width: 300px;
+  transition: all ease-in-out 0.5s;
+  z-index: 9997;
+  transition: all 0.5s;
+  padding: 0 15px;
+  overflow-y: auto;
+  position: fixed;
+  background: #16191b;
+  border-right: 1px solid #00000052;
+  box-shadow: 1px 0px 8px 1px #00000054;
+  animation: hide 1s alternate forwards ease-in-out;
+}
+.hide_header {
+  left: -300px !important;
+}
+.hr {
+      background: #32393d;
+    height: 2px;
+    margin-top: 6%;
+}
+.show_header {
+  left: 0 !important;
+}
+.buttons_menu {
+  color: white;
+  font-style: italic;
+  position: relative;
+  left: 7%;
+  background: var(--bs-danger-text-emphasis) !important;
+}
+.marginParche {
+  display: block;
+  text-align: center;
+  font-size:12px;
+  font-family:monospace;
+  margin-top:5%;
+  margin-bottom: 4%;
+  color:#ffc107
+}
+#header .profile img {
+  margin: 15px auto;
+  display: block;
+  width: 120px;
+}
+.li_dropdown {
+  background: radial-gradient(
+    circle farthest-corner at 48.4% 47.5%,
+    #272d30 0%,
+    #0000000a 90%
+  );
+  cursor: pointer;
+}
+#header .profile h1 {
+  font-size: 25px;
+  margin: 0;
+  padding: 0;
+  font-weight: 600;
+  -moz-text-align-last: center;
+  text-align-last: center;
+  font-family: "Poppins", sans-serif;
+}
+
+#header .profile h1 a,
+#header .profile h1 a:hover {
+  color: white;
+  text-decoration: none;
+}
+#envivo {
+  position: relative;
+  bottom: 1px;
+}
+
+#header .profile .social-links a {
+  font-size: 18px;
+  display: inline-block;
+  background: #ffc107;
+  color: #9a9a9a;
+  line-height: 1;
+  padding: 8px 0;
+  margin-right: 4px;
+  border-radius: 50%;
+  text-align: center;
+  width: 36px;
+  height: 36px;
+  transition: 0.3s;
+}
+#header nav ul {
+  width: 100%;
+}
+
+#header li a span {
+  margin-left: 3px;
+  margin-right: 3px;
+}
+#header li a img {
+  margin-left: 3px;
+}
+#header .profile .social-links a:hover {
+  color: #fff;
+  text-decoration: none;
+}
+.close_menu {
+  color: #464b4e;
+  float: right;
+  cursor: pointer;
+}
+.open_menu {
+  top: 30px;
+  position: fixed;
+  left: -50px;
+  color: #bfbfbf;
+  padding: 7px;
+  border-radius: 5px;
+  background: #00000000;
+  transform: rotate(180deg);
+  cursor: pointer;
+  height: 96vh;
+  display: grid;
+  align-items: end;
+  width: 130px;
+}
+.iconLink {
+  padding: 3%;
+  border-radius: 27px;
+  color: #464b4e;
+}
+.icons_span {
+  color: #b5b5b5;
+  position: relative;
+  bottom: 2px;
+}
+.icons_span_play {
+  color: #ff4a4a;
+  animation: title_match 1s infinite;
+  position: relative;
+  bottom: 2px;
+  margin-right: 5px;
+}
+@keyframes title_match {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

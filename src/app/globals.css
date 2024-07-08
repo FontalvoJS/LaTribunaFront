@@ -2,7 +2,7 @@
 
 body {
   font-family: "Roboto", sans-serif;
-  background-color:#141414 !important
+  background-color: #141414 !important;
 }
 
 #main {
@@ -14,16 +14,43 @@ body {
   padding-left: 30px;
   padding-right: 30px;
 }
+.btn:active {
+  color: none !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
+}
+.dropdown button {
+  background: transparent;
+  border: none;
+  color: #dddddd;
+  margin-bottom: 4px;
+}
 
+.dropdown button:focus,
+.dropdown button:active,
+.dropdown button:focus-visible,
+.dropdown button:hover {
+  background-color: transparent !important;
+  border: none !important;
+  color: #c0cad4 !important;
+}
+
+.dropdown-menu.show {
+  border: none !important;
+  display: block !important;
+  background: transparent !important;
+}
 @media (max-width: 1199px) {
   #header {
     left: -300px;
   }
 
   #main {
-    margin-left: 0;
+    margin-left: 0 !important;
   }
-
+  .scrollto {
+    cursor: pointer !important;
+  }
   .container,
   .container-fluid {
     padding-left: 12px;
@@ -32,6 +59,7 @@ body {
 }
 .modal-content {
   background-color: transparent !important;
+  border: 0 !important;
 }
 /*--------------------------------------------------------------
   # Navigation Menu
@@ -79,13 +107,49 @@ body {
   background: #1f2327;
 }
 
+.formInp input {
+  width: 100%;
+  background: none;
+  font-size: 13.4px;
+  color: #939393;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.formInp input:focus {
+  outline: none;
+}
+.form-control {
+  background: transparent !important;
+  color: #bdbdbd !important;
+  border-color: gray !important;
+  margin-top: 1% !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+.form-control:focus {
+  border: 1px solid white !important;
+}
 .nav-menu a:hover i,
 .nav-menu .active i,
 .nav-menu .active:focus i,
 .nav-menu li:hover > a i {
   color: #ffffff;
 }
-
+.btn-outline-primary {
+  background-color: transparent;
+  color: #f0b504 !important;
+  font-weight: 600;
+  width: 100%;
+  border: 2px solid #f0b504 !important;
+}
+.btn-outline-primary:hover {
+  transition: 0.5s;
+  background-color: #f0b504 !important;
+  color: black !important;
+  font-weight: 600;
+}
 /* Mobile Navigation */
 .mobile-nav-toggle {
   position: fixed;
@@ -114,4 +178,10 @@ body {
 
 .mobile-nav-active #header {
   left: 0;
+}
+option {
+  color:black;
+}
+option:hover {
+  color:black;
 }

@@ -1,0 +1,30 @@
+/*--------------------------------------------------------------
+# Footer
+--------------------------------------------------------------*/
+#footer {
+  padding: 15px;
+  color: #8299ab;
+  font-size: 14px;
+  position: fixed;
+  font-weight: 500;
+  left: 0;
+  bottom: 0;
+  width: 300px;
+  z-index: 9997;
+  background: rgba(33, 37, 41, 0.75);
+}
+
+#footer .copyright {
+  text-align: center;
+}
+
+@media (max-width: 1199px) {
+  #footer {
+    position: static;
+    width: auto;
+    padding-right: 20px 15px;
+  }
+}
+#footer strong {
+  color: #dfdfdf
+}
