@@ -38,7 +38,7 @@ interface FormValues {
 export default function Page(): JSX.Element {
   const { handleUpdateInfo } = useSession();
   const router = useRouter();
-  const { email, name, handleLogout, parche, club } = useSession();
+  const { email, name, parche, club } = useSession();
   const [isLoaded, setIsLoaded] = useState(false);
 
   const {
