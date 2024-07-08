@@ -20,8 +20,7 @@ const schema = yup.object().shape({
     .min(4, "Minimo 4 caracteres")
     .max(30, "Maximo 30 caracteres"),
   email: yup.string().email("Correo electrónico inválido"),
-  club: yup
-    .string(),
+  club: yup.string(),
   parche: yup
     .string()
     .min(2, "Minimo 4 caracteres")
@@ -66,7 +65,7 @@ export default function Page(): JSX.Element {
   const onSubmit = async (data: FormValues): Promise<void> => {
     if ((await UpdateProfileService(data)) === "redirect") {
       router.push("/");
-      return
+      return;
     }
     handleUpdateInfo(true);
   };
@@ -131,10 +130,7 @@ export default function Page(): JSX.Element {
                   name="club"
                   control={control}
                   render={({ field }) => (
-                    <select
-                      className="form-control"
-                      {...field}
-                    >
+                    <select className="form-control" {...field}>
                       <option value="ignore">
                         Selecciona tu equipo favorito
                       </option>
