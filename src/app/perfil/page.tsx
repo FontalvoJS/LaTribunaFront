@@ -35,9 +35,9 @@ interface FormValues {
 }
 
 export default function Page(): JSX.Element {
-  const { handleUpdateInfo } = useSession();
   const router = useRouter();
-  const { email, name, parche, club } = useSession();
+  const { email, name, parche, club, handleLogout, handleUpdateInfo } =
+    useSession();
   const [isLoaded, setIsLoaded] = useState(false);
 
   const {
@@ -65,6 +65,7 @@ export default function Page(): JSX.Element {
   const onSubmit = async (data: FormValues): Promise<void> => {
     if ((await UpdateProfileService(data)) === "redirect") {
       router.push("/");
+      handleLogout(true);
       return;
     }
     handleUpdateInfo(true);
@@ -76,9 +77,28 @@ export default function Page(): JSX.Element {
     );
     await forgotPassService({ email: data.email });
   };
+  const resetPassConfirmation = () => (
+    <div>
+      <small>¿Deseas restablecer tu contraseña?</small>
+      <hr />
+      <div className="form-group">
+        <div
+          className="btn alert_button"
+          onClick={() => {
+            forgotPass({ email: email });
+          }}
+        >
+          Sí, continuar
+        </div>
+      </div>
+    </div>
+  );
   if (!isLoaded) {
     return <></>;
   }
+  const resetHandler = (): unknown => {
+    return alertify.info(resetPassConfirmation());
+  };
 
   return (
     <>
@@ -86,7 +106,7 @@ export default function Page(): JSX.Element {
       <div className={styles.perfil_container + " container"}>
         <div className="row mb-3">
           <div className="col-sm-12 col-md-6">
-            <h1 className={styles.title_perfil}>Mi cuenta</h1>
+            <h1 className={styles.title_perfil}>Perfil</h1>
             <br />
             <form onSubmit={handleSubmit(trotthledSubmit)}>
               <div className="form-group">
@@ -201,14 +221,14 @@ export default function Page(): JSX.Element {
                 )}
               </div>
               <br />
-              <button type="submit" className="btn btn-outline-primary">
+              <button type="submit" className="btn btn-outline-primary w-100">
                 Actualizar
               </button>
               <br />
               <button
                 type="button"
                 className="btn btn-dark btn-block w-100 mt-2"
-                onClick={() => forgotPass({ email: email })}
+                onClick={resetHandler}
               >
                 Cambiar contraseña
               </button>

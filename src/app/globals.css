@@ -22,8 +22,11 @@ body {
 .dropdown button {
   background: transparent;
   border: none;
-  color: #dddddd;
+  color: white;
   margin-bottom: 4px;
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 13px;
 }
 
 .dropdown button:focus,
@@ -137,18 +140,47 @@ body {
 .nav-menu li:hover > a i {
   color: #ffffff;
 }
+.btn {
+  font-weight: 500;
+  font-size: 14px;
+  padding: 5px 15px;
+  letter-spacing: 0.5px;
+}
 .btn-outline-primary {
   background-color: transparent;
   color: #f0b504 !important;
-  font-weight: 600;
-  width: 100%;
   border: 2px solid #f0b504 !important;
+}
+.hide_footer {
+  left: -300px !important;
+}
+.btn-primary {
+  background-color: #f0b504 !important;
+  border: 2px solid #f0b504 !important;
+  color: black !important;
+  font-weight: 500;
+}
+.btn-primary:hover {
+  transition: 0.5s;
+  font-weight: 500;
+  border: 2px solid #bd8e02 !important;
+  background-color: #bd8e02 !important;
+}
+.alert_button {
+  background: #212121 !important;
+  font-size: 10px !important;
+  color: #bdbdbd !important;
+}
+.alert_button:hover {
+  background: #1a1a1a !important;
+  font-size: 10px !important;
+  color: #bdbdbd !important;
 }
 .btn-outline-primary:hover {
   transition: 0.5s;
+  font-weight: 500;
   background-color: #f0b504 !important;
   color: black !important;
-  font-weight: 600;
 }
 /* Mobile Navigation */
 .mobile-nav-toggle {
@@ -180,8 +212,8 @@ body {
   left: 0;
 }
 option {
-  color:black;
+  color: black;
 }
 option:hover {
-  color:black;
+  color: black;
 }

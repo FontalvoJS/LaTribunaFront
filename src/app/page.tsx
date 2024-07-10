@@ -12,7 +12,7 @@ import { useSession } from "./assets/context/session";
 export default function Home(): JSX.Element {
   const { showLoginForm, showSignupForm, showResetPasswordForm } =
     useLaTribunaAuthFormContext();
-  const {isLoggedIn} = useSession();
+  const { isLoggedIn } = useSession();
   const getFormComponent = (): JSX.Element => {
     if (showLoginForm) {
       return <LoginForm />;

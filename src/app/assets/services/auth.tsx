@@ -65,7 +65,7 @@ export const forgotPassService = async (data: ForgotPass): Promise<void> => {
     });
     if (response.status === 200) {
       alertify.success(
-        "Se envió un token a tu email para que actualices tu contraseña"
+        "Revisa tu email para actualizar tu contraseña"
       );
     }
   } catch (error: any) {
