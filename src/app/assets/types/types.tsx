@@ -26,6 +26,7 @@ export interface SessionContextProps {
   isAdmin?: boolean;
   parche?: string;
   imgSelectedClub?: string;
+  logout: boolean;
   handleIsLoggedIn: (param: boolean) => void;
   handleName: (param: string) => void;
   handleId: (param: string) => void;
@@ -36,6 +37,7 @@ export interface SessionContextProps {
   handleIsAdmin: (param: boolean) => void;
   handleParche: (param: string) => void;
   handleImgSelectedClub: (param: string) => void;
+  handleLogout: (param: boolean) => void;
 }
 export interface AuthContextProps {
   user: User | null;

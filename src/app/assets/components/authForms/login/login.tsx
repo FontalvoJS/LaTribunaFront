@@ -8,13 +8,18 @@ import { useLaTribunaAuthFormContext } from "@/app/assets/context/auth";
 import { useSession } from "@/app/assets/context/session";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { UserDataLogin, UserDataSignup, ForgotPass } from "@/app/assets/types/types";
+import {
+  UserDataLogin,
+  UserDataSignup,
+  ForgotPass,
+} from "@/app/assets/types/types";
 import { useThrottle } from "../../hooks/useThrottle";
 import {
   loginValidator,
   signupValidator,
   forgotPassValidator,
 } from "@/app/assets/validations/validations";
+import alertify from "@/app/assets/notifications/toast/alert_service";
 
 export default function LoginForm(): JSX.Element {
   const { handlerForm } = useLaTribunaAuthFormContext();
@@ -26,15 +31,17 @@ export default function LoginForm(): JSX.Element {
     handlerForm("reset");
   };
   const onSubmit = async (data: UserDataLogin): Promise<void> => {
+    const alert = alertify.loading("Iniciando sesión...");
     const res = await LoginService(data);
     if (typeof res === "boolean") {
       handleIsLoggedIn(res);
     }
+    alertify.dismiss(alert);
   };
 
   const throttledSubmit = useThrottle((data: UserDataLogin): void => {
     onSubmit(data);
-  }, 1000);
+  }, 5000);
 
   const {
     control,

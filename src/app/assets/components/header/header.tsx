@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import Image from "next/image";
 import styles from "./header.module.css";
 import Link from "next/link";
@@ -16,7 +16,12 @@ import {
   faPlayCircle,
   faCaretLeft,
   faUser,
+  faHome,
   faSignOutAlt,
+  faNewspaper,
+  faComments,
+  faMagic,
+  faEnvelope,
 } from "@fortawesome/free-solid-svg-icons";
 import { useLaTribunaAuthFormContext } from "@/app/assets/context/auth";
 import { useSideHeaderContext } from "@/app/assets/context/sideHeader";
@@ -53,24 +58,52 @@ export default function Header(): JSX.Element {
       {isLoggedIn === false ? (
         <div onClick={handleShowModalForm}>
           <Link href="#" className="nav-link scrollto active">
-            <span className={styles.icons_span}>
+            <div className={styles.icons_span}>
               <FontAwesomeIcon width={14} icon={faSignInAlt as IconProp} />
-            </span>
-            <span> Acceder al club </span>
+            </div>
+            <div style={{ left: "5%" }} className={styles.title_section}>
+              Acceder al club
+            </div>
           </Link>
         </div>
       ) : (
         <div>
           <Link href="/perfil" className="nav-link scrollto active">
-            <span className={styles.icons_span}>
+            <div className={styles.icons_span}>
               <FontAwesomeIcon width={14} icon={faUser as IconProp} />
-            </span>
-            <span> {name} </span>
+            </div>
+            <div style={{ left: "5%" }} className={styles.title_section}>
+              {name}{" "}
+            </div>
           </Link>
+          <hr className={styles.hr} />
+          <Link href="/ " className="nav-link scrollto">
+            <div className={styles.icons_span}>
+              <FontAwesomeIcon width={14} icon={faHome as IconProp} />
+            </div>
+            <div style={{ left: "5%" }} className={styles.title_section}>
+              Inicio
+            </div>
+          </Link>
+          
         </div>
       )}
     </li>
   );
+  const logoutButton: JSX.Element =
+    isLoggedIn === true ? (
+      <li>
+        <hr className={styles.hr} />
+        <a type="button" className="nav-link">
+          <span className={styles.salir_span}>
+            <FontAwesomeIcon width={14} icon={faSignOutAlt as IconProp} />
+          </span>
+          <span className={styles.salir_text}>Salir</span>
+        </a>
+      </li>
+    ) : (
+      <></>
+    );
   return (
     <header
       id={styles.header}
@@ -115,32 +148,48 @@ export default function Header(): JSX.Element {
             </a>
           </div> */}
         </div>
-
         <nav id={styles.navbar} className="nav-menu navbar">
           <ul>
             {loginButton}
             <li>
-              <a type="button" className="nav-link scrollto">
-                <span>Analisis criticos</span>
-              </a>
+              <Link href="/perfil" className="nav-link scrollto">
+                <div className={styles.icons_span}>
+                  <FontAwesomeIcon width={14} icon={faNewspaper as IconProp} />
+                </div>
+                <div style={{ left: "5%" }} className={styles.title_section}>
+                  Análisis
+                </div>
+              </Link>
             </li>
             <li>
-              <a href="#about" className="nav-link scrollto">
-                <span>Discusiones</span>
-              </a>
+              <Link href="/perfil" className="nav-link scrollto">
+                <div className={styles.icons_span}>
+                  <FontAwesomeIcon width={14} icon={faComments as IconProp} />
+                </div>
+                <div style={{ left: "5%" }} className={styles.title_section}>
+                  Discuciones
+                </div>
+              </Link>
             </li>
             <li>
-              <a type="button" className="nav-link scrollto">
-                <span>
-                  Predicciones por <b>IA</b>
-                  <strong></strong>
-                </span>
-              </a>
+              <Link href="/perfil" className="nav-link scrollto">
+                <div className={styles.icons_span}>
+                  <FontAwesomeIcon width={14} icon={faMagic as IconProp} />
+                </div>
+                <div style={{ left: "5%" }} className={styles.title_section}>
+                  Predicciones por IA ✨
+                </div>
+              </Link>
             </li>
             <li>
-              <a type="button" className="nav-link scrollto">
-                <span>Contáctame</span>
-              </a>
+              <Link href="/perfil" className="nav-link scrollto">
+                <div className={styles.icons_span}>
+                  <FontAwesomeIcon width={14} icon={faEnvelope as IconProp} />
+                </div>
+                <div style={{ left: "5%" }} className={styles.title_section}>
+                  Contáctame
+                </div>
+              </Link>
             </li>
             <li className={styles.li_dropdown}>
               <div className="dropdown open">
@@ -173,19 +222,7 @@ export default function Header(): JSX.Element {
                 </div>
               </div>
             </li>
-
-            <li>
-              <hr className={styles.hr} />
-              <a type="button" className="nav-link scrollto">
-                <span
-                  style={{ color: "#f1c40f" }}
-                  className={styles.icons_span}
-                >
-                  <FontAwesomeIcon width={14} icon={faSignOutAlt as IconProp} />
-                </span>
-                <span>Salir</span>
-              </a>
-            </li>
+            {logoutButton}
           </ul>
         </nav>
       </div>

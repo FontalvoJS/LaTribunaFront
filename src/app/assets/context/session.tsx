@@ -25,7 +25,7 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({
   const [updateInfo, setUpdateInfo] = useState<boolean>(false);
   const [parche, setParche] = useState<string>("");
   const [imgSelectedClub, setImgSelectedClub] = useState<string>("");
-
+  const [logout, setLogout] = useState<boolean>(false);
   const handleName = (name: string): void => setName(name);
   const handleId = (id: string): void => setId(id);
   const handleRole = (id: string): void => setRole(id);
@@ -39,6 +39,7 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({
   const handleParche = (parche: string): void => setParche(parche);
   const handleImgSelectedClub = (imgSelectedClub: string): void =>
     setImgSelectedClub(imgSelectedClub);
+  const handleLogout = (logout: boolean): void => setLogout(logout);
 
   const teams = useMemo(
     () => [
@@ -178,15 +179,18 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({
       isAdmin,
       parche,
       imgSelectedClub,
+      teams,
+      logout,
+      handleLogout: (logout: boolean) => setLogout(logout),
       handleClub: (club: string) => setClub(club),
       handleIsAdmin: (isAdmin: boolean) => setIsAdmin(isAdmin),
-      handleName,
-      handleId,
-      handleIsLoggedIn,
-      handleRole,
-      handleEmail,
-      handleUpdateInfo,
-      handleParche,
+      handleName: (name: string) => setName(name),
+      handleId: (id: string) => setId(id),
+      handleIsLoggedIn: (isLoggedIn: boolean) => setIsLoggedIn(isLoggedIn),
+      handleRole: (role: string) => setRole(role),
+      handleEmail: (email: string) => setEmail(email),
+      handleUpdateInfo: (updateInfo: boolean) => setUpdateInfo(updateInfo),
+      handleParche: (parche: string) => setParche(parche),
       handleImgSelectedClub: (image: string) => setImgSelectedClub(image),
     }),
     [
@@ -200,11 +204,27 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({
       isAdmin,
       parche,
       imgSelectedClub,
+      teams,
+      logout,
     ]
   );
 
   useEffect(() => {
-    if (updateInfo || localStorage.getItem("user")) {
+    if (logout) {
+      handleName("");
+      handleId("");
+      handleRole("");
+      handleEmail("");
+      handleClub("");
+      handleParche("");
+      handleImgSelectedClub("");
+      handleIsAdmin(false);
+      handleIsLoggedIn(false);
+      handleUpdateInfo(false);
+      handleLogout(false);
+      return
+    }
+    if (updateInfo || (localStorage.getItem("user") && logout === false)) {
       const JsonToObject = JSON.parse(localStorage.getItem("user") as string);
       handleName(JsonToObject.name);
       handleId(JsonToObject.id);
@@ -224,7 +244,7 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({
       handleIsLoggedIn(true);
       handleUpdateInfo(false);
     }
-  }, [isLoggedIn, updateInfo, teams]);
+  }, [isLoggedIn, updateInfo, teams, logout]);
 
   return (
     <sessionContext.Provider value={value}>{children}</sessionContext.Provider>
