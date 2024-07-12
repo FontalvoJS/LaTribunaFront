@@ -22,15 +22,26 @@ import {
   faComments,
   faMagic,
   faEnvelope,
+  faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { useLaTribunaAuthFormContext } from "@/app/assets/context/auth";
 import { useSideHeaderContext } from "@/app/assets/context/sideHeader";
 import { useSession } from "@/app/assets/context/session";
+import { logoutService } from "@/app/assets/services/auth";
+
 export default function Header(): JSX.Element {
   const { handleShowModalForm } = useLaTribunaAuthFormContext();
   const { showSideHeader, handleCloseSideHeader, handleShowSideHeader } =
     useSideHeaderContext();
-  const { isLoggedIn, name, parche, imgSelectedClub, club } = useSession();
+  const {
+    isLoggedIn,
+    name,
+    parche,
+    imgSelectedClub,
+    club,
+    handleLogout,
+    role,
+  } = useSession();
   const hideHeader = (): void => {
     handleCloseSideHeader();
   };
@@ -48,6 +59,10 @@ export default function Header(): JSX.Element {
     } else {
       showHeader();
     }
+  };
+  const logoutHandler = async (): Promise<void> => {
+    await logoutService();
+    handleLogout(true);
   };
   const imagePath =
     club && club !== "ignore"
@@ -73,7 +88,7 @@ export default function Header(): JSX.Element {
               <FontAwesomeIcon width={14} icon={faUser as IconProp} />
             </div>
             <div style={{ left: "5%" }} className={styles.title_section}>
-              {name}{" "}
+              {name}
             </div>
           </Link>
           <hr className={styles.hr} />
@@ -85,7 +100,6 @@ export default function Header(): JSX.Element {
               Inicio
             </div>
           </Link>
-          
         </div>
       )}
     </li>
@@ -94,12 +108,17 @@ export default function Header(): JSX.Element {
     isLoggedIn === true ? (
       <li>
         <hr className={styles.hr} />
-        <a type="button" className="nav-link">
+        <Link
+          href="/"
+          type="button"
+          onClick={logoutHandler}
+          className="nav-link"
+        >
           <span className={styles.salir_span}>
             <FontAwesomeIcon width={14} icon={faSignOutAlt as IconProp} />
           </span>
           <span className={styles.salir_text}>Salir</span>
-        </a>
+        </Link>
       </li>
     ) : (
       <></>
@@ -127,7 +146,7 @@ export default function Header(): JSX.Element {
             className="img-fluid rounded-circle"
           />
           <h1 className="text-light">
-            <a href="index.html">La Tribuna</a>
+            <Link href="/">La Tribuna</Link>
           </h1>
           {parche !== "" && (
             <div>

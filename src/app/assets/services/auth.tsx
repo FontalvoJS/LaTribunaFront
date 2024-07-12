@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import {
   UserDataLogin,
   ForgotPass,
@@ -20,8 +20,12 @@ export const LoginService = async (
       data: JSON.stringify(data),
     });
     alertify.success("¡Bienvenido a BeerClub!");
-    localStorage.setItem("user", JSON.stringify(response.data.user_session));
-    return true;
+    if (!!response.data.user_session) {
+      localStorage.setItem("user", JSON.stringify(response.data.user_session));
+      return true;
+    } else {
+      return false;
+    }
   } catch (error: any) {
     if (error.response.status >= 400) alertify.error(error.response.data.error);
     return false;
@@ -64,9 +68,7 @@ export const forgotPassService = async (data: ForgotPass): Promise<void> => {
       data: JSON.stringify(data),
     });
     if (response.status === 200) {
-      alertify.success(
-        "Revisa tu email para actualizar tu contraseña"
-      );
+      alertify.success("Se envió el email para cambiar tu contraseña");
     }
   } catch (error: any) {
     if (error.response.status >= 400) alertify.error(error.response.data.error);
@@ -97,7 +99,26 @@ export const logoutService = async (): Promise<void> => {
       method: "POST",
     });
     localStorage.removeItem("user");
+    // remove cookie jwt
+    document.cookie = "jwt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    alertify.success("¡Hasta pronto!");
   } catch (error: any) {
     if (error.response.status >= 400) alertify.error(error.response.data.error);
+  }
+};
+export const verifySession = async (): Promise<boolean> => {
+  try {
+    const endpoint = "/auth/verifyToken";
+    const response = await custom_axios(endpoint, {
+      method: "GET",
+    });
+    if (response.status === 200) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error: any) {
+    if (error.response.status >= 400) alertify.error(error.response.data.error);
+    return false;
   }
 };

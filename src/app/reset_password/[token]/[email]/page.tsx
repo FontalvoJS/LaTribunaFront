@@ -33,7 +33,7 @@ export default function Page(): JSX.Element {
   });
   const throttledSubmit = useThrottle((data: ChangePasswordProps): void => {
     onSubmit(data);
-  }, 1000);
+  }, 5000);
   const onSubmit = async (data: ChangePasswordProps) => {
     setData(data);
     await resetPassService(data);

@@ -51,9 +51,12 @@ export interface AuthContextProps {
   handleUser: (user: User) => void;
 }
 export interface User {
-  id: number;
+  id: string;
   name: string;
   email: string;
+  role: string;
+  club?: string;
+  parche?: string;
   created_at: string;
   updated_at: string;
 }

@@ -13,7 +13,7 @@ import alertify from "../assets/notifications/toast/alert_service";
 import { useThrottle } from "../assets/components/hooks/useThrottle";
 import { useRouter } from "next/navigation";
 import { useSession } from "@/app/assets/context/session";
-
+import { User } from "../assets/types/types";
 const schema = yup.object().shape({
   name: yup
     .string()
@@ -70,7 +70,7 @@ export default function Page(): JSX.Element {
     }
     handleUpdateInfo(true);
   };
-  const trotthledSubmit = useThrottle(onSubmit, 1000);
+  const trotthledSubmit = useThrottle(onSubmit, 5000);
   const forgotPass = async (data: ForgotPass): Promise<void> => {
     alertify.info(
       "Enviaremos un email para que cambies tu contraseña, revisa tu bandeja de entrada o spam"

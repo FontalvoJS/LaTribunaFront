@@ -125,10 +125,10 @@ export default function LoginForm(): JSX.Element {
             <button className={styles.submitButton}>Ingresar</button>
           </div>
           <div className={styles.forgotPass}>
-            <button style={{ float: "left" }} onClick={showSignUp}>
+            <button type="button" style={{ float: "left" }} onClick={showSignUp}>
               Registrarme
             </button>
-            <button style={{ float: "right" }} onClick={showResetPassword}>
+            <button type="button" style={{ float: "right" }} onClick={showResetPassword}>
               Recuperar
             </button>
           </div>
@@ -151,7 +151,7 @@ export function SignUpForm(): JSX.Element {
   };
   const throttledSubmit = useThrottle((data: UserDataSignup) => {
     onSubmit(data);
-  }, 1000);
+  }, 5000);
   const {
     control,
     handleSubmit,
@@ -271,10 +271,10 @@ export function SignUpForm(): JSX.Element {
             <button className={styles.submitButton}>Registrarme</button>
           </div>
           <div className={styles.forgotPass}>
-            <button style={{ float: "right" }} onClick={showResetPassword}>
+            <button type="button" style={{ float: "right" }} onClick={showResetPassword}>
               Recuperar
             </button>
-            <button style={{ float: "left" }} onClick={showLogin}>
+            <button type="button" style={{ float: "left" }} onClick={showLogin}>
               Ya tengo una!
             </button>
           </div>
@@ -308,7 +308,7 @@ export function ResetPass(): JSX.Element {
   };
   const throttledSubmit = useThrottle((data: ForgotPass): void => {
     onSubmit(data);
-  }, 1000);
+  }, 5000);
   return (
     <div className={styles.formUi}>
       <form onSubmit={handleSubmit(throttledSubmit)} className={styles.form}>
@@ -344,10 +344,10 @@ export function ResetPass(): JSX.Element {
             <button className={styles.submitButton}>Recuperar</button>
           </div>
           <div className={styles.forgotPass}>
-            <button style={{ float: "left" }} onClick={showLogin}>
+            <button type="button" style={{ float: "left" }} onClick={showLogin}>
               Iniciar sesión
             </button>
-            <button style={{ float: "right" }} onClick={showSignUp}>
+            <button type="button" style={{ float: "right" }} onClick={showSignUp}>
               Registrarme
             </button>
           </div>

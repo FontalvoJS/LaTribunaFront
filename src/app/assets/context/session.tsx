@@ -210,6 +210,9 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({
   );
 
   useEffect(() => {
+    const JsonToObject = !!localStorage.getItem("user")
+      ? JSON.parse(localStorage.getItem("user")!)
+      : null;
     if (logout) {
       handleName("");
       handleId("");
@@ -222,10 +225,9 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({
       handleIsLoggedIn(false);
       handleUpdateInfo(false);
       handleLogout(false);
-      return
+      return;
     }
-    if (updateInfo || (localStorage.getItem("user") && logout === false)) {
-      const JsonToObject = JSON.parse(localStorage.getItem("user") as string);
+    if (updateInfo) {
       handleName(JsonToObject.name);
       handleId(JsonToObject.id);
       handleRole(JsonToObject.role);
@@ -244,7 +246,29 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({
       handleIsLoggedIn(true);
       handleUpdateInfo(false);
     }
-  }, [isLoggedIn, updateInfo, teams, logout]);
+    if (!!localStorage.getItem("user") && logout === false && !updateInfo) {
+      const JsonToObject = localStorage.getItem("user")
+        ? JSON.parse(localStorage.getItem("user")!)
+        : null;
+      handleName(JsonToObject.name);
+      handleId(JsonToObject.id);
+      handleRole(JsonToObject.role);
+      handleEmail(JsonToObject.email);
+      if (JsonToObject.club) {
+        const clubSelected = teams.find(
+          (team) => team.value === JsonToObject.club
+        );
+        if (clubSelected) {
+          handleImgSelectedClub(clubSelected.image);
+        }
+      }
+      handleClub(JsonToObject.club);
+      handleParche(JsonToObject.parche);
+      handleIsAdmin(JsonToObject.isAdmin);
+      handleIsLoggedIn(true);
+      handleUpdateInfo(false);
+    }
+  }, [isLoggedIn, teams, logout, updateInfo]);
 
   return (
     <sessionContext.Provider value={value}>{children}</sessionContext.Provider>
