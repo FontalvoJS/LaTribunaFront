@@ -68,7 +68,7 @@ export const forgotPassService = async (data: ForgotPass): Promise<void> => {
       data: JSON.stringify(data),
     });
     if (response.status === 200) {
-      alertify.success("Se envió el email para cambiar tu contraseña");
+      alertify.success(response.data.message);
     }
   } catch (error: any) {
     if (error.response.status >= 400) alertify.error(error.response.data.error);
