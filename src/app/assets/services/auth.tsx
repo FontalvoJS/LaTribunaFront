@@ -108,7 +108,7 @@ export const logoutService = async (): Promise<void> => {
 };
 export const verifySession = async (): Promise<boolean> => {
   try {
-    const endpoint = "/auth/verifyToken";
+    const endpoint = "/auth/verify-token";
     const response = await custom_axios(endpoint, {
       method: "GET",
     });

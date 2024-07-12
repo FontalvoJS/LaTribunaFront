@@ -80,10 +80,10 @@ export default function Page(): JSX.Element {
   const resetPassConfirmation = () => (
     <div>
       <small>¿Deseas restablecer tu contraseña?</small>
-      <hr />
+      <div className="mt3 mb-3" />
       <div className="form-group">
         <div
-          className="btn alert_button"
+          className="btn btn-primary alert_button"
           onClick={() => {
             forgotPass({ email: email });
           }}
