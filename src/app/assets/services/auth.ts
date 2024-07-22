@@ -7,8 +7,8 @@ import {
   User,
 } from "../types/types";
 import alertify from "../notifications/toast/alert_service";
-import { custom_axios } from "../services/custom_axios";
-import { AxiosError } from "axios";
+import { custom_axios } from "./custom_axios";
+import { AxiosError, AxiosResponse } from "axios";
 
 export const LoginService = async (
   data: UserDataLogin
@@ -68,7 +68,7 @@ export const forgotPassService = async (data: ForgotPass): Promise<void> => {
       data: JSON.stringify(data),
     });
     if (response.status === 200) {
-      alertify.success(response.data.message);
+      alertify.success("Se envió el email para cambiar tu contraseña");
     }
   } catch (error: any) {
     if (error.response.status >= 400) alertify.error(error.response.data.error);
@@ -86,7 +86,6 @@ export const resetPassService = async (data: ResetPass): Promise<void> => {
     }
   } catch (error: any) {
     if (error.response.status >= 400) alertify.error(error.response.data.error);
-    // redirect to localhost
     setTimeout(() => {
       window.location.href = "http://localhost:3000/";
     }, 3000);
@@ -106,11 +105,15 @@ export const logoutService = async (): Promise<void> => {
     if (error.response.status >= 400) alertify.error(error.response.data.error);
   }
 };
-export const verifySession = async (): Promise<boolean> => {
+export const verifySession = async (token: string): Promise<Boolean | any> => {
   try {
-    const endpoint = "/auth/verify-token";
+    const endpoint = "/auth/verify-token/" + token;
     const response = await custom_axios(endpoint, {
-      method: "GET",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
     });
     if (response.status === 200) {
       return true;
@@ -118,7 +121,6 @@ export const verifySession = async (): Promise<boolean> => {
       return false;
     }
   } catch (error: any) {
-    if (error.response.status >= 400) alertify.error(error.response.data.error);
     return false;
   }
 };

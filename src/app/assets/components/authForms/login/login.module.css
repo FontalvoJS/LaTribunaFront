@@ -161,9 +161,11 @@
     #ff2a3e 70.6%
   );
   -webkit-background-clip: text;
+  background-clip: text; /* Define also the standard property for compatibility */
   font-weight: 600;
   font-size: 40px;
 }
+
 
 .welcomeLine2 {
   color: #ededed;

@@ -9,19 +9,19 @@ export default function PrincipalSection(): JSX.Element {
           <div className={styles.logos_card}>
             <Image
               src="/images/logos/betplay.webp"
-              alt="La Tribuna"
+              alt="EL KIOSKO "
               width={500}
               height={500}
             />
             <Image
               src="/images/logos/uefa.png"
-              alt="La Tribuna"
+              alt="EL KIOSKO "
               width={500}
               height={500}
             />
             <Image
               src="/images/logos/premier.png"
-              alt="La Tribuna"
+              alt="EL KIOSKO "
               width={500}
               height={500}
             />

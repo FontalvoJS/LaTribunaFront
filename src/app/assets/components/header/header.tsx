@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { config } from "@fortawesome/fontawesome-svg-core";
 config.autoAddCss = false;
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { useRouter } from "next/navigation";
+import alertify from "../../notifications/toast/alert_service";
 // import {
 //   faTwitter,
 //   faFacebook,
@@ -30,6 +32,7 @@ import { useSession } from "@/app/assets/context/session";
 import { logoutService } from "@/app/assets/services/auth";
 
 export default function Header(): JSX.Element {
+  const router = useRouter();
   const { handleShowModalForm } = useLaTribunaAuthFormContext();
   const { showSideHeader, handleCloseSideHeader, handleShowSideHeader } =
     useSideHeaderContext();
@@ -63,6 +66,7 @@ export default function Header(): JSX.Element {
   const logoutHandler = async (): Promise<void> => {
     await logoutService();
     handleLogout(true);
+    router.push("/");
   };
   const imagePath =
     club && club !== "ignore"
@@ -91,6 +95,16 @@ export default function Header(): JSX.Element {
               {name}
             </div>
           </Link>
+          {role === "admin" && (
+            <Link href="/admin" className="nav-link scrollto active">
+              <div className={styles.icons_span}>
+                <FontAwesomeIcon width={14} icon={faMagic as IconProp} />
+              </div>
+              <div style={{ left: "5%" }} className={styles.title_section}>
+                Crear Post
+              </div>
+            </Link>
+          )}
           <hr className={styles.hr} />
           <Link href="/ " className="nav-link scrollto">
             <div className={styles.icons_span}>
@@ -146,7 +160,7 @@ export default function Header(): JSX.Element {
             className="img-fluid rounded-circle"
           />
           <h1 className="text-light">
-            <Link href="/">La Tribuna</Link>
+            <Link href="/">EL KIOSKO </Link>
           </h1>
           {parche !== "" && (
             <div>

@@ -65,7 +65,7 @@ export default function LoginForm(): JSX.Element {
       >
         <div className={styles.formBody} style={{ top: "45%" }}>
           <div className={styles.welcomeLines}>
-            <div className={styles.welcomeLine1}>La Tribuna</div>
+            <div className={styles.welcomeLine1}>EL KIOSKO </div>
             <div className={styles.welcomeLine2}>
               Para amantes del fútbol colombiano
             </div>
@@ -171,7 +171,7 @@ export function SignUpForm(): JSX.Element {
       <form onSubmit={handleSubmit(throttledSubmit)} className={styles.form}>
         <div className={styles.formBody}>
           <div className={styles.welcomeLines}>
-            <div className={styles.welcomeLine1}>La Tribuna</div>
+            <div className={styles.welcomeLine1}>EL KIOSKO </div>
             <div className={styles.welcomeLine2}>
               Para amantes del fútbol colombiano
             </div>
@@ -314,7 +314,7 @@ export function ResetPass(): JSX.Element {
       <form onSubmit={handleSubmit(throttledSubmit)} className={styles.form}>
         <div className={styles.formBody}>
           <div className={styles.welcomeLines}>
-            <div className={styles.welcomeLine1}>La Tribuna</div>
+            <div className={styles.welcomeLine1}>EL KIOSKO </div>
             <div className={styles.welcomeLine2}>
               Para amantes del futbol colombiano
             </div>

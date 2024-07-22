@@ -1,7 +1,7 @@
 "use client";
 import { ProfileModifyProps } from "../types/types";
 import alertify from "../notifications/toast/alert_service";
-import { custom_axios } from "../services/custom_axios";
+import { custom_axios } from "./custom_axios";
 
 export const UpdateProfileService = async (
   data: ProfileModifyProps

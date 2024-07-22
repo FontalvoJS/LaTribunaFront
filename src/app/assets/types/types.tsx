@@ -15,6 +15,20 @@ export interface ProfileModifyProps {
   name?: string;
   club?: string;
 }
+export type FormValues = {
+  title: string;
+  image: FileList | null;
+  content: string;
+  description: string;
+  tags: string;
+  author: string;
+  category: string;
+};
+export interface PreviewPost {
+  title: string;
+  image: string;
+  slug: string;
+}
 export interface SessionContextProps {
   name: string;
   role: string;

@@ -69,13 +69,16 @@ body {
 /* Desktop Navigation */
 .nav-menu {
   padding: 30px 0 0 0;
-  margin-top:20% !important;
+  margin-top: 20% !important;
 }
 
 .nav-menu * {
   margin: 0;
   padding: 0;
   list-style: none;
+}
+.labels {
+  color: gray;
 }
 
 .nav-menu > ul > li {

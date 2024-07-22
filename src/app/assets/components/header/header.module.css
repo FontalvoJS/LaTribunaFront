@@ -133,7 +133,7 @@
 .close_menu {
   color: #464b4e;
   float: right;
-  cursor: pointer;
+  cursor: pointer !important;
   position:relative;
   top: 10px;
 }

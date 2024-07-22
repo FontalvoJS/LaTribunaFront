@@ -1,0 +1,18 @@
+.preview_title {
+  color: #ffc107;
+}
+.preview_content {
+  color: #e3e3e3;
+}
+.preview {
+  background: #1e1e1e;
+  padding: 4%;
+  border-left: 5px solid #e3e3e3;
+}
+.preview_author {
+  padding: 4px;
+  color: #afafaf;
+}
+.preview_description {
+  color: #898989 !important;
+}

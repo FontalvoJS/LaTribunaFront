@@ -10,7 +10,6 @@ import Main from "./assets/components/main/main";
 import { ToastContainer } from "react-toastify";
 import Header from "./assets/components/header/header";
 import Footer from "./assets/components/footer/footer";
-import { authMiddleware } from "./middleware";
 export default function RootLayout({
   children,
 }: Readonly<{
