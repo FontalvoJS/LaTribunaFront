@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { config } from "@fortawesome/fontawesome-svg-core";
 config.autoAddCss = false;
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { useRouter } from "next/navigation";
+import alertify from "../../notifications/toast/alert_service";
 // import {
 //   faTwitter,
 //   faFacebook,
@@ -22,15 +24,27 @@ import {
   faComments,
   faMagic,
   faEnvelope,
+  faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { useLaTribunaAuthFormContext } from "@/app/assets/context/auth";
 import { useSideHeaderContext } from "@/app/assets/context/sideHeader";
 import { useSession } from "@/app/assets/context/session";
+import { logoutService } from "@/app/assets/services/auth";
+
 export default function Header(): JSX.Element {
+  const router = useRouter();
   const { handleShowModalForm } = useLaTribunaAuthFormContext();
   const { showSideHeader, handleCloseSideHeader, handleShowSideHeader } =
     useSideHeaderContext();
-  const { isLoggedIn, name, parche, imgSelectedClub, club } = useSession();
+  const {
+    isLoggedIn,
+    name,
+    parche,
+    imgSelectedClub,
+    club,
+    handleLogout,
+    role,
+  } = useSession();
   const hideHeader = (): void => {
     handleCloseSideHeader();
   };
@@ -48,6 +62,11 @@ export default function Header(): JSX.Element {
     } else {
       showHeader();
     }
+  };
+  const logoutHandler = async (): Promise<void> => {
+    await logoutService();
+    handleLogout(true);
+    router.push("/");
   };
   const imagePath =
     club && club !== "ignore"
@@ -68,14 +87,24 @@ export default function Header(): JSX.Element {
         </div>
       ) : (
         <div>
-          <Link href="/perfil" className="nav-link scrollto active">
+          <Link href="/profile" className="nav-link scrollto active">
             <div className={styles.icons_span}>
               <FontAwesomeIcon width={14} icon={faUser as IconProp} />
             </div>
             <div style={{ left: "5%" }} className={styles.title_section}>
-              {name}{" "}
+              {name}
             </div>
           </Link>
+          {role === "admin" && (
+            <Link href="/admin" className="nav-link scrollto active">
+              <div className={styles.icons_span}>
+                <FontAwesomeIcon width={14} icon={faMagic as IconProp} />
+              </div>
+              <div style={{ left: "5%" }} className={styles.title_section}>
+                Crear Post
+              </div>
+            </Link>
+          )}
           <hr className={styles.hr} />
           <Link href="/ " className="nav-link scrollto">
             <div className={styles.icons_span}>
@@ -85,7 +114,6 @@ export default function Header(): JSX.Element {
               Inicio
             </div>
           </Link>
-          
         </div>
       )}
     </li>
@@ -94,12 +122,17 @@ export default function Header(): JSX.Element {
     isLoggedIn === true ? (
       <li>
         <hr className={styles.hr} />
-        <a type="button" className="nav-link">
+        <Link
+          href="/"
+          type="button"
+          onClick={logoutHandler}
+          className="nav-link"
+        >
           <span className={styles.salir_span}>
             <FontAwesomeIcon width={14} icon={faSignOutAlt as IconProp} />
           </span>
           <span className={styles.salir_text}>Salir</span>
-        </a>
+        </Link>
       </li>
     ) : (
       <></>
@@ -127,7 +160,7 @@ export default function Header(): JSX.Element {
             className="img-fluid rounded-circle"
           />
           <h1 className="text-light">
-            <a href="index.html">La Tribuna</a>
+            <Link href="/">EL KIOSKO </Link>
           </h1>
           {parche !== "" && (
             <div>
@@ -152,7 +185,7 @@ export default function Header(): JSX.Element {
           <ul>
             {loginButton}
             <li>
-              <Link href="/perfil" className="nav-link scrollto">
+              <Link href="/profile" className="nav-link scrollto">
                 <div className={styles.icons_span}>
                   <FontAwesomeIcon width={14} icon={faNewspaper as IconProp} />
                 </div>
@@ -162,7 +195,7 @@ export default function Header(): JSX.Element {
               </Link>
             </li>
             <li>
-              <Link href="/perfil" className="nav-link scrollto">
+              <Link href="/profile" className="nav-link scrollto">
                 <div className={styles.icons_span}>
                   <FontAwesomeIcon width={14} icon={faComments as IconProp} />
                 </div>
@@ -172,7 +205,7 @@ export default function Header(): JSX.Element {
               </Link>
             </li>
             <li>
-              <Link href="/perfil" className="nav-link scrollto">
+              <Link href="/profile" className="nav-link scrollto">
                 <div className={styles.icons_span}>
                   <FontAwesomeIcon width={14} icon={faMagic as IconProp} />
                 </div>
@@ -182,7 +215,7 @@ export default function Header(): JSX.Element {
               </Link>
             </li>
             <li>
-              <Link href="/perfil" className="nav-link scrollto">
+              <Link href="/profile" className="nav-link scrollto">
                 <div className={styles.icons_span}>
                   <FontAwesomeIcon width={14} icon={faEnvelope as IconProp} />
                 </div>

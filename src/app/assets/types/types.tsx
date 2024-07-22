@@ -15,6 +15,32 @@ export interface ProfileModifyProps {
   name?: string;
   club?: string;
 }
+export type FormValues = {
+  title: string;
+  image?: FileList;
+  content?: string;
+  description: string;
+  tags: string;
+  author: string;
+  category: string;
+};
+export interface PreviewPost {
+  title: string;
+  image: string;
+  slug: string;
+}
+export interface Post {
+  title: string;
+  content: string;
+  description: string;
+  tags: string;
+  author: string;
+  category: string;
+  created_at: string;
+  updated_at: string;
+  slug: string;
+  image: string;
+}
 export interface SessionContextProps {
   name: string;
   role: string;
@@ -51,9 +77,12 @@ export interface AuthContextProps {
   handleUser: (user: User) => void;
 }
 export interface User {
-  id: number;
+  id: string;
   name: string;
   email: string;
+  role: string;
+  club?: string;
+  parche?: string;
   created_at: string;
   updated_at: string;
 }

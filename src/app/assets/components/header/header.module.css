@@ -32,7 +32,7 @@
   color: white;
   font-style: italic;
   position: relative;
-  left: 7%;
+  left: 2%;
   background: var(--bs-danger-text-emphasis) !important;
 }
 .title_section {
@@ -133,7 +133,7 @@
 .close_menu {
   color: #464b4e;
   float: right;
-  cursor: pointer;
+  cursor: pointer !important;
   position:relative;
   top: 10px;
 }

@@ -1,7 +1,7 @@
-'use client';
+"use client";
 import { ProfileModifyProps } from "../types/types";
 import alertify from "../notifications/toast/alert_service";
-import { custom_axios } from "../services/custom_axios";
+import { custom_axios } from "./custom_axios";
 
 export const UpdateProfileService = async (
   data: ProfileModifyProps
@@ -14,7 +14,7 @@ export const UpdateProfileService = async (
       withCredentials: true,
     });
     if (localStorage.getItem("user")) localStorage.removeItem("user");
-    localStorage.setItem("user", JSON.stringify(userUpdated.data.user));
+    localStorage.setItem("user", JSON.stringify(userUpdated.data.user_session));
     alertify.success("Se actualizó tu perfil");
   } catch (error: any) {
     if (error.response.status === 401) {
@@ -23,7 +23,10 @@ export const UpdateProfileService = async (
       );
       localStorage.removeItem("user");
       return "redirect";
-    } else if (error.response.status >= 400)
+    } else if (error.response.status === 406) {
+      alertify.info(error.response.data.error);
+    } else if (error.response.status >= 407) {
       alertify.error(error.response.data.error);
+    }
   }
 };

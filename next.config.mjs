@@ -10,6 +10,10 @@ const nextConfig = {
                 source: "/api/profile/:path*",
                 destination: "http://localhost/beerclub_backend/public/api/profile/:path*",
             },
+            {
+                source: "/api/admin/:path*",
+                destination: "http://localhost/beerclub_backend/public/api/admin/:path*",
+            },
         ];
     }
 };

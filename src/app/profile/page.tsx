@@ -13,7 +13,6 @@ import alertify from "../assets/notifications/toast/alert_service";
 import { useThrottle } from "../assets/components/hooks/useThrottle";
 import { useRouter } from "next/navigation";
 import { useSession } from "@/app/assets/context/session";
-
 const schema = yup.object().shape({
   name: yup
     .string()
@@ -36,8 +35,16 @@ interface FormValues {
 
 export default function Page(): JSX.Element {
   const router = useRouter();
-  const { email, name, parche, club, handleLogout, handleUpdateInfo } =
-    useSession();
+  const {
+    email,
+    name,
+    parche,
+    club,
+    handleLogout,
+    handleUpdateInfo,
+    isLoggedIn,
+    id,
+  } = useSession();
   const [isLoaded, setIsLoaded] = useState(false);
 
   const {
@@ -56,12 +63,18 @@ export default function Page(): JSX.Element {
   });
 
   useEffect(() => {
-    if (name && email && parche && club) {
+    if (name && email && parche && club && isLoggedIn) {
       reset({ name, email, club, parche });
       setIsLoaded(true);
     }
-  }, [name, email, parche, club, reset]);
+  }, [name, email, parche, club, reset, isLoggedIn]);
 
+  useEffect(() => {
+    if (!isLoggedIn && !id) {
+      alertify.error("Debes iniciar sesión para ver tu perfil");
+      router.push("/");
+    }
+  }, [isLoggedIn, router, id]);
   const onSubmit = async (data: FormValues): Promise<void> => {
     if ((await UpdateProfileService(data)) === "redirect") {
       router.push("/");
@@ -70,7 +83,7 @@ export default function Page(): JSX.Element {
     }
     handleUpdateInfo(true);
   };
-  const trotthledSubmit = useThrottle(onSubmit, 1000);
+  const trotthledSubmit = useThrottle(onSubmit, 5000);
   const forgotPass = async (data: ForgotPass): Promise<void> => {
     alertify.info(
       "Enviaremos un email para que cambies tu contraseña, revisa tu bandeja de entrada o spam"
@@ -80,10 +93,10 @@ export default function Page(): JSX.Element {
   const resetPassConfirmation = () => (
     <div>
       <small>¿Deseas restablecer tu contraseña?</small>
-      <hr />
+      <div className="mt3 mb-3" />
       <div className="form-group">
         <div
-          className="btn alert_button"
+          className="btn btn-primary alert_button"
           onClick={() => {
             forgotPass({ email: email });
           }}
@@ -110,7 +123,7 @@ export default function Page(): JSX.Element {
             <br />
             <form onSubmit={handleSubmit(trotthledSubmit)}>
               <div className="form-group">
-                <label className={styles.labels}>Nombre de usuario</label>
+                <label className={"labels"}>Nombre de usuario</label>
                 <Controller
                   name="name"
                   control={control}
@@ -123,9 +136,7 @@ export default function Page(): JSX.Element {
                 )}
               </div>
               <div className="form-group">
-                <label className={styles.labels + " mt-3"}>
-                  Correo electronico
-                </label>
+                <label className={"labels" + " mt-3"}>Correo electronico</label>
                 <Controller
                   name="email"
                   control={control}
@@ -143,9 +154,7 @@ export default function Page(): JSX.Element {
                 )}
               </div>
               <div className="form-group">
-                <label className={styles.labels + " mt-3"}>
-                  Tu club favorito
-                </label>
+                <label className={"labels" + " mt-3"}>Tu club favorito</label>
                 <Controller
                   name="club"
                   control={control}
@@ -201,7 +210,7 @@ export default function Page(): JSX.Element {
                 )}
               </div>
               <div className="form-group">
-                <label className={styles.labels + " mt-3"}>
+                <label className={"labels" + " mt-3"}>
                   ¿Tienes un parche? Pon las siglas aquí
                 </label>
                 <Controller

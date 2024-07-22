@@ -7,7 +7,7 @@ export default function Footer(): JSX.Element {
   const footerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (!showSideHeader && footerRef.current) {
-      footerRef.current.style.left = "0px";
+      footerRef.current.style.left = "-300px";
     }
   });
   return (
