@@ -17,8 +17,8 @@ export interface ProfileModifyProps {
 }
 export type FormValues = {
   title: string;
-  image: FileList | null;
-  content: string;
+  image?: FileList;
+  content?: string;
   description: string;
   tags: string;
   author: string;
@@ -28,6 +28,18 @@ export interface PreviewPost {
   title: string;
   image: string;
   slug: string;
+}
+export interface Post {
+  title: string;
+  content: string;
+  description: string;
+  tags: string;
+  author: string;
+  category: string;
+  created_at: string;
+  updated_at: string;
+  slug: string;
+  image: string;
 }
 export interface SessionContextProps {
   name: string;

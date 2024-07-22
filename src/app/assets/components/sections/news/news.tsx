@@ -10,6 +10,9 @@ import { useEffect, useState } from "react";
 import { PreviewPost } from "@/app/assets/types/types";
 export default function News() {
   const [posts, setPosts] = useState<PreviewPost[]>([]);
+  const getPost = async (post: PreviewPost) => {
+    console.log(post);
+  };
   useEffect(() => {
     const fetchPosts = async () => {
       const latestPosts = await getPreviewPosts();
@@ -44,6 +47,9 @@ export default function News() {
         <div className="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
           <div
             id={styles.principal_news}
+            onClick={() => {
+              getPost(posts[0]);
+            }}
             style={
               posts && posts[0]?.image
                 ? { backgroundImage: `url(${posts[0]?.image})` }
@@ -58,6 +64,9 @@ export default function News() {
         <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
           <div
             className={styles.content_card}
+            onClick={() => {
+              getPost(posts[1]);
+            }}
             style={
               posts && posts[1]?.image
                 ? { backgroundImage: `url(${posts[1]?.image})` }
@@ -74,6 +83,9 @@ export default function News() {
         <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
           <div
             className={styles.content_card}
+            onClick={() => {
+              getPost(posts[2]);
+            }}
             style={
               posts && posts[2]?.image
                 ? { backgroundImage: `url(${posts[2]?.image})` }
@@ -88,6 +100,9 @@ export default function News() {
         <div className="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
           <div
             className={styles.content_card}
+            onClick={() => {
+              getPost(posts[3]);
+            }}
             style={
               posts && posts[3]?.image
                 ? { backgroundImage: `url(${posts[3]?.image})` }

@@ -21,7 +21,7 @@ import { FormValues } from "../assets/types/types";
 // Define validation schema with Yup
 const schema = yup.object().shape({
   title: yup.string().required("El título es obligatorio"),
-  image: yup.mixed().required("La imagen es obligatoria"),
+  image: yup.mixed(),
   description: yup.string().required("La descripción es obligatoria"),
   tags: yup.string().required("Los tags son obligatorios"),
   author: yup.string().required("El autor es obligatorio"),
@@ -41,7 +41,7 @@ export default function Page(): JSX.Element {
     resolver: yupResolver(schema),
     defaultValues: {
       title: "Redacta un nuevo articulo",
-      image: null,
+      image: undefined,
       description: "La descripción del contenido es obligatoria",
       tags: "Aquí puedes escribir tus tags separados por comas",
       author: "FontalvoJS",
@@ -97,7 +97,7 @@ export default function Page(): JSX.Element {
     await uploadContent(newData);
     reset({
       title: "Redacta un nuevo articulo",
-      image: null,
+      image: undefined,
       description: "La descripción del contenido es obligatoria",
       tags: "Aquí puedes escribir tus tags separados por comas",
       author: "FontalvoJS",

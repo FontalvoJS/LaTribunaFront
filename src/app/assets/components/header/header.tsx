@@ -87,7 +87,7 @@ export default function Header(): JSX.Element {
         </div>
       ) : (
         <div>
-          <Link href="/perfil" className="nav-link scrollto active">
+          <Link href="/profile" className="nav-link scrollto active">
             <div className={styles.icons_span}>
               <FontAwesomeIcon width={14} icon={faUser as IconProp} />
             </div>
@@ -185,7 +185,7 @@ export default function Header(): JSX.Element {
           <ul>
             {loginButton}
             <li>
-              <Link href="/perfil" className="nav-link scrollto">
+              <Link href="/profile" className="nav-link scrollto">
                 <div className={styles.icons_span}>
                   <FontAwesomeIcon width={14} icon={faNewspaper as IconProp} />
                 </div>
@@ -195,7 +195,7 @@ export default function Header(): JSX.Element {
               </Link>
             </li>
             <li>
-              <Link href="/perfil" className="nav-link scrollto">
+              <Link href="/profile" className="nav-link scrollto">
                 <div className={styles.icons_span}>
                   <FontAwesomeIcon width={14} icon={faComments as IconProp} />
                 </div>
@@ -205,7 +205,7 @@ export default function Header(): JSX.Element {
               </Link>
             </li>
             <li>
-              <Link href="/perfil" className="nav-link scrollto">
+              <Link href="/profile" className="nav-link scrollto">
                 <div className={styles.icons_span}>
                   <FontAwesomeIcon width={14} icon={faMagic as IconProp} />
                 </div>
@@ -215,7 +215,7 @@ export default function Header(): JSX.Element {
               </Link>
             </li>
             <li>
-              <Link href="/perfil" className="nav-link scrollto">
+              <Link href="/profile" className="nav-link scrollto">
                 <div className={styles.icons_span}>
                   <FontAwesomeIcon width={14} icon={faEnvelope as IconProp} />
                 </div>

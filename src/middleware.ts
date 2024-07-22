@@ -19,5 +19,5 @@ export default async function middleware(request: NextRequest) {
 };
 
 export const config = {
-  matcher: ['/perfil', '/streaming']
+  matcher: ['/profile', '/streaming']
 };
