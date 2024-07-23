@@ -96,7 +96,7 @@ export default function Header(): JSX.Element {
             </div>
           </Link>
           {role === "admin" && (
-            <Link href="/admin" className="nav-link scrollto active">
+            <Link href="/admin" className="nav-link scrollto">
               <div className={styles.icons_span}>
                 <FontAwesomeIcon width={14} icon={faMagic as IconProp} />
               </div>
@@ -160,7 +160,7 @@ export default function Header(): JSX.Element {
             className="img-fluid rounded-circle"
           />
           <h1 className="text-light">
-            <Link href="/">EL KIOSKO </Link>
+            <Link href="/">LA TRIBUNA </Link>
           </h1>
           {parche !== "" && (
             <div>

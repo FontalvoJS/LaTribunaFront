@@ -13,7 +13,7 @@
 } */
 .calendar_text {
   font-size: 10px;
-  border-bottom: 1px solid #ff953d6b;
+  border-bottom: 1px solid #7f7f7f6b;
   padding-bottom: 6px;
   color: #9fb5d3;
 }
@@ -263,7 +263,7 @@
 
 .article .article_title h6 a {
   text-transform: uppercase;
-  color: black;
+  color: #0b0e12;
   text-decoration: none;
   border: 2px solid #ff953d;
   border-top-right-radius: 10px;

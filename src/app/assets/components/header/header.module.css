@@ -71,8 +71,8 @@
 .li_dropdown {
   background: radial-gradient(
     circle farthest-corner at 48.4% 47.5%,
-    #272d30 0%,
-    #0000000a 90%
+    #11161d 0%,
+    #090b0e 90%
   );
   cursor: pointer;
 }
@@ -115,12 +115,9 @@
 }
 
 #header li a span {
-  margin-left: 3px;
-  margin-right: 3px;
+  margin-right: 5px;
 }
-#header li a img {
-  margin-left: 3px;
-}
+
 #header .profile .social-links a:hover {
   color: #fff;
   text-decoration: none;
@@ -129,7 +126,7 @@
   color: #464b4e;
   float: right;
   cursor: pointer !important;
-  position:relative;
+  position: relative;
   top: 10px;
 }
 

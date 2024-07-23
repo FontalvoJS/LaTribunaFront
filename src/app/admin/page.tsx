@@ -104,7 +104,7 @@ export default function Page(): JSX.Element {
   };
   const throttledFunction = useThrottle(onSubmit, 1000);
   return (
-    <div className="container-fluid">
+    <div className="container">
       <div className="row mt-5">
         <div className="col-12">
           <h1 className="text-light">Crea una nueva publicación</h1>
