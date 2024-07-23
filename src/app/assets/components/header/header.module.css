@@ -11,8 +11,7 @@
   padding: 0 15px;
   overflow-y: auto;
   position: fixed;
-  background: #16191b;
-  border-right: 1px solid #00000052;
+  background: #11161d;
   box-shadow: 1px 0px 8px 1px #00000054;
   animation: hide 1s alternate forwards ease-in-out;
 }
@@ -45,14 +44,11 @@
 }
 .salir_span {
   color: #fa4658;
-  margin-left: 0 !important;
-  margin-right: 3% !important;
   position: relative;
   bottom: 2px;
 }
 .salir_text {
   position: relative;
-  left: 1%;
   text-transform: uppercase;
   color: whitesmoke;
   font-size: 13px;
@@ -61,9 +57,8 @@
 .marginParche {
   display: block;
   text-align: center;
-  font-size: 1.3rem;
-  font-family: monospace;
-  margin-top: 5%;
+  font-size: 14px;
+  margin-top: 1%;
   margin-bottom: 10%;
   color: #d5d5d5;
   text-transform: uppercase;
@@ -82,7 +77,7 @@
   cursor: pointer;
 }
 #header .profile h1 {
-  font-size: 25px;
+  font-size: 20px;
   margin: 0;
   padding: 0;
   font-weight: 600;
@@ -168,7 +163,7 @@
   animation: title_match 1s infinite;
   position: relative;
   bottom: 2px;
-  margin-right: 10% !important;
+  margin-right: 6% !important;
 }
 @keyframes title_match {
   0% {

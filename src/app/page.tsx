@@ -9,6 +9,7 @@ import LoginForm, {
 } from "./assets/components/authForms/login/login";
 import { useLaTribunaAuthFormContext } from "./assets/context/auth";
 import { useSession } from "./assets/context/session";
+import Image from "next/image";
 export default function Home(): JSX.Element {
   const { showLoginForm, showSignupForm, showResetPasswordForm } =
     useLaTribunaAuthFormContext();

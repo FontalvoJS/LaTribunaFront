@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -29,7 +28,6 @@ const schema = yup.object().shape({
 });
 
 export default function Page(): JSX.Element {
-  const router = useRouter();
   const {
     control,
     handleSubmit,
@@ -59,9 +57,9 @@ export default function Page(): JSX.Element {
   const watchContent = watch("content");
   const watchTitle = watch("title");
   const watchDescription = watch("description");
-  const watchTags = watch("tags");
+  // const watchTags = watch("tags");
   const watchAuthor = watch("author");
-  const watchCategory = watch("category");
+  // const watchCategory = watch("category");
 
   useEffect(() => {
     setPreviewTitle(watchTitle || "");
