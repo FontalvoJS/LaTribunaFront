@@ -7,11 +7,13 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { getPreviewPosts } from "@/app/assets/services/posts";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { PreviewPost } from "@/app/assets/types/types";
 export default function News() {
   const [posts, setPosts] = useState<PreviewPost[]>([]);
+  const router = useRouter();
   const getPost = async (post: PreviewPost) => {
-    console.log(post);
+    router.push(`/blog/${post.slug}`);
   };
   useEffect(() => {
     const fetchPosts = async () => {

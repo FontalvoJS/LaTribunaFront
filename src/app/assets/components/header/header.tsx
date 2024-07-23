@@ -80,7 +80,7 @@ export default function Header(): JSX.Element {
             <div className={styles.icons_span}>
               <FontAwesomeIcon width={14} icon={faSignInAlt as IconProp} />
             </div>
-            <div style={{ left: "5%" }} className={styles.title_section}>
+            <div style={{ left: "2.5%" }} className={styles.title_section}>
               Acceder al club
             </div>
           </Link>
@@ -91,16 +91,16 @@ export default function Header(): JSX.Element {
             <div className={styles.icons_span}>
               <FontAwesomeIcon width={14} icon={faUser as IconProp} />
             </div>
-            <div style={{ left: "5%" }} className={styles.title_section}>
+            <div style={{ left: "2.5%" }} className={styles.title_section}>
               {name}
             </div>
           </Link>
           {role === "admin" && (
-            <Link href="/admin" className="nav-link scrollto active">
+            <Link href="/admin" className="nav-link scrollto">
               <div className={styles.icons_span}>
                 <FontAwesomeIcon width={14} icon={faMagic as IconProp} />
               </div>
-              <div style={{ left: "5%" }} className={styles.title_section}>
+              <div style={{ left: "2.5%" }} className={styles.title_section}>
                 Crear Post
               </div>
             </Link>
@@ -110,7 +110,7 @@ export default function Header(): JSX.Element {
             <div className={styles.icons_span}>
               <FontAwesomeIcon width={14} icon={faHome as IconProp} />
             </div>
-            <div style={{ left: "5%" }} className={styles.title_section}>
+            <div style={{ left: "2.5%" }} className={styles.title_section}>
               Inicio
             </div>
           </Link>
@@ -160,7 +160,7 @@ export default function Header(): JSX.Element {
             className="img-fluid rounded-circle"
           />
           <h1 className="text-light">
-            <Link href="/">EL KIOSKO </Link>
+            <Link href="/">LA TRIBUNA </Link>
           </h1>
           {parche !== "" && (
             <div>
@@ -189,7 +189,7 @@ export default function Header(): JSX.Element {
                 <div className={styles.icons_span}>
                   <FontAwesomeIcon width={14} icon={faNewspaper as IconProp} />
                 </div>
-                <div style={{ left: "5%" }} className={styles.title_section}>
+                <div style={{ left: "2.5%" }} className={styles.title_section}>
                   Análisis
                 </div>
               </Link>
@@ -199,7 +199,7 @@ export default function Header(): JSX.Element {
                 <div className={styles.icons_span}>
                   <FontAwesomeIcon width={14} icon={faComments as IconProp} />
                 </div>
-                <div style={{ left: "5%" }} className={styles.title_section}>
+                <div style={{ left: "2.5%" }} className={styles.title_section}>
                   Discuciones
                 </div>
               </Link>
@@ -209,7 +209,7 @@ export default function Header(): JSX.Element {
                 <div className={styles.icons_span}>
                   <FontAwesomeIcon width={14} icon={faMagic as IconProp} />
                 </div>
-                <div style={{ left: "5%" }} className={styles.title_section}>
+                <div style={{ left: "2.5%" }} className={styles.title_section}>
                   Predicciones por IA ✨
                 </div>
               </Link>
@@ -219,7 +219,7 @@ export default function Header(): JSX.Element {
                 <div className={styles.icons_span}>
                   <FontAwesomeIcon width={14} icon={faEnvelope as IconProp} />
                 </div>
-                <div style={{ left: "5%" }} className={styles.title_section}>
+                <div style={{ left: "2.5%" }} className={styles.title_section}>
                   Contáctame
                 </div>
               </Link>
