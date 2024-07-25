@@ -24,10 +24,13 @@
 }
 #principal_new_title,
 .content_card_title {
-  color: rgb(255, 255, 255);
+  color: rgb(255 255 255) !important;
   align-self: end;
   position: relative;
   z-index: 9;
+  font-weight: 600;
+  font-size: 1.8rem;
+  text-shadow: 0px 2px #00000052;
 }
 
 .content_card_title {
@@ -37,7 +40,7 @@
   background-image: radial-gradient(
     circle farthest-corner at 48.4% 47.5%,
     var(--bs-danger-text-emphasis) 0%,
-    #151515 90%
+    #0b0e12 90%
   );
   border: none;
   color: antiquewhite;

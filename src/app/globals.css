@@ -8,7 +8,14 @@ body {
 #main {
   margin-left: 300px;
 }
-
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Poppins", sans-serif;
+  color: whitesmoke !important;
+}
+.carousel-control-next-icon, .carousel-control-prev-icon {
+  background-color: black;
+  padding: 5% !important;
+}
 .container,
 .container-fluid {
   padding-left: 30px;
@@ -63,7 +70,9 @@ body {
   background-color: transparent !important;
   border: 0 !important;
 }
-
+.bg_side_color {
+  background: #1a2029;
+}
 p {
   max-width: 600px;
   margin: 10px;
@@ -71,7 +80,7 @@ p {
   text-align: justify;
   padding: 5px;
   font-size: 14px;
-  color: #b1b1b1 !important;
+  color: #d6d6d6 !important;
 }
 /*--------------------------------------------------------------
   # Navigation Menu
@@ -229,4 +238,26 @@ option {
 }
 option:hover {
   color: black;
+}
+
+/* Tablas */
+
+.table-bordered > :not(caption) > * > * {
+  border-width: 0 var(--bs-border-width) !important;
+  background: #020304 !important;
+  color: #ffffff !important;
+  border: 1px !important;
+}
+
+.table thead th {
+  background-color: #bb2d3d !important;
+  color: #ffffff !important;
+  border: 0 !important;
+}
+
+.table tbody td {
+  background-color: #00000028 !important;
+  border: 0 !important;
+  border-bottom: 0px;
+  color: whitesmoke;
 }

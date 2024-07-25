@@ -152,15 +152,7 @@
 }
 
 .welcomeLine1 {
-  color: transparent;
-  background: linear-gradient(
-    to right,
-    #ffc107 27.3%,
-    #267dff 63.3%,
-    #1760ce 57.6%,
-    #ff2a3e 70.6%
-  );
-  -webkit-background-clip: text;
+  color: whitesmoke;
   background-clip: text; /* Define also the standard property for compatibility */
   font-weight: 600;
   font-size: 40px;
@@ -168,8 +160,8 @@
 
 
 .welcomeLine2 {
-  color: #ededed;
-  font-size: 14px;
+  color: #dadada;
+  font-size: 12px;
   margin-top: 12px;
 }
 
