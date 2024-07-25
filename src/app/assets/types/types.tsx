@@ -41,6 +41,11 @@ export interface Post {
   slug: string;
   image: string;
 }
+export interface Teams {
+  text: string;
+  image: string;
+  value: string;
+}
 export interface SessionContextProps {
   name: string;
   role: string;
@@ -53,6 +58,7 @@ export interface SessionContextProps {
   parche?: string;
   imgSelectedClub?: string;
   logout: boolean;
+  teams: Teams[];
   handleIsLoggedIn: (param: boolean) => void;
   handleName: (param: string) => void;
   handleId: (param: string) => void;

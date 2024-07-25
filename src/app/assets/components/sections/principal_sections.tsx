@@ -30,9 +30,8 @@ export default function PrincipalSection(): JSX.Element {
             </div>
             <h2 className={styles.title_primary_section}>
               Únete a nuestra comunidad y disfruta la pasión del futbol
-              <strong id={styles.never_ever}>
-                {" "}
-                ¡Transmisiones de calidad y gratuitas!
+              <strong id={styles.never_ever}> <br />
+                ¡Transmisiones gratuitas!
               </strong>
             </h2>
           </div>

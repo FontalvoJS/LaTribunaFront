@@ -56,7 +56,7 @@ export const getPreviewPosts = async (): Promise<AxiosResponse | any> => {
     }
 }
 
-export const getPostBySlug = async (slug: string): Promise<AxiosResponse | any> => {
+export const getPostBySlug = async (slug: string[] | string): Promise<AxiosResponse | any> => {
     try {
         const endpoint = `/admin/get-one-post/${slug}`;
         const res = await custom_axios(endpoint, {

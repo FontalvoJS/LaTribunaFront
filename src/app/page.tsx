@@ -10,6 +10,7 @@ import LoginForm, {
 import { useLaTribunaAuthFormContext } from "./assets/context/auth";
 import { useSession } from "./assets/context/session";
 import Image from "next/image";
+import LeagueTable from "./assets/components/positionTable/positions";
 export default function Home(): JSX.Element {
   const { showLoginForm, showSignupForm, showResetPasswordForm } =
     useLaTribunaAuthFormContext();
@@ -36,6 +37,7 @@ export default function Home(): JSX.Element {
       ) : (
         <div></div>
       )}
+      <LeagueTable />
     </>
   );
 }

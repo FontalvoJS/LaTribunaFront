@@ -77,13 +77,11 @@
   cursor: pointer;
 }
 #header .profile h1 {
-  font-size: 20px;
-  margin: 0;
-  padding: 0;
-  font-weight: 600;
   -moz-text-align-last: center;
   text-align-last: center;
   font-family: "Poppins", sans-serif;
+  font-size: 1.8em;
+  font-weight: 900;
 }
 
 #header .profile h1 a,
@@ -91,25 +89,7 @@
   color: white;
   text-decoration: none;
 }
-#envivo {
-  position: relative;
-  bottom: 1px;
-}
 
-#header .profile .social-links a {
-  font-size: 18px;
-  display: inline-block;
-  background: #ffc107;
-  color: #9a9a9a;
-  line-height: 1;
-  padding: 8px 0;
-  margin-right: 4px;
-  border-radius: 50%;
-  text-align: center;
-  width: 36px;
-  height: 36px;
-  transition: 0.3s;
-}
 #header nav ul {
   width: 100%;
 }
@@ -123,7 +103,7 @@
   text-decoration: none;
 }
 .close_menu {
-  color: #464b4e;
+  color: #73777a;
   float: right;
   cursor: pointer !important;
   position: relative;
@@ -134,7 +114,7 @@
   top: 30px;
   position: fixed;
   left: -50px;
-  color: #bfbfbf;
+  color: #d6d6d6;
   padding: 7px;
   border-radius: 5px;
   background: #00000000;

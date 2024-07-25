@@ -18,12 +18,14 @@
 }
 .title_primary_section {
   position: absolute;
+  font-weight: 600;
   z-index: 1;
   top: 15rem;
-  font-size: 2.7rem;
+  font-size: 2rem;
   animation: title 2s alternate forwards;
   color: whitesmoke;
   padding: 2.5%;
+  text-transform: uppercase;
 }
 
 #about {
@@ -99,7 +101,7 @@
     filter: drop-shadow(0px 3px 0px #16151591);
   }
   .title_primary_section {
-    width: 100%;
+    width: 90%;
     position: absolute;
     z-index: 1;
     top: 20rem;
@@ -126,7 +128,7 @@
     transform: translate(-50%, -50%);
     z-index: 1;
     top: 19rem;
-    font-size: 2.7rem;
+    font-size: 3.5rem;
     animation: title 2s alternate forwards;
     color: whitesmoke;
   }
@@ -170,6 +172,6 @@
   }
   100% {
     opacity: 1;
-    text-shadow: 0px 4px #2b1c0e;
+    text-shadow: 0px 4px #2b1c0e96;
   }
 }
