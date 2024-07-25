@@ -27,6 +27,9 @@ export type FormValues = {
 export interface PreviewPost {
   title: string;
   image: string;
+  category: string;
+  created_at: string;
+  date: string;
   slug: string;
 }
 export interface Post {

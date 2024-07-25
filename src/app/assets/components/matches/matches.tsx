@@ -4,6 +4,7 @@ import { useSession } from "../../context/session";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
+import { formatDate } from "@/app/assets/utils/format_date";
 interface Match {
   id: number;
   date: string;
@@ -15,7 +16,6 @@ interface Match {
   };
   venue_name: string;
 }
-
 const CarouselComponent: React.FC<{ matches: { [key: number]: Match } }> = ({
   matches,
 }) => {
@@ -37,20 +37,6 @@ const CarouselComponent: React.FC<{ matches: { [key: number]: Match } }> = ({
       return acc;
     }, {} as Record<string, string>);
   }, [teams]);
-
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    const day = date.getDate();
-    const month = date
-      .toLocaleString("default", { month: "short" })
-      .toUpperCase();
-    const year = date.getFullYear();
-    const hours = date.getHours() % 12 || 12;
-    const minutes = date.getMinutes().toString().padStart(2, "0");
-    const ampm = date.getHours() >= 12 ? "P.M." : "A.M.";
-
-    return `${day} ${month} ${year} - ${hours}:${minutes} ${ampm}`;
-  };
 
   const getTeamLogo = (teamName: string) => {
     const normalizedTeamName = normalizeString(teamName);
@@ -91,7 +77,15 @@ const CarouselComponent: React.FC<{ matches: { [key: number]: Match } }> = ({
                         style={{ height: "250px" }}
                       >
                         <small className={`text-center ${styles.matchDate}`}>
-                          <FontAwesomeIcon icon={faCalendarAlt} width={10} style={{marginRight: "5px", position:"relative", bottom:"2px"}} /> 
+                          <FontAwesomeIcon
+                            icon={faCalendarAlt}
+                            width={10}
+                            style={{
+                              marginRight: "5px",
+                              position: "relative",
+                              bottom: "2px",
+                            }}
+                          />
                           {formatDate(match.date)}
                         </small>
                         <div
@@ -128,7 +122,7 @@ const CarouselComponent: React.FC<{ matches: { [key: number]: Match } }> = ({
                             </div>
                           </div>
                           <p className={`text-center ${styles.competition} `}>
-                           Estadio {match.venue_name}
+                            Estadio {match.venue_name}
                           </p>
                         </div>
                       </div>

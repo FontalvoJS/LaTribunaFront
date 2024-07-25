@@ -135,7 +135,7 @@
 }
 @media (max-width: 768px) {
   .title_primary_section {
-    top: 35%;
+    top: 25%;
     left: 0;
     padding: 2.5%;
     z-index: 1;
