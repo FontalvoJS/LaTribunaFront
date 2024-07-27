@@ -29,7 +29,7 @@ export default function PrincipalSection(): JSX.Element {
               />
             </div>
             <h2 className={styles.title_primary_section}>
-              Únete a nuestra comunidad y disfruta la pasión del futbol
+              Únete a nuestra comunidad y disfruta la pasión del futbol colombiano con
               <strong id={styles.never_ever}> <br />
                 ¡Transmisiones gratuitas!
               </strong>

@@ -4,11 +4,17 @@ const nextConfig = {
       dangerouslyAllowSVG: true,
       remotePatterns: [
         {
-          protocol: "https",
+          protocol: "http",
           hostname: "**",
           port: "",
           pathname: "**",
         },
+        {
+          protocol: "https",
+          hostname: "**",
+          port: "",
+          pathname: "**",
+        }
       ],
     },
     rewrites: async () => {
