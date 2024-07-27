@@ -131,3 +131,77 @@ export interface ChangePasswordProps {
   password_confirmation: string;
   token: string;
 }
+// Tipo para los datos del nuevo objeto
+export interface NewMatch {
+  date: string;
+  matches: {
+    id: string;
+    home: string;
+    homeID: string;
+    away: string;
+    awayID: string;
+    goalsHome: number;
+    goalsAway: number;
+    homeLogo: string;
+    awayLogo: string;
+    referee: string;
+    time: string;
+    isIdaVueltaMatch: boolean;
+    idaVueltaMatch: string;
+    agregateWinnerId: string | null;
+    venue: string;
+    matchStatus: string;
+    isPlayedOrPlaying: boolean;
+    isPlaying: boolean;
+    timeShort: string;
+    yellowCardsHome: any[];
+    redCardsHome: any[];
+    yellowCardsAway: any[];
+    redCardsAway: any[];
+    goalscorersHome: any[];
+    goalscorersAway: any[];
+    hasPenalties: boolean;
+    goalsHomePenalty: number | null;
+    goalsAwayPenalty: number | null;
+    videoURL: string | null;
+    hasVideo: boolean;
+    channelImage: string | null;
+    hasChannelImage: boolean;
+    optaMatchId: number;
+    hasOptaMatchId: boolean;
+    optaStageId: string;
+  }[];
+  dateShort: string;
+  isPorDefinir: boolean;
+}
+
+// Tipo adaptado para el componente
+export interface Match {
+  id: string;
+  date: string;
+  home: {
+    name: string;
+    logo: string;
+  };
+  away: {
+    name: string;
+    logo: string;
+  };
+  venue_name: string;
+  isPlayedOrPlaying: boolean;
+  matchStatus: string;
+  referee?: string;
+  goalsHome?: number;
+  goalsAway?: number;
+  hasPenalties?: boolean;
+  channelImage?: string | null;
+  hasVideo?: boolean;
+  isPlaying?: boolean;
+  yellowCardsHome?: any[];
+  redCardsHome?: any[];
+  yellowCardsAway?: any[];
+  redCardsAway?: any[];
+  goalscorersHome?: any[];
+  goalscorersAway?: any[];
+  venue?: string;
+}
