@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPoll, faUserEdit } from "@fortawesome/free-solid-svg-icons";
-import styles from "./Page.module.css"; // Asegúrate de ajustar el path si es necesario
+import styles from "./page.module.css"; // Asegúrate de ajustar el path si es necesario
 import { getPostBySlug } from "@/app/assets/services/posts";
 
 const pollOptions = [
