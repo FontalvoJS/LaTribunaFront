@@ -5,7 +5,6 @@ export default function PrincipalSection(): JSX.Element {
   return (
     <>
       <section id={styles.about} className={styles.section}>
-
         <div className="container">
           <div className={styles.section_title}>
             <div className={styles.logos_card}>
@@ -29,10 +28,8 @@ export default function PrincipalSection(): JSX.Element {
               />
             </div>
             <h2 className={styles.title_primary_section}>
-              Únete a nuestra comunidad y disfruta la pasión del futbol colombiano con
-              <strong id={styles.never_ever}> <br />
-                ¡Transmisiones gratuitas!
-              </strong>
+              Únete a nuestra comunidad <br /> y disfruta la pasión del futbol en todo
+              momento.
             </h2>
           </div>
         </div>

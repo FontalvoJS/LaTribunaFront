@@ -127,14 +127,14 @@
     transform: translate(-50%, -50%);
     z-index: 1;
     top: 19rem;
-    font-size: 3.5rem;
+    font-size: 3rem;
     animation: title 2s alternate forwards;
     color: whitesmoke;
   }
 }
 @media (max-width: 768px) {
   .title_primary_section {
-    top: 25%;
+    top: 5em;
     left: 0;
     padding: 2.5%;
     z-index: 1;
