@@ -17,6 +17,7 @@ export const LoginService = async (
   try {
     const response = await custom_axios(endpoint, {
       method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
       data: JSON.stringify(data),
     });
     alertify.success("¡Bienvenido a BeerClub!");
@@ -36,6 +37,7 @@ export const SignUpService = async (data: UserDataSignup): Promise<void> => {
     const endpoint = "/auth/register";
     const response = await custom_axios(endpoint, {
       method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
       data: JSON.stringify(data),
     });
     if (response.status === 201) {
@@ -65,6 +67,7 @@ export const forgotPassService = async (data: ForgotPass): Promise<void> => {
     const endpoint = "/auth/forgot-password";
     const response = await custom_axios(endpoint, {
       method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
       data: JSON.stringify(data),
     });
     if (response.status === 200) {
@@ -79,6 +82,7 @@ export const resetPassService = async (data: ResetPass): Promise<void> => {
     const endpoint = "/auth/reset-password";
     const response = await custom_axios(endpoint, {
       method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
       data: JSON.stringify(data),
     });
     if (response.status === 200) {
@@ -96,6 +100,7 @@ export const logoutService = async (): Promise<void> => {
     const endpoint = "/auth/logout";
     await custom_axios(endpoint, {
       method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
     });
     localStorage.removeItem("user");
     // remove cookie jwt

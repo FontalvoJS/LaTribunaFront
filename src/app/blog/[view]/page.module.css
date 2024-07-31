@@ -161,11 +161,8 @@
 }
 
 .article_comment {
-  box-shadow: 0px -163px 0px 20px #050608b0;
-  border-radius: 5px;
   overflow: hidden;
   padding: 20px;
-  background-color: black;
 }
 
 .article_comment h4 {
@@ -399,4 +396,10 @@
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
     transform: translateY(-3px);
   }
+}
+
+.description {
+  padding: 1.5%;
+  color: #c0c6ce;
+  font-size: 12px;
 }

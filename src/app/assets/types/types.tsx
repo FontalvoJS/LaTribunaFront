@@ -23,6 +23,7 @@ export type FormValues = {
   tags: string;
   author: string;
   category: string;
+  editing: boolean;
 };
 export interface PreviewPost {
   title: string;

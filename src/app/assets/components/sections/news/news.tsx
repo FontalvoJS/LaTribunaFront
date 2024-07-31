@@ -1,32 +1,77 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import styles from "./news.module.css";
 import { getPreviewPosts } from "@/app/assets/services/posts";
 import { useRouter } from "next/navigation";
 import { PreviewPost } from "@/app/assets/types/types";
-import { formatDate } from "@/app/assets/utils/format_date";
 import Image from "next/image";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faArrowAltCircleRight,
+  faArrowAltCircleLeft,
+} from "@fortawesome/free-solid-svg-icons";
+import { formatDate } from "@/app/assets/utils/format_date";
+import { TypeAnimation } from "react-type-animation";
+import { useThrottle } from "../../hooks/useThrottle";
 const NewsComponent: React.FC = () => {
   const [posts, setPosts] = useState<PreviewPost[]>([]);
+  const [currentTitleIndex, setCurrentTitleIndex] = useState(0);
+  const [displayNew, setDisplayNew] = useState<string>("");
   const router = useRouter();
+
+  const handleNextTitle = useThrottle(() => {
+    setCurrentTitleIndex((prevIndex) =>
+      prevIndex === posts.length - 1 ? 0 : prevIndex + 1
+    );
+  }, 1000);
+
+  const handlePrevTitle = useThrottle(() => {
+    setCurrentTitleIndex((prevIndex) =>
+      prevIndex === 0 ? posts.length - 1 : prevIndex - 1
+    );
+  }, 1000);
+
+  const handleTitleClick = () => {
+    if (posts[currentTitleIndex]) {
+      router.push(`/blog/${posts[currentTitleIndex].slug}`);
+    }
+  };
+
+  const getPost = (post: PreviewPost) => {
+    router.push(`/blog/${post.slug}`);
+  };
+
+  const typeComponent = (
+    <TypeAnimation
+      sequence={[displayNew, 4000]}
+      speed={50}
+      cursor={false}
+      style={{
+        marginLeft: "5px",
+        textDecoration: "underline",
+        cursor: "pointer",
+      }}
+      key={displayNew}
+    />
+  );
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
         const latestPosts = await getPreviewPosts();
         setPosts(latestPosts);
+        setDisplayNew(latestPosts[0].title);
       } catch (error) {
         console.error("Error fetching posts:", error);
       }
     };
     fetchPosts();
   }, []);
-
-  const getPost = (post: PreviewPost) => {
-    router.push(`/blog/${post.slug}`);
-  };
-
-  // Dividir las publicaciones en dos grupos para cada columna
+  useEffect(() => {
+    setDisplayNew(posts[currentTitleIndex]?.title);
+  }, [currentTitleIndex, posts]);
+  useEffect(() => {
+    setTimeout(handleNextTitle, 5000);
+  }, [displayNew, handleNextTitle]);
   if (posts?.length === 0) {
     return null;
   }
@@ -37,7 +82,24 @@ const NewsComponent: React.FC = () => {
   return (
     <div className="container mt-4 mb-4">
       <div className="row">
-        {/* Primera columna */}
+        <div className="row">
+          <div className="col-12">
+            <div className={`alert ${styles.alert_dark}`}>
+              <span onClick={handleTitleClick} className={styles.typingEffect}>
+                <b>Lo último |</b>
+                {typeComponent}
+              </span>
+              <div className={styles.controls_alert}>
+                <span onClick={handlePrevTitle}>
+                  <FontAwesomeIcon icon={faArrowAltCircleLeft} width={20} />
+                </span>
+                <span onClick={handleNextTitle}>
+                  <FontAwesomeIcon icon={faArrowAltCircleRight} width={20} />
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
         <div className="col-md-6">
           <div className="row">
             {firstColumnPosts && firstColumnPosts.length > 0 && (
@@ -57,32 +119,34 @@ const NewsComponent: React.FC = () => {
                 </div>
               </div>
             )}
-            {firstColumnPosts && firstColumnPosts.slice(1).map((post, index) => (
-              <div
-                key={index}
-                className={`col-12 mb-2 ${styles.secondaryArticle}`}
-                onClick={() => getPost(post)}
-              >
-                <Image
-                  src={post.image}
-                  className={styles.articleImage}
-                  width={300}
-                  height={200}
-                  alt={post.title}
-                />
-                <div className={styles.articleContent}>
-                  <h6 className={styles.articleCategory}>{post.category}</h6>
-                  <h5 className={styles.articleTitle}>{post.title}</h5>
-                  <p className={styles.articleDate}>{formatDate(post.date)}</p>
+            {firstColumnPosts &&
+              firstColumnPosts.slice(1).map((post, index) => (
+                <div
+                  key={index}
+                  className={`col-12 mb-2 ${styles.secondaryArticle}`}
+                  onClick={() => getPost(post)}
+                >
+                  <Image
+                    src={post.image}
+                    className={styles.articleImage}
+                    width={300}
+                    height={200}
+                    alt={post.title}
+                  />
+                  <div className={styles.articleContent}>
+                    <h6 className={styles.articleCategory}>{post.category}</h6>
+                    <h5 className={styles.articleTitle}>{post.title}</h5>
+                    <p className={styles.articleDate}>
+                      {formatDate(post.date)}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
-        {/* Segunda columna */}
         <div className="col-md-6">
           <div className="row">
-            { secondColumnPosts && secondColumnPosts.length > 0 && (
+            {secondColumnPosts && secondColumnPosts.length > 0 && (
               <div className="col-12 mb-4">
                 <div
                   className={`card ${styles.mainCard}`}
@@ -99,26 +163,29 @@ const NewsComponent: React.FC = () => {
                 </div>
               </div>
             )}
-            {secondColumnPosts && secondColumnPosts.slice(1).map((post, index) => (
-              <div
-                key={index}
-                className={`col-12 mb-2 ${styles.secondaryArticle}`}
-                onClick={() => getPost(post)}
-              >
-                <Image
-                  src={post.image}
-                  className={styles.articleImage}
-                  width={300}
-                  height={200}
-                  alt={post.title}
-                />
-                <div className={styles.articleContent}>
-                  <h6 className={styles.articleCategory}>{post.category}</h6>
-                  <h5 className={styles.articleTitle}>{post.title}</h5>
-                  <p className={styles.articleDate}>{formatDate(post.date)}</p>
+            {secondColumnPosts &&
+              secondColumnPosts.slice(1).map((post, index) => (
+                <div
+                  key={index}
+                  className={`col-12 mb-2 ${styles.secondaryArticle}`}
+                  onClick={() => getPost(post)}
+                >
+                  <Image
+                    src={post.image}
+                    className={styles.articleImage}
+                    width={300}
+                    height={200}
+                    alt={post.title}
+                  />
+                  <div className={styles.articleContent}>
+                    <h6 className={styles.articleCategory}>{post.category}</h6>
+                    <h5 className={styles.articleTitle}>{post.title}</h5>
+                    <p className={styles.articleDate}>
+                      {formatDate(post.date)}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
       </div>

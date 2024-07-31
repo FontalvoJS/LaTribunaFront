@@ -4,10 +4,11 @@ import { useParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPoll, faUserEdit } from "@fortawesome/free-solid-svg-icons";
+import { faPoll, faUserEdit, faEdit } from "@fortawesome/free-solid-svg-icons";
 import styles from "./page.module.css"; // Asegúrate de ajustar el path si es necesario
 import { getPostBySlug } from "@/app/assets/services/posts";
-
+import Matches from "@/app/assets/components/matches/matches";
+import { useSession } from "@/app/assets/context/session";
 const pollOptions = [
   { value: "yes", label: "Sí", percentage: 60 },
   { value: "no", label: "No", percentage: 40 },
@@ -18,6 +19,7 @@ export default function Page() {
   const [vote, setVote] = useState<string | null>(null);
   const [post, setPost] = useState<any>(null);
 
+  const { role } = useSession();
   const handleVote = (option: string) => {
     setVote(option);
   };
@@ -27,7 +29,6 @@ export default function Page() {
       try {
         const fetchedPost = await getPostBySlug(view);
         setPost(fetchedPost);
-        console.log(fetchedPost);
       } catch (error) {
         console.error(error);
       }
@@ -70,7 +71,23 @@ export default function Page() {
                     <strong>NOTA:</strong> CONTENIDO GENERADO POR INTELIGENCIA
                     ARTIFICIAL <br />
                     <strong>AUTOR:</strong> {post.author} <br />
-                    <strong>INFORMACIÓN VERIFICADA:</strong> SÍ
+                    <strong>INFORMACIÓN VERIFICADA:</strong> SÍ <br />
+                    {role === "admin" && (
+                      <strong>
+                        <Link href={"/manage/" + post.slug}>
+                          <FontAwesomeIcon
+                            icon={faEdit}
+                            color="#9ba4b7"
+                            className="mt-1"
+                            cursor={"pointer"}
+                            width={16}
+                          />
+                        </Link>
+                      </strong>
+                    )}
+                    <div className={styles.description}>
+                      <small>{post.description}</small>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -133,6 +150,7 @@ export default function Page() {
                 </div>
               </form>
             </div>
+            <Matches />
           </div>
           {/* Sidebar */}
           <div className="col-lg-4 m-15px-tb">
@@ -218,14 +236,14 @@ export default function Page() {
                     <strong>Detalles del personaje:</strong> Carlos Antonio
                     Plebe es un periodista deportivo colombiano y ficticio,
                     conocido por su estilo crítico y provocador. No teme ser
-                    arenoso y a menudo utiliza un lenguaje vulgar que le ha
-                    dado tanto seguidores como detractores. Su enfoque sin
-                    filtros y su capacidad para señalar las fallas de los
-                    equipos y jugadores lo han convertido en una figura odiada
-                    y querida. A pesar de su controversia,
-                    Plebe es respetado por su conocimiento profundo del fútbol y
-                    su compromiso con el periodismo de calidad, aunque su manera de expresarse
-                    no siempre sea la más diplomática.
+                    arenoso y a menudo utiliza un lenguaje vulgar que le ha dado
+                    tanto seguidores como detractores. Su enfoque sin filtros y
+                    su capacidad para señalar las fallas de los equipos y
+                    jugadores lo han convertido en una figura odiada y querida.
+                    A pesar de su controversia, Plebe es respetado por su
+                    conocimiento profundo del fútbol y su compromiso con el
+                    periodismo de calidad, aunque su manera de expresarse no
+                    siempre sea la más diplomática.
                   </>
                 )}
               </p>

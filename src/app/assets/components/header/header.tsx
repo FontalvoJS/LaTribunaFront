@@ -96,7 +96,7 @@ export default function Header(): JSX.Element {
             </div>
           </Link>
           {role === "admin" && (
-            <Link href="/admin" className="nav-link scrollto">
+            <Link href="/manage/article" className="nav-link scrollto">
               <div className={styles.icons_span}>
                 <FontAwesomeIcon width={14} icon={faMagic as IconProp} />
               </div>

@@ -1,21 +1,25 @@
 "use client";
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
-import { useForm, Controller, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import styles from "./page.module.css";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserEdit } from "@fortawesome/free-solid-svg-icons";
-import { useThrottle } from "../assets/components/hooks/useThrottle";
+import { useThrottle } from "../../assets/components/hooks/useThrottle";
+import { useParams } from "next/navigation";
+import { getPostBySlug, removePostBySlug } from "../../assets/services/posts";
 // Dynamic import for Editor component
 const DynamicEditor = dynamic(
   () => import("@/app/assets/components/editor/editor"),
   { ssr: false }
 );
-import { uploadContent } from "../assets/services/posts";
-import { FormValues } from "../assets/types/types";
+import { uploadContent, updateContent } from "../../assets/services/posts";
+import { FormValues } from "../../assets/types/types";
+import alertify from "@/app/assets/notifications/toast/alert_service";
+import { useRouter } from "next/navigation";
 
 // Define validation schema with Yup
 const schema = yup.object().shape({
@@ -25,9 +29,11 @@ const schema = yup.object().shape({
   tags: yup.string().required("Los tags son obligatorios"),
   author: yup.string().required("El autor es obligatorio"),
   category: yup.string().required("La categoría es obligatoria"),
+  editing: yup.boolean().required("El estado de edición es obligatorio"),
 });
 
 export default function Page(): JSX.Element {
+  const router = useRouter();
   const {
     control,
     handleSubmit,
@@ -44,8 +50,11 @@ export default function Page(): JSX.Element {
       tags: "Aquí puedes escribir tus tags separados por comas",
       author: "FontalvoJS",
       category: "",
+      editing: false,
+      content: "",
     },
   });
+  const { article } = useParams();
 
   const [previewTitle, setPreviewTitle] = useState<string>("");
   const [previewImage, setPreviewImage] = useState<string | ArrayBuffer | null>(
@@ -60,7 +69,11 @@ export default function Page(): JSX.Element {
   // const watchTags = watch("tags");
   const watchAuthor = watch("author");
   // const watchCategory = watch("category");
-
+  const changeTitle = article ? (
+    <h1 className="text-light">Modifica el artículo</h1>
+  ) : (
+    <h1 className="text-light">Crea una nueva publicación</h1>
+  );
   useEffect(() => {
     setPreviewTitle(watchTitle || "");
   }, [watchTitle]);
@@ -82,6 +95,39 @@ export default function Page(): JSX.Element {
     setPreviewContent(watchContent || "");
   }, [watchContent]);
 
+  useEffect(() => {
+    const fetch_data = async () => {
+      if (article && article.length > 0 && article.includes("-")) {
+        const res = await getPostBySlug(article);
+        if (res) {
+          const contentForEdit =
+            "<b>Portada actual: </b> <br/> <img src='" +
+            res.image +
+            "' width='500px' height='500px'/><br/>" +
+            res.content;
+          reset({
+            title: res.title,
+            description: res.description,
+            tags: res.tags,
+            image: undefined,
+            author: res.author,
+            category: res.category,
+            content: contentForEdit,
+            editing: true,
+          });
+        }
+      }
+    };
+    if (article) {
+      fetch_data();
+    }
+  }, [article, reset]);
+  const deleteArticle = async () => {
+    if (article && article.length > 0 && article.includes("-")) {
+      await removePostBySlug(article);
+      router.push("/");
+    }
+  };
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     data.content = previewContent;
     const newData = new FormData();
@@ -92,7 +138,13 @@ export default function Page(): JSX.Element {
     newData.append("author", data.author);
     newData.append("category", data.category);
     newData.append("content", data.content);
-    await uploadContent(newData);
+    newData.append("slug", article as string);
+    newData.append("editing", data.editing ? "true" : "false");
+    if (article && article.length > 0 && article.includes("-")) {
+      await updateContent(newData);
+    } else {
+      await uploadContent(newData);
+    }
     reset({
       title: "Redacta un nuevo articulo",
       image: undefined,
@@ -106,9 +158,7 @@ export default function Page(): JSX.Element {
   return (
     <div className="container">
       <div className="row mt-5">
-        <div className="col-12">
-          <h1 className="text-light">Crea una nueva publicación</h1>
-        </div>
+        <div className="col-12">{changeTitle}</div>
       </div>
       <form onSubmit={handleSubmit(throttledFunction)}>
         <div className="row mt-3">
@@ -116,6 +166,9 @@ export default function Page(): JSX.Element {
             <label className="form-label labels">
               Selecciona una imagen de portada
             </label>
+            {article && (
+              <input type="checkbox" hidden {...register("editing")} />
+            )}
             <input
               type="file"
               className="form-control"
@@ -139,8 +192,13 @@ export default function Page(): JSX.Element {
           </div>
           <div className="col-lg-1 mt-3">
             <button className="btn btn-primary mt-4">
-              <small>Publicar</small>
+              <small>{article ? "Guardar" : "Publicar"}</small>
             </button>
+            {article && article.includes("-") && (
+              <button onClick={deleteArticle} className="btn btn-dark mt-1">
+                <small>Eliminar</small>
+              </button>
+            )}
           </div>
         </div>
         <div className="row mt-3">

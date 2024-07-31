@@ -19,7 +19,7 @@
   font-weight: 500;
 }
 .card p {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
   text-align: center;
 }
@@ -139,30 +139,4 @@
 
 .detailsRow:last-child .detailsValue {
   border-bottom: none;
-}
-
-
-
-/* Personalización del scrollbar para navegadores WebKit (Chrome, Safari) */
-.custom_scroll::-webkit-scrollbar {
-  width: 12px; /* Ancho del scrollbar */
-}
-
-.custom_scroll::-webkit-scrollbar-track {
-  background: #002b36; /* Fondo del área del scroll */
-}
-
-.custom_scroll::-webkit-scrollbar-thumb {
-  background: #dd1b32; /* Color del scrollbar */
-  border-radius: 10px; /* Bordes redondeados */
-}
-
-.custom_scroll::-webkit-scrollbar-thumb:hover {
-  background: #dd1b32; /* Color del scrollbar al pasar el mouse */
-}
-
-/* Personalización del scrollbar para Firefox */
-.custom_scroll {
-  scrollbar-width: thin; /* Ancho del scrollbar */
-  scrollbar-color: #dd1b32 transparent; /* Color del scrollbar y del área del scroll */
 }

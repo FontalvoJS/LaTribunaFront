@@ -84,7 +84,7 @@ const RichTextEditor = ({ previewContent, setPreviewContent }: Props) => {
         initialValue="<p>Escribe aquí...</p>"
         init={{
           width: "100%",
-          height: "400px",
+          height: "900px",
           plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace code table visualblocks wordcount linkchecker',
           toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
         }}

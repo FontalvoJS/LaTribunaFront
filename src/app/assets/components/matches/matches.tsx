@@ -7,7 +7,7 @@ import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 import { formatDate } from "@/app/assets/utils/format_date";
 import { NewMatch, Match } from "@/app/assets/types/types";
 
-const CarouselComponent: React.FC = () => {
+const Matches: React.FC = () => {
   const { teams } = useSession();
   const [matches, setMatches] = useState<NewMatch[]>([]);
   const [expandedCard, setExpandedCard] = useState<string | null>(null);
@@ -96,247 +96,237 @@ const CarouselComponent: React.FC = () => {
 
   return (
     <div className={styles.comming_soon + " container-fluid"}>
-  <h2 className={styles.coming_soon_title + " pt-4"}>Próximos partidos</h2>
-  <div className={`overflow-auto ${styles.custom_scroll}`}>
-    <div className="d-flex">
-      {matchArray.length > 0 &&
-        matchArray.map((match) => (
-          <div
-            className="col-12 p-1 col-md-6 col-lg-3 mb-4"
-            key={match.id}
-          >
-            <div
-              className={`card mx-2 shadow-sm border-0 ${
-                styles.card
-              } ${
-                match.isPlayedOrPlaying
-                  ? styles.played
-                  : match.matchStatus === "Fixture"
-                  ? styles.notStarted
-                  : ""
-              }`}
-              style={{
-                height: expandedCard === match.id ? "auto" : "250px",
-              }}
-            >
-              <small className={`text-center ${styles.matchDate}`}>
-                <FontAwesomeIcon
-                  icon={faCalendarAlt}
-                  width={10}
-                  style={{
-                    marginRight: "5px",
-                    position: "relative",
-                    bottom: "2px",
-                  }}
-                />
-                {formatDate(match.date)}
-              </small>
-              <div
-                className={`card-body d-flex flex-column align-items-center justify-content-between p-2`}
-              >
+      <h2 className={styles.coming_soon_title + " pt-4"}>Próximos partidos</h2>
+      <div className={`overflow-auto ${styles.custom_scroll}`}>
+        <div className="d-flex">
+          {matchArray.length > 0 &&
+            matchArray.map((match) => (
+              <div className="col-12 p-1 col-md-6 col-lg-3 mb-4" key={match.id}>
                 <div
-                  className={`d-flex justify-content-between w-100 mb-2 ${styles.team}`}
-                >
-                  <div className="text-center">
-                    <Image
-                      src={`/images/clubes/${getTeamLogo(
-                        match.home.name
-                      )}`}
-                      alt={match.home.name}
-                      width={50}
-                      height={50}
-                    />
-                    <span>1</span>
-                    <p className={`text-light ${styles.teamName}`}>
-                      {match.home.name}
-                    </p>
-                  </div>
-                  <div className="text-center">
-                    <Image
-                      src={`/images/clubes/${getTeamLogo(
-                        match.away.name
-                      )}`}
-                      alt={match.away.name}
-                      width={50}
-                      height={50}
-                    />
-                    <p className={`text-light ${styles.teamName}`}>
-                      {match.away.name}
-                    </p>
-                  </div>
-                </div>
-                <p
-                  onClick={() => handleCardClick(match.id)}
-                  className={`text-center ${
-                    match.isPlayedOrPlaying === true
-                      ? styles.competition_played
-                      : styles.competition
+                  className={`card mx-2 shadow-sm border-0 ${styles.card} ${
+                    match.isPlayedOrPlaying
+                      ? styles.played
+                      : match.matchStatus === "Fixture"
+                      ? styles.notStarted
+                      : ""
                   }`}
+                  style={{
+                    height: expandedCard === match.id ? "auto" : "250px",
+                  }}
                 >
-                  {expandedCard === match.id
-                    ? "Cerrar"
-                    : match.isPlayedOrPlaying
-                    ? "Ver resultados"
-                    : "Detalles del partido"}
-                </p>
-                {expandedCard === match.id && (
-                  <div className={styles.cardDetails}>
-                    {match.isPlayedOrPlaying ? (
-                      <>
-                        <div className={styles.detailsTable}>
-                          <div className={styles.detailsRow}>
-                            <div className={styles.detailsKey}>
-                              Árbitro:
-                            </div>
-                            <div className={styles.detailsValue}>
-                              {match.referee}
-                            </div>
-                          </div>
-                          <div className={styles.detailsRow}>
-                            <div className={styles.detailsKey}>
-                              Goles Local:
-                            </div>
-                            <div className={styles.detailsValue}>
-                              {match.goalsHome}
-                            </div>
-                          </div>
-                          <div className={styles.detailsRow}>
-                            <div className={styles.detailsKey}>
-                              Goles Visitante:
-                            </div>
-                            <div className={styles.detailsValue}>
-                              {match.goalsAway}
-                            </div>
-                          </div>
-                          <div className={styles.detailsRow}>
-                            <div className={styles.detailsKey}>
-                              Penales:
-                            </div>
-                            <div className={styles.detailsValue}>
-                              {match.hasPenalties ? "Sí" : "No"}
-                            </div>
-                          </div>
-                          {/* <div className={styles.detailsRow}>
+                  <small className={`text-center ${styles.matchDate}`}>
+                    <FontAwesomeIcon
+                      icon={faCalendarAlt}
+                      width={10}
+                      style={{
+                        marginRight: "5px",
+                        position: "relative",
+                        bottom: "2px",
+                      }}
+                    />
+                    {formatDate(match.date)}
+                  </small>
+                  <div
+                    className={`card-body d-flex flex-column align-items-center justify-content-between p-2`}
+                  >
+                    <div
+                      className={`d-flex justify-content-between w-100 mb-2 ${styles.team}`}
+                    >
+                      <div className="text-center">
+                        <Image
+                          src={`/images/clubes/${getTeamLogo(match.home.name)}`}
+                          alt={match.home.name}
+                          width={50}
+                          height={50}
+                        />
+                        <span>1</span>
+                        <p className={`text-light ${styles.teamName}`}>
+                          {match.home.name}
+                        </p>
+                      </div>
+                      <div className="text-center">
+                        <Image
+                          src={`/images/clubes/${getTeamLogo(match.away.name)}`}
+                          alt={match.away.name}
+                          width={50}
+                          height={50}
+                        />
+                        <p className={`text-light ${styles.teamName}`}>
+                          {match.away.name}
+                        </p>
+                      </div>
+                    </div>
+                    <p
+                      onClick={() => handleCardClick(match.id)}
+                      className={`text-center ${
+                        match.isPlayedOrPlaying === true
+                          ? styles.competition_played
+                          : styles.competition
+                      }`}
+                    >
+                      {expandedCard === match.id
+                        ? "Cerrar"
+                        : match.isPlayedOrPlaying
+                        ? "Ver resultados"
+                        : "Detalles del partido"}
+                    </p>
+                    {expandedCard === match.id && (
+                      <div className={styles.cardDetails}>
+                        {match.isPlayedOrPlaying ? (
+                          <>
+                            <div className={styles.detailsTable}>
+                              <div className={styles.detailsRow}>
+                                <div className={styles.detailsKey}>
+                                  Árbitro:
+                                </div>
+                                <div className={styles.detailsValue}>
+                                  {match.referee}
+                                </div>
+                              </div>
+                              <div className={styles.detailsRow}>
+                                <div className={styles.detailsKey}>
+                                  Goles Local:
+                                </div>
+                                <div className={styles.detailsValue}>
+                                  {match.goalsHome}
+                                </div>
+                              </div>
+                              <div className={styles.detailsRow}>
+                                <div className={styles.detailsKey}>
+                                  Goles Visitante:
+                                </div>
+                                <div className={styles.detailsValue}>
+                                  {match.goalsAway}
+                                </div>
+                              </div>
+                              <div className={styles.detailsRow}>
+                                <div className={styles.detailsKey}>
+                                  Penales:
+                                </div>
+                                <div className={styles.detailsValue}>
+                                  {match.hasPenalties ? "Sí" : "No"}
+                                </div>
+                              </div>
+                              {/* <div className={styles.detailsRow}>
                           <div className={styles.detailsKey}>Canal:</div>
                           <div className={styles.detailsValue}>{match.channelImage ? "Disponible" : "No disponible"}</div>
                         </div> */}
-                          {/* <div className={styles.detailsRow}>
+                              {/* <div className={styles.detailsRow}>
                           <div className={styles.detailsKey}>Video:</div>
                           <div className={styles.detailsValue}>{match.hasVideo ? "Disponible" : "No disponible"}</div>
                         </div> */}
-                          <div className={styles.detailsRow}>
-                            <div className={styles.detailsKey}>
-                              Tarjetas Amarillas Locales:
+                              <div className={styles.detailsRow}>
+                                <div className={styles.detailsKey}>
+                                  Tarjetas Amarillas Locales:
+                                </div>
+                                <div className={styles.detailsValue}>
+                                  {match.yellowCardsHome?.length
+                                    ? match.yellowCardsHome
+                                        .map((card) => "🟨")
+                                        .join(" ")
+                                    : "Ninguna"}
+                                </div>
+                              </div>
+                              <div className={styles.detailsRow}>
+                                <div className={styles.detailsKey}>
+                                  Tarjetas Rojas Locales:
+                                </div>
+                                <div className={styles.detailsValue}>
+                                  {match.redCardsHome?.length
+                                    ? match.redCardsHome
+                                        .map((card) => "🟥")
+                                        .join(" ")
+                                    : "Ninguna"}
+                                </div>
+                              </div>
+                              <div className={styles.detailsRow}>
+                                <div className={styles.detailsKey}>
+                                  Tarjetas Amarillas Visitantes:
+                                </div>
+                                <div className={styles.detailsValue}>
+                                  {match.yellowCardsAway?.length
+                                    ? match.yellowCardsAway
+                                        .map((card) => "🟨")
+                                        .join(" ")
+                                    : "Ninguna"}
+                                </div>
+                              </div>
+                              <div className={styles.detailsRow}>
+                                <div className={styles.detailsKey}>
+                                  Tarjetas Rojas Visitantes:
+                                </div>
+                                <div className={styles.detailsValue}>
+                                  {match.redCardsAway?.length
+                                    ? match.redCardsAway
+                                        .map((card) => "🟥")
+                                        .join(" ")
+                                    : "Ninguna"}
+                                </div>
+                              </div>
+                              <div className={styles.detailsRow}>
+                                <div className={styles.detailsKey}>
+                                  Goleadores Locales:
+                                </div>
+                                <div className={styles.detailsValue}>
+                                  {match.goalscorersHome?.length
+                                    ? match.goalscorersHome
+                                        .map(
+                                          (scorer) =>
+                                            `${scorer.playerName} (${scorer.minute}')`
+                                        )
+                                        .join(", ")
+                                    : "Ninguno"}
+                                </div>
+                              </div>
+                              <div className={styles.detailsRow}>
+                                <div className={styles.detailsKey}>
+                                  Goleadores Visitantes:
+                                </div>
+                                <div className={styles.detailsValue}>
+                                  {match.goalscorersAway?.length
+                                    ? match.goalscorersAway
+                                        .map(
+                                          (scorer) =>
+                                            `${scorer.playerName} (${scorer.minute}')`
+                                        )
+                                        .join(", ")
+                                    : "Ninguno"}
+                                </div>
+                              </div>
                             </div>
-                            <div className={styles.detailsValue}>
-                              {match.yellowCardsHome?.length
-                                ? match.yellowCardsHome
-                                    .map((card) => "🟨")
-                                    .join(" ")
-                                : "Ninguna"}
+                          </>
+                        ) : (
+                          <>
+                            <div className={styles.detailsTable}>
+                              <div className={styles.detailsRow}>
+                                <div className={styles.detailsKey}>
+                                  Árbitro:
+                                </div>
+                                <div className={styles.detailsValue}>
+                                  {match.referee}
+                                </div>
+                              </div>
+                              <div className={styles.detailsRow}>
+                                <div className={styles.detailsKey}>
+                                  Estadio:
+                                </div>
+                                <div className={styles.detailsValue}>
+                                  {match.venue_name}
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                          <div className={styles.detailsRow}>
-                            <div className={styles.detailsKey}>
-                              Tarjetas Rojas Locales:
-                            </div>
-                            <div className={styles.detailsValue}>
-                              {match.redCardsHome?.length
-                                ? match.redCardsHome
-                                    .map((card) => "🟥")
-                                    .join(" ")
-                                : "Ninguna"}
-                            </div>
-                          </div>
-                          <div className={styles.detailsRow}>
-                            <div className={styles.detailsKey}>
-                              Tarjetas Amarillas Visitantes:
-                            </div>
-                            <div className={styles.detailsValue}>
-                              {match.yellowCardsAway?.length
-                                ? match.yellowCardsAway
-                                    .map((card) => "🟨")
-                                    .join(" ")
-                                : "Ninguna"}
-                            </div>
-                          </div>
-                          <div className={styles.detailsRow}>
-                            <div className={styles.detailsKey}>
-                              Tarjetas Rojas Visitantes:
-                            </div>
-                            <div className={styles.detailsValue}>
-                              {match.redCardsAway?.length
-                                ? match.redCardsAway
-                                    .map((card) => "🟥")
-                                    .join(" ")
-                                : "Ninguna"}
-                            </div>
-                          </div>
-                          <div className={styles.detailsRow}>
-                            <div className={styles.detailsKey}>
-                              Goleadores Locales:
-                            </div>
-                            <div className={styles.detailsValue}>
-                              {match.goalscorersHome?.length
-                                ? match.goalscorersHome
-                                    .map(
-                                      (scorer) =>
-                                        `${scorer.playerName} (${scorer.minute}')`
-                                    )
-                                    .join(", ")
-                                : "Ninguno"}
-                            </div>
-                          </div>
-                          <div className={styles.detailsRow}>
-                            <div className={styles.detailsKey}>
-                              Goleadores Visitantes:
-                            </div>
-                            <div className={styles.detailsValue}>
-                              {match.goalscorersAway?.length
-                                ? match.goalscorersAway
-                                    .map(
-                                      (scorer) =>
-                                        `${scorer.playerName} (${scorer.minute}')`
-                                    )
-                                    .join(", ")
-                                : "Ninguno"}
-                            </div>
-                          </div>
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <div className={styles.detailsTable}>
-                          <div className={styles.detailsRow}>
-                            <div className={styles.detailsKey}>
-                              Árbitro:
-                            </div>
-                            <div className={styles.detailsValue}>
-                              {match.referee}
-                            </div>
-                          </div>
-                          <div className={styles.detailsRow}>
-                            <div className={styles.detailsKey}>
-                              Estadio:
-                            </div>
-                            <div className={styles.detailsValue}>
-                              {match.venue_name}
-                            </div>
-                          </div>
-                        </div>
-                      </>
+                          </>
+                        )}
+                      </div>
                     )}
                   </div>
-                )}
+                </div>
               </div>
-            </div>
-          </div>
-        ))}
+            ))}
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-
   );
 };
 
-export default CarouselComponent;
+export default Matches;

@@ -44,6 +44,23 @@ export const uploadContent = async (data: FormData): Promise<void | any> => {
     }
 }
 
+export const updateContent = async (data: FormData): Promise<void | any> => {
+    try {
+        const endpoint = "/admin/update-post";
+        const res = await custom_axios.post(endpoint, data,
+            {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    "Accept": "application/json",
+                },
+            });
+        if (res.status === 200) alertify.success(res.data.message);
+    } catch (error: any) {
+        returnToHome(error);
+    }
+}
+
 export const getPreviewPosts = async (): Promise<AxiosResponse | any> => {
     try {
         const endpoint = "/admin/get-preview-posts";
@@ -63,6 +80,18 @@ export const getPostBySlug = async (slug: string[] | string): Promise<AxiosRespo
             method: "GET",
         });
         return res.data;
+    } catch (error: any) {
+        returnToHome(error);
+    }
+}
+
+export const removePostBySlug = async (slug: string[] | string): Promise<AxiosResponse | any> => {
+    try {
+        const endpoint = `/admin/delete-post/${slug}`;
+        const res = await custom_axios(endpoint, {
+            method: "DELETE",
+        });
+        if (res.status === 200) alertify.success(res.data.message);
     } catch (error: any) {
         returnToHome(error);
     }

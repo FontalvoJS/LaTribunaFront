@@ -28,7 +28,7 @@ export default function PrincipalSection(): JSX.Element {
               />
             </div>
             <h2 className={styles.title_primary_section}>
-              Únete a nuestra comunidad <br /> y disfruta la pasión del futbol en todo
+              Únete a nuestra comunidad y disfruta <br />  la pasión del futbol en todo
               momento.
             </h2>
           </div>
