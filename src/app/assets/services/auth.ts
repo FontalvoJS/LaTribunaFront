@@ -8,11 +8,11 @@ import {
 } from "../types/types";
 import alertify from "../notifications/toast/alert_service";
 import { custom_axios } from "./custom_axios";
-import { AxiosError, AxiosResponse } from "axios";
+import { returnToHome } from "./posts";
 
 export const LoginService = async (
   data: UserDataLogin
-): Promise<User | AxiosError | boolean> => {
+): Promise<any | boolean> => {
   const endpoint = "/auth/login";
   try {
     const response = await custom_axios(endpoint, {
@@ -20,15 +20,13 @@ export const LoginService = async (
       headers: { "Content-Type": "application/json", Accept: "application/json" },
       data: JSON.stringify(data),
     });
-    alertify.success("¡Bienvenido a BeerClub!");
     if (!!response.data.user_session) {
       localStorage.setItem("user", JSON.stringify(response.data.user_session));
+      alertify.success("¡Bienvenido a La Tribuna!");
       return true;
-    } else {
-      return false;
     }
   } catch (error: any) {
-    if (error.response.status >= 400) alertify.error(error.response.data.error);
+    alertify.error(error.response.data.error);
     return false;
   }
 };
@@ -74,7 +72,7 @@ export const forgotPassService = async (data: ForgotPass): Promise<void> => {
       alertify.success("Se envió el email para cambiar tu contraseña");
     }
   } catch (error: any) {
-    if (error.response.status >= 400) alertify.error(error.response.data.error);
+    returnToHome(error);
   }
 };
 export const resetPassService = async (data: ResetPass): Promise<void> => {
@@ -89,10 +87,7 @@ export const resetPassService = async (data: ResetPass): Promise<void> => {
       alertify.success(response.data.message);
     }
   } catch (error: any) {
-    if (error.response.status >= 400) alertify.error(error.response.data.error);
-    setTimeout(() => {
-      window.location.href = "http://localhost:3000/";
-    }, 3000);
+    returnToHome(error);
   }
 };
 export const logoutService = async (): Promise<void> => {
@@ -103,11 +98,9 @@ export const logoutService = async (): Promise<void> => {
       headers: { "Content-Type": "application/json", Accept: "application/json" },
     });
     localStorage.removeItem("user");
-    // remove cookie jwt
-    document.cookie = "jwt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     alertify.success("¡Hasta pronto!");
   } catch (error: any) {
-    if (error.response.status >= 400) alertify.error(error.response.data.error);
+    returnToHome(error);
   }
 };
 export const verifySession = async (token: string): Promise<Boolean | any> => {
@@ -129,3 +122,47 @@ export const verifySession = async (token: string): Promise<Boolean | any> => {
     return false;
   }
 };
+export const generateTokenForEmailService = async (data: string): Promise<Boolean | any> => {
+  try {
+    const endpoint = `/auth/generate-token/${data}`;
+    const response = await custom_axios(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      data: JSON.stringify(data),
+    });
+    if (response.status === 200) {
+      alertify.success(response.data.message);
+    }
+    return true;
+  } catch (error: any) {
+    alertify.error(error.response.data.error);
+    return false;
+  }
+}
+export const verifyEmailService = async (token: string, data: UserDataSignup): Promise<Boolean | any> => {
+  try {
+    const endpoint = `/auth/verify-email/`;
+    const dataToSend = {
+      token: token,
+      ...data
+    };
+    const response = await custom_axios(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      data: dataToSend
+    });
+    if (response.status === 201) {
+      alertify.success(response.data.message);
+      return true;
+    }
+  } catch (error: any) {
+    alertify.error(error.response.data.error);
+    return false;
+  }
+}

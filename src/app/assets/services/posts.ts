@@ -2,7 +2,7 @@ import { AxiosResponse } from "axios";
 import { custom_axios } from "./custom_axios";
 import alertify from "../notifications/toast/alert_service";
 
-const returnToHome = (error: any) => {
+export const returnToHome = (error: any) => {
     if (error.response.status >= 400 && error.response.status !== 401) return alertify.error(error.response.data.error);
     if (error.response.status === 401) alertify.error(error.response.data.error);
     setTimeout(() => {

@@ -81,10 +81,15 @@ export interface AuthContextProps {
   showLoginForm: boolean;
   showSignupForm: boolean;
   showResetPasswordForm: boolean;
+  showVerifyEmail: boolean;
+  showContactme: boolean;
+  activeForm: string;
+  setActiveForm: (activeForm: string) => void;
   handleShowModalForm: () => void;
   handleCloseModalForm: () => void;
   handlerForm: (activeForm: string) => void;
   handleUser: (user: User) => void;
+  handlerContactme: () => void;
 }
 export interface User {
   id: string;
@@ -106,12 +111,22 @@ export interface UserDataLogin {
   password: string;
   remember?: string;
 }
+export interface EmailVerifyProps {
+  email: string;
+  code: string;
+}
 export interface UserDataSignup {
   name: string;
   email: string;
   email_confirmation: string;
   password: string;
   password_confirmation: string;
+}
+export interface ContactMeProps {
+  name: string;
+  email: string;
+  message: string;
+  subject: string;
 }
 export interface HeadersProps {
   headers?: Record<string, string>;

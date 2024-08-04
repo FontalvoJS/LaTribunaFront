@@ -61,6 +61,7 @@ export default function Page(): JSX.Element {
     null
   );
   const [previewContent, setPreviewContent] = useState<string>("");
+  const [articleLoaded, setArticleLoaded] = useState(false);
 
   const watchImage = watch("image");
   const watchContent = watch("content");
@@ -115,13 +116,14 @@ export default function Page(): JSX.Element {
             content: contentForEdit,
             editing: true,
           });
+          setArticleLoaded(true);
         }
       }
     };
-    if (article) {
+    if (article && !articleLoaded) {
       fetch_data();
     }
-  }, [article, reset]);
+  }, [article, reset, articleLoaded]);
   const deleteArticle = async () => {
     if (article && article.length > 0 && article.includes("-")) {
       await removePostBySlug(article);

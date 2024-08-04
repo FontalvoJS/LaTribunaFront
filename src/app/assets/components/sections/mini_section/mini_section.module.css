@@ -17,4 +17,12 @@
   height:100%;
   background-repeat: no-repeat;
   filter: brightness(0.5);
+  background-size:contain;
+}
+.logo_old {
+  background-image: url("/images/logos/viejo.jpeg");
+  background-position: center;
+  height:100%;
+  background-repeat: no-repeat;
+  background-size:contain;
 }

@@ -26,14 +26,14 @@ import {
   faEnvelope,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
-import { useLaTribunaAuthFormContext } from "@/app/assets/context/auth";
+import { useLaTribunaFormContext } from "@/app/assets/context/auth";
 import { useSideHeaderContext } from "@/app/assets/context/sideHeader";
 import { useSession } from "@/app/assets/context/session";
 import { logoutService } from "@/app/assets/services/auth";
 
 export default function Header(): JSX.Element {
   const router = useRouter();
-  const { handleShowModalForm } = useLaTribunaAuthFormContext();
+  const { handleShowModalForm, handlerContactme } = useLaTribunaFormContext();
   const { showSideHeader, handleCloseSideHeader, handleShowSideHeader } =
     useSideHeaderContext();
   const {
@@ -154,9 +154,12 @@ export default function Header(): JSX.Element {
           <h1 className="text-light">
             <Link href="/">LA TRIBUNA </Link>
           </h1>
+
           {parche !== "" && (
             <div>
-              <span className={styles.marginParche}> [{parche}] </span>
+              <span className={styles.marginParche}>
+                [{parche || "TU PARCHE"}]
+              </span>
             </div>
           )}
           {/* <div
@@ -186,7 +189,7 @@ export default function Header(): JSX.Element {
                 </div>
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link href="/" className="nav-link scrollto">
                 <div className={styles.icons_span}>
                   <FontAwesomeIcon width={14} icon={faComments as IconProp} />
@@ -205,16 +208,26 @@ export default function Header(): JSX.Element {
                   Predicciones por IA ✨
                 </div>
               </Link>
-            </li>
+            </li> */}
             <li>
-              <Link href="/" className="nav-link scrollto">
-                <div className={styles.icons_span}>
-                  <FontAwesomeIcon width={14} icon={faEnvelope as IconProp} />
-                </div>
-                <div style={{ left: "2.5%" }} className={styles.title_section}>
-                  Contáctame
-                </div>
-              </Link>
+              <div
+                onClick={() => {
+                  handlerContactme();
+                  handleShowModalForm();
+                }}
+              >
+                <Link href="/#" className="nav-link scrollto">
+                  <div className={styles.icons_span}>
+                    <FontAwesomeIcon width={14} icon={faEnvelope as IconProp} />
+                  </div>
+                  <div
+                    style={{ left: "2.5%" }}
+                    className={styles.title_section}
+                  >
+                    Contáctame
+                  </div>
+                </Link>
+              </div>
             </li>
             <li className={styles.li_dropdown}>
               <div className="dropdown open">

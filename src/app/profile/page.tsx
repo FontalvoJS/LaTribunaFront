@@ -39,13 +39,15 @@ export default function Page(): JSX.Element {
     email,
     name,
     parche,
+    teams,
     club,
     handleLogout,
     handleUpdateInfo,
     isLoggedIn,
     id,
   } = useSession();
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isDataLoaded, setisDataLoaded] = useState<boolean>(false);
+  const [isBrowserLoaded, setIsBrowserLoaded] = useState<boolean>(false);
 
   const {
     control,
@@ -58,23 +60,29 @@ export default function Page(): JSX.Element {
       name: name,
       email: email,
       club: club,
-      parche: parche,
+      parche: "Siglas del parche, máximo 6 caracteres",
     },
   });
-
   useEffect(() => {
-    if (name && email && parche && club && isLoggedIn) {
-      reset({ name, email, club, parche });
-      setIsLoaded(true);
+    setIsBrowserLoaded(true);
+  }, []);
+  useEffect(() => {
+    if (name && email && isLoggedIn) {
+      reset({
+        name,
+        email,
+        parche: parche ?? "Siglas del parche y máximo 6 caracteres. Ej: FRBS",
+      });
+      setisDataLoaded(true);
     }
-  }, [name, email, parche, club, reset, isLoggedIn]);
+  }, [name, email, reset, parche, isLoggedIn]);
 
   useEffect(() => {
-    if (!isLoggedIn && !id) {
+    if (!isLoggedIn && !id && isBrowserLoaded) {
       alertify.error("Debes iniciar sesión para ver tu perfil");
       router.push("/");
     }
-  }, [isLoggedIn, router, id]);
+  }, [isLoggedIn, router, id, isBrowserLoaded]);
   const onSubmit = async (data: FormValues): Promise<void> => {
     if ((await UpdateProfileService(data)) === "redirect") {
       router.push("/");
@@ -106,7 +114,7 @@ export default function Page(): JSX.Element {
       </div>
     </div>
   );
-  if (!isLoaded) {
+  if (!isDataLoaded) {
     return <></>;
   }
   const resetHandler = (): unknown => {
@@ -160,48 +168,11 @@ export default function Page(): JSX.Element {
                   control={control}
                   render={({ field }) => (
                     <select className="form-control" {...field}>
-                      <option value="ignore">
-                        Selecciona tu equipo favorito
-                      </option>
-                      <option value="atletico_nacional">
-                        Atlético Nacional
-                      </option>
-                      <option value="america_de_cali">América de Cali</option>
-                      <option value="deportivo_cali">Deportivo Cali</option>
-                      <option value="millonarios_fc">Millonarios FC</option>
-                      <option value="independiente_santa_fe">
-                        Independiente Santa Fe
-                      </option>
-                      <option value="junior_de_barranquilla">
-                        Junior de Barranquilla
-                      </option>
-                      <option value="deportes_tolima">Deportes Tolima</option>
-                      <option value="once_caldas">Once Caldas</option>
-                      <option value="independiente_medellin">
-                        Independiente Medellín
-                      </option>
-                      <option value="atletico_bucaramanga">
-                        Atlético Bucaramanga
-                      </option>
-                      <option value="envigado_fc">Envigado FC</option>
-                      <option value="alianza_petrolera">
-                        Alianza Petrolera
-                      </option>
-                      <option value="boyaca_chico">Boyacá Chicó</option>
-                      <option value="deportivo_pereira">
-                        Deportivo Pereira
-                      </option>
-                      <option value="cucuta_deportivo">Cúcuta Deportivo</option>
-                      <option value="real_cartagena">Real Cartagena</option>
-                      <option value="union_magdalena">Unión Magdalena</option>
-                      <option value="cortulua">Cortuluá</option>
-                      <option value="patriotas_boyaca">Patriotas Boyacá</option>
-                      <option value="deportivo_pasto">Deportion Pasto</option>
-                      <option value="aguilas_doradas">Águilas Doradas</option>
-                      <option value="jaguares_de_cordoba">
-                        Jaguares de Córdoba
-                      </option>
-                      <option value="la_equidad">La Equidad</option>
+                      {teams.map((team) => (
+                        <option key={team.value} value={team.value}>
+                          {team.text}
+                        </option>
+                      ))}
                     </select>
                   )}
                 />

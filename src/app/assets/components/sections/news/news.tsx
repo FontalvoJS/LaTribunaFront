@@ -12,6 +12,7 @@ import {
 import { formatDate } from "@/app/assets/utils/format_date";
 import { TypeAnimation } from "react-type-animation";
 import { useThrottle } from "../../hooks/useThrottle";
+import alertify from "@/app/assets/notifications/toast/alert_service";
 const NewsComponent: React.FC = () => {
   const [posts, setPosts] = useState<PreviewPost[]>([]);
   const [currentTitleIndex, setCurrentTitleIndex] = useState(0);
@@ -20,13 +21,13 @@ const NewsComponent: React.FC = () => {
 
   const handleNextTitle = useThrottle(() => {
     setCurrentTitleIndex((prevIndex) =>
-      prevIndex === posts.length - 1 ? 0 : prevIndex + 1
+      prevIndex === posts?.length - 1 ? 0 : prevIndex + 1
     );
   }, 1000);
 
   const handlePrevTitle = useThrottle(() => {
     setCurrentTitleIndex((prevIndex) =>
-      prevIndex === 0 ? posts.length - 1 : prevIndex - 1
+      prevIndex === 0 ? posts?.length - 1 : prevIndex - 1
     );
   }, 1000);
 
@@ -58,8 +59,12 @@ const NewsComponent: React.FC = () => {
     const fetchPosts = async () => {
       try {
         const latestPosts = await getPreviewPosts();
-        setPosts(latestPosts);
-        setDisplayNew(latestPosts[0].title);
+        if (latestPosts) {
+          setPosts(latestPosts);
+          setDisplayNew(latestPosts[0].title);
+        }else{
+          alertify.error("Hubo un problema con la carga de los artículos, intente nuevamente y reporte si el problema persiste");
+        }
       } catch (error) {
         console.error("Error fetching posts:", error);
       }
@@ -67,7 +72,9 @@ const NewsComponent: React.FC = () => {
     fetchPosts();
   }, []);
   useEffect(() => {
-    setDisplayNew(posts[currentTitleIndex]?.title);
+    if (posts && posts[currentTitleIndex]) {
+      setDisplayNew(posts[currentTitleIndex].title);
+    }
   }, [currentTitleIndex, posts]);
   useEffect(() => {
     setTimeout(handleNextTitle, 5000);

@@ -27,6 +27,7 @@ export default function RootLayout({
                   theme="dark"
                   autoClose={3000}
                   closeOnClick
+                  hideProgressBar
                 />
                 <Header />
                 {children}

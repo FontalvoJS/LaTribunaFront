@@ -66,7 +66,7 @@ export default function Page() {
                 <h2>{post.title}</h2>
                 <div className="media">
                   <div className={styles.calendar_text + " text-uppercase"}>
-                    <strong>PUBLICADO:</strong>{" "}
+                    <strong>PUBLICADO:</strong>
                     {new Date(post.created_at).toLocaleDateString()} <br />
                     <strong>NOTA:</strong> CONTENIDO GENERADO POR INTELIGENCIA
                     ARTIFICIAL <br />

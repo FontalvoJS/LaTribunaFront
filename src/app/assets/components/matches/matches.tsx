@@ -15,7 +15,7 @@ const Matches: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
-        "https://wopta.dimayor.com.co/clausura24?fecha=3"
+        "https://wopta.dimayor.com.co/clausura24?fecha=4"
       );
       const data = await response.json();
       if (data) {

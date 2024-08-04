@@ -3,8 +3,10 @@ import {
   LoginService,
   SignUpService,
   forgotPassService,
+  generateTokenForEmailService,
+  verifyEmailService,
 } from "@/app/assets/services/auth";
-import { useLaTribunaAuthFormContext } from "@/app/assets/context/auth";
+import { useLaTribunaFormContext } from "@/app/assets/context/auth";
 import { useSession } from "@/app/assets/context/session";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -12,17 +14,23 @@ import {
   UserDataLogin,
   UserDataSignup,
   ForgotPass,
+  EmailVerifyProps,
+  ContactMeProps,
 } from "@/app/assets/types/types";
 import { useThrottle } from "../../hooks/useThrottle";
 import {
   loginValidator,
   signupValidator,
   forgotPassValidator,
+  emailVerify,
+  contactmeValidator,
 } from "@/app/assets/validations/validations";
 import alertify from "@/app/assets/notifications/toast/alert_service";
+import { useEffect, useState } from "react";
+import { uploadContact } from "@/app/assets/services/contact";
 
 export default function LoginForm(): JSX.Element {
-  const { handlerForm } = useLaTribunaAuthFormContext();
+  const { handlerForm } = useLaTribunaFormContext();
   const { handleIsLoggedIn } = useSession();
   const showSignUp = () => {
     handlerForm("signup");
@@ -80,7 +88,7 @@ export default function LoginForm(): JSX.Element {
                     {...field}
                     placeholder="Usuario o email"
                     type="text"
-                    className={styles.input}
+                    className={styles.input + " form-control"}
                   />
                 )}
               />
@@ -97,7 +105,7 @@ export default function LoginForm(): JSX.Element {
                     {...field}
                     placeholder="Contraseña"
                     type="password"
-                    className={styles.input}
+                    className={styles.input + " form-control"}
                   />
                 )}
               />
@@ -125,10 +133,18 @@ export default function LoginForm(): JSX.Element {
             <button className={styles.submitButton}>Ingresar</button>
           </div>
           <div className={styles.forgotPass}>
-            <button type="button" style={{ float: "left" }} onClick={showSignUp}>
+            <button
+              type="button"
+              style={{ float: "left" }}
+              onClick={showSignUp}
+            >
               Registrarme
             </button>
-            <button type="button" style={{ float: "right" }} onClick={showResetPassword}>
+            <button
+              type="button"
+              style={{ float: "right" }}
+              onClick={showResetPassword}
+            >
               Recuperar
             </button>
           </div>
@@ -138,7 +154,7 @@ export default function LoginForm(): JSX.Element {
   );
 }
 export function SignUpForm(): JSX.Element {
-  const { handlerForm } = useLaTribunaAuthFormContext();
+  const { handlerForm } = useLaTribunaFormContext();
 
   const showLogin = (): void => {
     handlerForm("login");
@@ -147,7 +163,18 @@ export function SignUpForm(): JSX.Element {
     handlerForm("reset");
   };
   const onSubmit = async (data: UserDataSignup): Promise<void> => {
-    await SignUpService(data);
+    // await SignUpService(data);
+    localStorage.setItem("verifyng_data", JSON.stringify(data));
+    const alert = alertify.loading(
+      "Espere mientras se envía el codigo de verificación al email asociado..."
+    );
+    const res = await generateTokenForEmailService(data.email);
+    alertify.dismiss(alert);
+    if (!res) {
+      handlerForm("signup");
+    } else {
+      handlerForm("verify");
+    }
   };
   const throttledSubmit = useThrottle((data: UserDataSignup) => {
     onSubmit(data);
@@ -159,11 +186,11 @@ export function SignUpForm(): JSX.Element {
   } = useForm({
     resolver: yupResolver(signupValidator),
     defaultValues: {
-      name: "",
-      email: "",
-      email_confirmation: "",
-      password: "",
-      password_confirmation: "",
+      name: "FontalvoJS",
+      email: "mejia_andres@hotmail.es",
+      email_confirmation: "mejia_andres@hotmail.es",
+      password: "1470Caro_",
+      password_confirmation: "1470Caro_",
     },
   });
   return (
@@ -186,7 +213,7 @@ export function SignUpForm(): JSX.Element {
                     {...field}
                     placeholder="Nombre"
                     type="text"
-                    className={styles.input}
+                    className={styles.input + " form-control"}
                   />
                 )}
               />
@@ -203,7 +230,7 @@ export function SignUpForm(): JSX.Element {
                     {...field}
                     placeholder="Correo electrónico"
                     type="text"
-                    className={styles.input}
+                    className={styles.input + " form-control"}
                   />
                 )}
               />
@@ -220,7 +247,7 @@ export function SignUpForm(): JSX.Element {
                     {...field}
                     placeholder="Confirma correo electrónico"
                     type="text"
-                    className={styles.input}
+                    className={styles.input + " form-control"}
                   />
                 )}
               />
@@ -239,7 +266,7 @@ export function SignUpForm(): JSX.Element {
                     {...field}
                     placeholder="Contraseña"
                     type="password"
-                    className={styles.input}
+                    className={styles.input + " form-control"}
                   />
                 )}
               />
@@ -256,7 +283,7 @@ export function SignUpForm(): JSX.Element {
                     {...field}
                     placeholder="Confirma contraseña"
                     type="password"
-                    className={styles.input}
+                    className={styles.input + " form-control"}
                   />
                 )}
               />
@@ -271,7 +298,11 @@ export function SignUpForm(): JSX.Element {
             <button className={styles.submitButton}>Registrarme</button>
           </div>
           <div className={styles.forgotPass}>
-            <button type="button" style={{ float: "right" }} onClick={showResetPassword}>
+            <button
+              type="button"
+              style={{ float: "right" }}
+              onClick={showResetPassword}
+            >
               Recuperar
             </button>
             <button type="button" style={{ float: "left" }} onClick={showLogin}>
@@ -284,7 +315,7 @@ export function SignUpForm(): JSX.Element {
   );
 }
 export function ResetPass(): JSX.Element {
-  const { handlerForm } = useLaTribunaAuthFormContext();
+  const { handlerForm } = useLaTribunaFormContext();
   const {
     control,
     handleSubmit,
@@ -347,9 +378,237 @@ export function ResetPass(): JSX.Element {
             <button type="button" style={{ float: "left" }} onClick={showLogin}>
               Iniciar sesión
             </button>
-            <button type="button" style={{ float: "right" }} onClick={showSignUp}>
+            <button
+              type="button"
+              style={{ float: "right" }}
+              onClick={showSignUp}
+            >
               Registrarme
             </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  );
+}
+
+export function EmailVerify(): JSX.Element {
+  const { handlerForm } = useLaTribunaFormContext();
+  const [code, setCode] = useState<string | null>(null);
+  const [dataUser, setData] = useState<UserDataSignup | null>(null);
+
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<EmailVerifyProps>({
+    resolver: yupResolver(emailVerify),
+    defaultValues: {
+      email: "",
+      code: "",
+    },
+  });
+
+  useEffect(() => {
+    const data = localStorage.getItem("verifyng_data");
+    if (data) {
+      const parsedData = JSON.parse(data);
+      setData(parsedData);
+      reset({
+        email: parsedData.email,
+        code: "",
+      });
+    }
+  }, [reset]);
+
+  useEffect(() => {
+    if (dataUser && code) {
+      const verifyData = async () => {
+        const res = await verifyEmailService(code, dataUser);
+        if (res) {
+          handlerForm("login");
+        } else {
+          reset({ email: dataUser.email, code: "" });
+        }
+      };
+      verifyData();
+    }
+  }, [code, dataUser, handlerForm, reset]);
+
+  const onSubmit = async (data: EmailVerifyProps): Promise<void> => {
+    setCode(data.code);
+  };
+
+  const throttledSubmit = useThrottle((data: EmailVerifyProps): void => {
+    onSubmit(data);
+  }, 1000);
+
+  return (
+    <div className={styles.formUi}>
+      <form
+        onSubmit={handleSubmit(throttledSubmit)}
+        className={styles.form}
+        style={{ height: "470px" }}
+      >
+        <div className={styles.formBody} style={{ top: "45%" }}>
+          <div className={styles.welcomeLines}>
+            <div className={styles.welcomeLine1}>LA TRIBUNA </div>
+            <div className={styles.welcomeLine2}>
+              Ingresa el codigo que enviamos a tu correo para continuar tu
+              registro
+            </div>
+          </div>
+          <div className={styles.inputArea}>
+            <div className={styles.formInp + " d-none"}>
+              <Controller
+                name="email"
+                control={control}
+                render={({ field }) => (
+                  <input
+                    {...field}
+                    placeholder="email"
+                    hidden
+                    type="text"
+                    className={styles.input + " form-control"}
+                  />
+                )}
+              />
+            </div>
+            {errors.email && (
+              <p className={styles.errors_tags}>{errors.email.message}</p>
+            )}
+            <div className={styles.formInp}>
+              <Controller
+                name="code"
+                control={control}
+                render={({ field }) => (
+                  <input
+                    {...field}
+                    placeholder="Codigo"
+                    type="text"
+                    className={styles.input + " form-control"}
+                  />
+                )}
+              />
+            </div>
+            {errors.code && (
+              <p className={styles.errors_tags}>{errors.code.message}</p>
+            )}
+          </div>
+          <div className={styles.submitButtonCvr}>
+            <button className={styles.submitButton}>Verificar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  );
+}
+export function ContactMe(): JSX.Element {
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(contactmeValidator),
+    defaultValues: {
+      name: "Tu nombre",
+      email: "Tu email donde responderemos",
+      subject: "Asunto",
+      message: "Redacta el mensaje aquí",
+    },
+  });
+  const onSubmit = async (data: ContactMeProps): Promise<void> => {
+    await uploadContact(data);
+    reset({
+      name: "Tu nombre",
+      email: "Tu email donde responderemos",
+      subject: "Asunto",
+      message: "Redacta el mensaje aquí",
+    });
+  };
+  const throttledSubmit = useThrottle((data: ContactMeProps) => {
+    onSubmit(data);
+  }, 5000);
+  return (
+    <div className={styles.formUi}>
+      <form onSubmit={handleSubmit(throttledSubmit)} className={styles.form}>
+        <div className={styles.formBody}>
+          <div className={styles.welcomeLines}>
+            <div className={styles.welcomeLine1}>LA TRIBUNA </div>
+            <div className={styles.welcomeLine2}>
+              Para amantes del fútbol colombiano
+            </div>
+          </div>
+          <div className={styles.inputArea}>
+            <div className={styles.formInp}>
+              <Controller
+                name="name"
+                control={control}
+                render={({ field }) => (
+                  <input
+                    {...field}
+                    placeholder="Nombre"
+                    type="text"
+                    className={styles.input + " form-control"}
+                  />
+                )}
+              />
+            </div>
+            {errors.name && (
+              <p className={styles.errors_tags}>{errors.name.message}</p>
+            )}
+            <div className={styles.formInp}>
+              <Controller
+                name="email"
+                control={control}
+                render={({ field }) => (
+                  <input
+                    {...field}
+                    placeholder="Correo electrónico"
+                    type="text"
+                    className={styles.input + " form-control"}
+                  />
+                )}
+              />
+            </div>
+            {errors.email && (
+              <p className={styles.errors_tags}>{errors.email.message}</p>
+            )}
+            <div className={styles.formInp}>
+              <Controller
+                name="subject"
+                control={control}
+                render={({ field }) => (
+                  <input
+                    {...field}
+                    placeholder="Asunto"
+                    type="text"
+                    className={styles.input + " form-control"}
+                  />
+                )}
+              />
+            </div>
+            {errors.subject && (
+              <p className={styles.errors_tags}>{errors.subject.message}</p>
+            )}
+            <Controller
+              name="message"
+              control={control}
+              render={({ field }) => (
+                <textarea
+                  {...field}
+                  className={styles.textarea + " form-control"}
+                ></textarea>
+              )}
+            />
+            {errors.message && (
+              <p className={styles.errors_tags}>{errors.message.message}</p>
+            )}
+          </div>
+          <div className={styles.submitButtonCvr}>
+            <button className={styles.submitButton}>Envíar</button>
           </div>
         </div>
       </form>
