@@ -66,7 +66,6 @@ export default function Header(): JSX.Element {
   const logoutHandler = async (): Promise<void> => {
     await logoutService();
     handleLogout(true);
-    router.push("/");
   };
   const imagePath =
     club && club !== "ignore"
@@ -115,7 +114,7 @@ export default function Header(): JSX.Element {
       <li>
         <hr className={styles.hr} />
         <Link
-          href="/"
+          href="#"
           type="button"
           onClick={logoutHandler}
           className="nav-link"
@@ -216,7 +215,7 @@ export default function Header(): JSX.Element {
                   handleShowModalForm();
                 }}
               >
-                <Link href="/#" className="nav-link scrollto">
+                <Link href="#"  className="nav-link scrollto">
                   <div className={styles.icons_span}>
                     <FontAwesomeIcon width={14} icon={faEnvelope as IconProp} />
                   </div>

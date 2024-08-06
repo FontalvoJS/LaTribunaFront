@@ -103,16 +103,16 @@ export default function Page(): JSX.Element {
         if (res) {
           const contentForEdit =
             "<b>Portada actual: </b> <br/> <img src='" +
-            res.image +
+            res.Slug.image +
             "' width='500px' height='500px'/><br/>" +
-            res.content;
+            res.Slug.content;
           reset({
-            title: res.title,
-            description: res.description,
-            tags: res.tags,
+            title: res.Slug.title,
+            description: res.Slug.description,
+            tags: res.Slug.tags,
             image: undefined,
-            author: res.author,
-            category: res.category,
+            author: res.Slug.author,
+            category: res.Slug.category,
             content: contentForEdit,
             editing: true,
           });
@@ -224,11 +224,14 @@ export default function Page(): JSX.Element {
           </div>
           <div className="col-lg-2">
             <label className="form-label labels">Autor</label>
-            <input
-              type="text"
-              className="form-control"
-              {...register("author")}
-            />
+            <select className="form-select" {...register("author")}>
+              <option value="Valderrama">
+                Valderrama | Critico, imparcial y jocoso
+              </option>
+              <option value="Carlos A. Plebe">
+                Carlos A. Plebe | Critico y Bien hp
+              </option>
+            </select>
             {errors.author && (
               <p className="text-danger">{errors.author.message}</p>
             )}

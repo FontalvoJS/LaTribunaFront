@@ -40,7 +40,7 @@ const RichTextEditor = ({ previewContent, setPreviewContent }: Props) => {
       if (matches) {
         const updatedContents = previewContent.replace(
           matches[index],
-          `src="${url}"`
+          `src="http://localhost/beerclub_backend/public${url}"`
         );
         setPreviewContent(updatedContents);
       }

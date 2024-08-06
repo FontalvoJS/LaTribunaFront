@@ -28,6 +28,7 @@ import {
 import alertify from "@/app/assets/notifications/toast/alert_service";
 import { useEffect, useState } from "react";
 import { uploadContact } from "@/app/assets/services/contact";
+import Image from "next/image";
 
 export default function LoginForm(): JSX.Element {
   const { handlerForm } = useLaTribunaFormContext();
@@ -363,6 +364,7 @@ export function ResetPass(): JSX.Element {
                     {...field}
                     placeholder="Correo electrónico"
                     type="email"
+                    className={styles.input + " form-control"}
                   />
                 )}
               />
@@ -534,6 +536,13 @@ export function ContactMe(): JSX.Element {
   return (
     <div className={styles.formUi}>
       <form onSubmit={handleSubmit(throttledSubmit)} className={styles.form}>
+          <Image
+            src="/images/logos/logo.png"
+            width={100}
+            height={100}
+            alt="Logo la tribuna"
+            style={{display:"block", margin:"auto"}}
+          />
         <div className={styles.formBody}>
           <div className={styles.welcomeLines}>
             <div className={styles.welcomeLine1}>LA TRIBUNA </div>

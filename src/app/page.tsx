@@ -13,45 +13,13 @@ import { useLaTribunaFormContext } from "./assets/context/auth";
 import { useSession } from "./assets/context/session";
 import LeagueTable from "./assets/components/positionTable/positions";
 import MiniSectionBottom from "./assets/components/sections/mini_section/mini_section_bottom";
-
+import GetFormComponent from "./assets/utils/getFormComponent";
 export default function Home(): JSX.Element {
-  const {
-    showLoginForm,
-    showSignupForm,
-    showResetPasswordForm,
-    showVerifyEmail,
-    showContactme,
-  } = useLaTribunaFormContext();
-  const { isLoggedIn } = useSession();
-
-  // Obtiene el componente de formulario correspondiente
-  const getFormComponent = (): JSX.Element => {
-    if (showLoginForm) {
-      return <LoginForm />;
-    }
-    if (showSignupForm) {
-      return <SignUpForm />;
-    }
-    if (showResetPasswordForm) {
-      return <ResetPass />;
-    }
-    if (showVerifyEmail) {
-      return <EmailVerify />;
-    }
-    if (showContactme) {
-      return <ContactMe />;
-    }
-    return <></>;
-  };
-
   return (
     <>
       <PrincipalSection />
       <News />
       <MiniSection />
-      {isLoggedIn === false && (
-        <CustomModal>{getFormComponent()}</CustomModal>
-      )}
       <LeagueTable />
       <MiniSectionBottom />
     </>

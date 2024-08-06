@@ -1,7 +1,8 @@
 "use client";
 import "./globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-typeof window !== "undefined" && require('bootstrap/dist/js/bootstrap.bundle.min.js');
+typeof window !== "undefined" &&
+  require("bootstrap/dist/js/bootstrap.bundle.min.js");
 import "react-toastify/dist/ReactToastify.css";
 import { LaTribunaProvider } from "./assets/context/auth";
 import { SideHeaderProvider } from "./assets/context/sideHeader";
