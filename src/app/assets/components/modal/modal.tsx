@@ -1,10 +1,12 @@
-import { useLaTribunaAuthFormContext } from "@/app/assets/context/auth";
+import { useLaTribunaFormContext } from "@/app/assets/context/auth";
 import { ModalProps } from "@/app/assets/types/types";
 import { useEffect, useRef, useCallback } from "react";
+import { useSideHeaderContext } from "../../context/sideHeader";
 
 export default function CustomModal({ children }: ModalProps): JSX.Element {
-  const { showModalForm, handleCloseModalForm } = useLaTribunaAuthFormContext();
+  const { showModalForm, handleCloseModalForm, setActiveForm } = useLaTribunaFormContext();
   const modalRef = useRef<HTMLDivElement>(null);
+  const {handleCloseSideHeader} = useSideHeaderContext();
 
   const handleEsc = useCallback((event: KeyboardEvent) => {
     if (event.key === 'Escape') {
@@ -20,9 +22,11 @@ export default function CustomModal({ children }: ModalProps): JSX.Element {
 
   useEffect(() => {
     if (showModalForm) {
+      handleCloseSideHeader();
       document.addEventListener('keydown', handleEsc);
       document.addEventListener('mousedown', handleClickOutside);
     } else {
+      setActiveForm('login');
       document.removeEventListener('keydown', handleEsc);
       document.removeEventListener('mousedown', handleClickOutside);
     }
@@ -31,7 +35,7 @@ export default function CustomModal({ children }: ModalProps): JSX.Element {
       document.removeEventListener('keydown', handleEsc);
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [showModalForm, handleEsc, handleClickOutside]);
+  }, [showModalForm, handleEsc, handleClickOutside, setActiveForm, handleCloseSideHeader]);
 
   if (!showModalForm) {
     return <></>;

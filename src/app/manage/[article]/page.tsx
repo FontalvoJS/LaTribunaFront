@@ -1,21 +1,24 @@
 "use client";
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
-import { useForm, Controller, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import styles from "./page.module.css";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserEdit } from "@fortawesome/free-solid-svg-icons";
-import { useThrottle } from "../assets/components/hooks/useThrottle";
-// Dynamic import for Editor component
+import { useThrottle } from "../../assets/components/hooks/useThrottle";
+import { useParams } from "next/navigation";
+import { getPostBySlug, removePostBySlug } from "../../assets/services/posts";
 const DynamicEditor = dynamic(
   () => import("@/app/assets/components/editor/editor"),
   { ssr: false }
 );
-import { uploadContent } from "../assets/services/posts";
-import { FormValues } from "../assets/types/types";
+import { uploadContent, updateContent } from "../../assets/services/posts";
+import { FormValues } from "../../assets/types/types";
+import alertify from "@/app/assets/notifications/toast/alert_service";
+import { useRouter } from "next/navigation";
 
 // Define validation schema with Yup
 const schema = yup.object().shape({
@@ -25,9 +28,13 @@ const schema = yup.object().shape({
   tags: yup.string().required("Los tags son obligatorios"),
   author: yup.string().required("El autor es obligatorio"),
   category: yup.string().required("La categoría es obligatoria"),
+  editing: yup.boolean().required("El estado de edición es obligatorio"),
 });
 
 export default function Page(): JSX.Element {
+  const router = useRouter();
+  const { article } = useParams();
+
   const {
     control,
     handleSubmit,
@@ -44,6 +51,8 @@ export default function Page(): JSX.Element {
       tags: "Aquí puedes escribir tus tags separados por comas",
       author: "FontalvoJS",
       category: "",
+      editing: false,
+      content: "",
     },
   });
 
@@ -52,14 +61,19 @@ export default function Page(): JSX.Element {
     null
   );
   const [previewContent, setPreviewContent] = useState<string>("");
+  const [articleLoaded, setArticleLoaded] = useState(false);
 
   const watchImage = watch("image");
   const watchContent = watch("content");
   const watchTitle = watch("title");
   const watchDescription = watch("description");
-  // const watchTags = watch("tags");
   const watchAuthor = watch("author");
-  // const watchCategory = watch("category");
+
+  const changeTitle = article ? (
+    <h1 className="text-light">Modifica el artículo</h1>
+  ) : (
+    <h1 className="text-light">Crea una nueva publicación</h1>
+  );
 
   useEffect(() => {
     setPreviewTitle(watchTitle || "");
@@ -82,6 +96,50 @@ export default function Page(): JSX.Element {
     setPreviewContent(watchContent || "");
   }, [watchContent]);
 
+  useEffect(() => {
+    const fetch_data = async () => {
+      if (
+        article &&
+        article.length > 0 &&
+        article.includes("-") &&
+        !articleLoaded
+      ) {
+        try {
+          const res = await getPostBySlug(article as string);
+          if (res) {
+            const contentForEdit =
+              "<b>Portada actual: </b> <br/> <img src='" +
+              res.Slug.image +
+              "' width='500px' height='500px'/><br/>" +
+              res.Slug.content;
+            reset({
+              title: res.Slug.title,
+              description: res.Slug.description,
+              tags: res.Slug.tags,
+              image: undefined,
+              author: res.Slug.author,
+              category: res.Slug.category,
+              content: contentForEdit,
+              editing: true,
+            });
+            setArticleLoaded(true);
+          }
+        } catch (error) {
+          console.error("Error fetching article data:", error);
+        }
+      }
+    };
+
+    fetch_data();
+  }, [article, articleLoaded, reset]);
+
+  const deleteArticle = async () => {
+    if (article && article.length > 0 && article.includes("-")) {
+      await removePostBySlug(article);
+      router.push("/");
+    }
+  };
+
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     data.content = previewContent;
     const newData = new FormData();
@@ -92,7 +150,13 @@ export default function Page(): JSX.Element {
     newData.append("author", data.author);
     newData.append("category", data.category);
     newData.append("content", data.content);
-    await uploadContent(newData);
+    newData.append("slug", article as string);
+    newData.append("editing", data.editing ? "true" : "false");
+    if (article && article.length > 0 && article.includes("-")) {
+      await updateContent(newData);
+    } else {
+      await uploadContent(newData);
+    }
     reset({
       title: "Redacta un nuevo articulo",
       image: undefined,
@@ -102,13 +166,13 @@ export default function Page(): JSX.Element {
       category: "",
     });
   };
+
   const throttledFunction = useThrottle(onSubmit, 1000);
+
   return (
     <div className="container">
       <div className="row mt-5">
-        <div className="col-12">
-          <h1 className="text-light">Crea una nueva publicación</h1>
-        </div>
+        <div className="col-12">{changeTitle}</div>
       </div>
       <form onSubmit={handleSubmit(throttledFunction)}>
         <div className="row mt-3">
@@ -116,6 +180,9 @@ export default function Page(): JSX.Element {
             <label className="form-label labels">
               Selecciona una imagen de portada
             </label>
+            {article && (
+              <input type="checkbox" hidden {...register("editing")} />
+            )}
             <input
               type="file"
               className="form-control"
@@ -139,8 +206,13 @@ export default function Page(): JSX.Element {
           </div>
           <div className="col-lg-1 mt-3">
             <button className="btn btn-primary mt-4">
-              <small>Publicar</small>
+              <small>{article ? "Guardar" : "Publicar"}</small>
             </button>
+            {article && article.includes("-") && (
+              <button onClick={deleteArticle} className="btn btn-dark mt-1">
+                <small>Eliminar</small>
+              </button>
+            )}
           </div>
         </div>
         <div className="row mt-3">
@@ -164,11 +236,14 @@ export default function Page(): JSX.Element {
           </div>
           <div className="col-lg-2">
             <label className="form-label labels">Autor</label>
-            <input
-              type="text"
-              className="form-control"
-              {...register("author")}
-            />
+            <select className="form-select" {...register("author")}>
+              <option value="Valderrama">
+                Valderrama | Critico, imparcial y jocoso
+              </option>
+              <option value="Carlos A. Plebe">
+                Carlos A. Plebe | Critico y Bien hp
+              </option>
+            </select>
             {errors.author && (
               <p className="text-danger">{errors.author.message}</p>
             )}
@@ -179,12 +254,10 @@ export default function Page(): JSX.Element {
             <label className="form-label labels">Categoría</label>
             <select className="form-select" {...register("category")}>
               <option value="">Selecciona una categoría</option>
-              <option value="resultados_futbolisticos">
-                Analisis de resultados
-              </option>
-              <option value="farandula">Farándula</option>
-              <option value="chismes">Chismes</option>
-              <option value="criticas">Críticas</option>
+              <option value="Analisis">Analisis</option>
+              <option value="Rumores">Rumores</option>
+              <option value="Criticas">Críticas</option>
+              <option value="Criticas">Pronostico</option>
             </select>
             {errors.category && (
               <p className="text-danger">{errors.category.message}</p>

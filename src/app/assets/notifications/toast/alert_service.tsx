@@ -4,9 +4,11 @@ const alertify = {
   success: (
     message: string,
     position: ToastPosition | undefined = "bottom-right"
+    
   ) =>
     toast.success(message, {
       position,
+      className: "toastify_background"
     }),
   error: (
     message: string,
@@ -14,6 +16,7 @@ const alertify = {
   ) =>
     toast.error(message, {
       position,
+      className: "toastify_background"
     }),
   warning: (
     message: string,
@@ -21,6 +24,7 @@ const alertify = {
   ) =>
     toast.warn(message, {
       position,
+      className: "toastify_background"
     }),
   info: (
     message: string | JSX.Element,
@@ -28,6 +32,7 @@ const alertify = {
   ) =>
     toast.info(message, {
       position,
+      className: "toastify_background"
     }),
   loading: (
     message: string,
@@ -35,6 +40,7 @@ const alertify = {
   ) =>
     toast.loading(message, {
       position,
+      className: "toastify_background"
     }),
 
   dismiss: (alert: any) => toast.dismiss(alert),

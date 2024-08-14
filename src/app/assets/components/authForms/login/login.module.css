@@ -6,8 +6,8 @@
 }
 .reset_text {
   color: #8f8f8f;
-    margin-top: 7%;
-    font-size: 12px;
+  margin-top: 7%;
+  font-size: 12px;
 }
 #rememberMe {
   width: 11px;
@@ -20,7 +20,7 @@
   width: 100%;
   height: auto !important;
   padding: 10%;
-  background-color: #16191b;
+  background-color: #11161d;
   box-shadow: 0px 15px 60px #000000a6;
   border-radius: 3px;
 }
@@ -158,7 +158,6 @@
   font-size: 40px;
 }
 
-
 .welcomeLine2 {
   color: #dadada;
   font-size: 12px;
@@ -170,26 +169,22 @@
 }
 
 .formInp {
-  padding: 11px 25px;
-  background: transparent;
-  border: 1px solid #e3e3e352;
-  line-height: 1;
-  border-radius: 8px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .formInp:focus {
-  border: 1px solid #ffc107;
+  border: 1px solid #f0903a;
 }
-
-.formInp input {
+.input {
   width: 100%;
   background: none;
-  font-size: 13.4px;
+  font-size: 13px;
   color: #939393;
-  border: none;
-  padding: 0;
-  margin: 0;
+}
+.textarea {
+  font-size: 13px;
+  color: #939393;
+  width: 100%;
 }
 
 .formInp input:focus {
@@ -203,14 +198,13 @@
 .submitButton {
   display: block;
   width: 100%;
-  color: #ffc107;
+  color: #f0903a;
   background-color: transparent;
-  font-weight: 600;
   font-size: 14px;
   margin: 0;
   padding: 14px 13px 12px 13px;
   border: 0;
-  outline: 1px solid #ffc107;
+  outline: 1px solid #f0903a;
   border-radius: 8px;
   line-height: 1;
   cursor: pointer;
@@ -219,8 +213,8 @@
 
 .submitButton:hover {
   transition: all ease-in-out 0.3s;
-  background-color: #ffc107;
-  color: #161616;
+  background-color: #f0903a;
+  color: whitesmoke;
   cursor: pointer;
 }
 
@@ -233,7 +227,7 @@
   color: #868686;
   font-size: 12px;
   text-decoration: none;
-  background:none;
+  background: none;
   border: none;
   outline: none;
   cursor: pointer;

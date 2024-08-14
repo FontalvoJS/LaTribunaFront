@@ -1,74 +1,81 @@
 "use client";
 import { AuthContextProps, User } from "@/app/assets/types/types";
-
 import React, {
   createContext,
   useContext,
   useState,
   ReactNode,
   useMemo,
-  useEffect,
+  useCallback,
 } from "react";
 
+// Contexto
 const LaTribunaContextAuthForm = createContext<AuthContextProps | undefined>(
   undefined
 );
 
+// Proveedor
 export const LaTribunaProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  // user data states
+  // Estado para almacenar el usuario
   const [user, setUser] = useState<User | null>(null);
-  // states
+
+  // Estado para controlar la visibilidad del modal
   const [showModalForm, setShowModalForm] = useState<boolean>(false);
+
+  // Estado para controlar qué formulario está activo
   const [activeForm, setActiveForm] = useState<string>("login");
-  const [showLoginForm, setShowLoginForm] = useState<boolean>(true);
-  const [showSignupForm, setShowSignupForm] = useState<boolean>(false);
-  const [showResetPasswordForm, setShowResetPasswordForm] =
-    useState<boolean>(false);
-  // handlers
-  const handleShowModalForm = (): void => setShowModalForm(true);
-  const handleCloseModalForm = (): void => setShowModalForm(false);
-  const handleUser = (user: User): void => setUser(user);
-  const handlerForm = (activeForm: string): void => {
+
+  // Funciones de manejo
+  const handleShowModalForm = useCallback(() => setShowModalForm(true), []);
+  const handleCloseModalForm = useCallback(() => setShowModalForm(false), []);
+  const handleUser = useCallback((user: User) => setUser(user), []);
+  const handlerContactme = useCallback(() => {
+    setActiveForm((prev) => (prev === "contactme" ? "login" : "contactme"));
+  }, []);
+  const handlerForm = useCallback((activeForm: string) => {
     setActiveForm(activeForm);
-  };
-  // effects
-  useEffect(() => {
-    switch (activeForm) {
-      case "login":
-        setShowLoginForm(true);
-        setShowSignupForm(false);
-        setShowResetPasswordForm(false);
-        break;
-      case "signup":
-        setShowLoginForm(false);
-        setShowSignupForm(true);
-        setShowResetPasswordForm(false);
-        break;
-      case "reset":
-        setShowLoginForm(false);
-        setShowSignupForm(false);
-        setShowResetPasswordForm(true);
-        break;
-      default:
-        break;
-    }
+    
+  }, []);
+
+  // Calcula los estados de los formularios según el formulario activo
+  const formStates = useMemo(() => {
+    return {
+      showLoginForm: activeForm === "login",
+      showSignupForm: activeForm === "signup",
+      showResetPasswordForm: activeForm === "reset",
+      showVerifyEmail: activeForm === "verify",
+      showContactme: activeForm === "contactme",
+    };
   }, [activeForm]);
-  // value
+
+  // Valor del contexto
   const value = useMemo(
     () => ({
       showModalForm,
-      showLoginForm,
-      showSignupForm,
-      showResetPasswordForm,
       user,
+      activeForm,
+      setActiveForm,
       handleUser,
       handleShowModalForm,
       handleCloseModalForm,
       handlerForm,
+      handlerContactme,
+      ...formStates,
     }),
-    [showModalForm, showLoginForm, showSignupForm, showResetPasswordForm, user]
+    [
+      showModalForm,
+      user,
+      activeForm,
+      setActiveForm,
+      handleUser,
+      handleShowModalForm,
+      handleCloseModalForm,
+      handlerForm,
+      handlerContactme,
+      formStates,
+    ]
   );
 
   return (
@@ -78,11 +85,12 @@ export const LaTribunaProvider: React.FC<{ children: ReactNode }> = ({
   );
 };
 
-export const useLaTribunaAuthFormContext = (): AuthContextProps => {
+// Hook personalizado para usar el contexto
+export const useLaTribunaFormContext = (): AuthContextProps => {
   const context = useContext(LaTribunaContextAuthForm);
   if (!context) {
     throw new Error(
-      "useLaTribunaAuthFormContext must be used within a LaTribunaProvider"
+      "useLaTribunaFormContext must be used within a LaTribunaProvider"
     );
   }
   return context;

@@ -1,7 +1,9 @@
+'use client';
 import { useEffect, useRef } from "react";
 import { useSideHeaderContext } from "@/app/assets/context/sideHeader";
 import { MainProps } from "@/app/assets/types/types";
-
+import CustomModal from "../modal/modal";
+import GetFormComponent from "../../utils/getFormComponent";
 export default function Main({ children }: MainProps): JSX.Element {
   const { showSideHeader } = useSideHeaderContext();
   const mainRef = useRef<HTMLDivElement>(null);
@@ -14,5 +16,8 @@ export default function Main({ children }: MainProps): JSX.Element {
       }
     }
   }, [showSideHeader]);
-  return <main id="main" ref={mainRef}>{children}</main>;
+  return <main id="main" ref={mainRef}>
+    <CustomModal>{GetFormComponent()}</CustomModal>
+    {children}
+    </main>;
 }

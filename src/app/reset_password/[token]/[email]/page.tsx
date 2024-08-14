@@ -58,7 +58,7 @@ export default function Page(): JSX.Element {
                       {...field}
                       placeholder="Ingresa tu correo"
                       type="email"
-                      className={form_styles.input}
+                      className={"form-control"}
                     />
                   )}
                 />
@@ -77,7 +77,7 @@ export default function Page(): JSX.Element {
                       {...field}
                       placeholder="Nueva contraseña"
                       type="password"
-                      className={form_styles.input}
+                      className={"form-control"}
                     />
                   )}
                 />
@@ -96,7 +96,7 @@ export default function Page(): JSX.Element {
                       {...field}
                       placeholder="Confirma tu nueva contraseña"
                       type="password"
-                      className={form_styles.input}
+                      className={"form-control"}
                     />
                   )}
                 />

@@ -113,7 +113,7 @@
 .open_menu {
   top: 30px;
   position: fixed;
-  left: -50px;
+  left: -80px;
   color: #d6d6d6;
   padding: 7px;
   border-radius: 5px;
@@ -148,5 +148,10 @@
   }
   100% {
     opacity: 1;
+  }
+}
+@media screen and (max-width: 768px) {
+  .open_menu {
+    left: -100px;
   }
 }

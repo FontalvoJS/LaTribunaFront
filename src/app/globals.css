@@ -8,11 +8,17 @@ body {
 #main {
   margin-left: 300px;
 }
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: "Poppins", sans-serif;
   color: whitesmoke !important;
 }
-.carousel-control-next-icon, .carousel-control-prev-icon {
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
   background-color: black;
   padding: 5% !important;
 }
@@ -75,7 +81,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 p {
   max-width: 600px;
-  margin: 10px;
   line-height: 1.6;
   text-align: justify;
   padding: 5px;
@@ -128,7 +133,7 @@ p {
 .nav-menu .active:focus,
 .nav-menu li:hover > a {
   text-decoration: none;
-  color: #ffffff;
+  color: whitesmoke;
   background: #1a212b;
 }
 
@@ -141,7 +146,12 @@ p {
   padding: 0;
   margin: 0;
 }
-
+input::placeholder {
+  color: #939393 !important;
+}
+textarea::placeholder {
+  color: #939393 !important;
+}
 .formInp input:focus {
   outline: none;
 }
@@ -160,7 +170,7 @@ p {
 .nav-menu .active i,
 .nav-menu .active:focus i,
 .nav-menu li:hover > a i {
-  color: #ffffff;
+  color: whitesmoke;
 }
 .btn {
   font-weight: 500;
@@ -170,15 +180,15 @@ p {
 }
 .btn-outline-primary {
   background-color: transparent;
-  color: #ffc107 !important;
-  border: 2px solid #ffc107 !important;
+  color: #f0903a !important;
+  border: 2px solid #f0903a !important;
 }
 .hide_footer {
   left: -300px !important;
 }
 .btn-primary {
-  background-color: #ffc107 !important;
-  border: 2px solid #ffc107 !important;
+  background-color: #f0903a !important;
+  border: 2px solid #f0903a !important;
   color: black !important;
   font-weight: 500;
 }
@@ -189,7 +199,7 @@ p {
   background-color: #bd8e02 !important;
 }
 .alert_button {
-  background: #ffc107 !important;
+  background: #f0903a !important;
   font-size: 10px !important;
   color: #000000 !important;
 }
@@ -201,7 +211,7 @@ p {
 .btn-outline-primary:hover {
   transition: 0.5s;
   font-weight: 500;
-  background-color: #ffc107 !important;
+  background-color: #f0903a !important;
   color: black !important;
 }
 /* Mobile Navigation */
@@ -225,7 +235,9 @@ p {
   border-radius: 50px;
   cursor: pointer;
 }
-
+.toastify_background {
+  background-color: #1b2838 !important;
+}
 .mobile-nav-active {
   overflow: hidden;
 }
@@ -245,13 +257,13 @@ option:hover {
 .table-bordered > :not(caption) > * > * {
   border-width: 0 var(--bs-border-width) !important;
   background: #020304 !important;
-  color: #ffffff !important;
+  color: whitesmoke !important;
   border: 1px !important;
 }
 
 .table thead th {
   background-color: #bb2d3d !important;
-  color: #ffffff !important;
+  color: whitesmoke !important;
   border: 0 !important;
 }
 
@@ -260,18 +272,5 @@ option:hover {
   border: 0 !important;
   border-bottom: 0px;
   color: whitesmoke;
-  font-size:12px;
+  font-size: 12px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

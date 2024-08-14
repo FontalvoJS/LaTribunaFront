@@ -6,38 +6,22 @@ import CustomModal from "./assets/components/modal/modal";
 import LoginForm, {
   SignUpForm,
   ResetPass,
+  ContactMe,
+  EmailVerify,
 } from "./assets/components/authForms/login/login";
-import { useLaTribunaAuthFormContext } from "./assets/context/auth";
+import { useLaTribunaFormContext } from "./assets/context/auth";
 import { useSession } from "./assets/context/session";
-import Image from "next/image";
 import LeagueTable from "./assets/components/positionTable/positions";
+import MiniSectionBottom from "./assets/components/sections/mini_section/mini_section_bottom";
+import GetFormComponent from "./assets/utils/getFormComponent";
 export default function Home(): JSX.Element {
-  const { showLoginForm, showSignupForm, showResetPasswordForm } =
-    useLaTribunaAuthFormContext();
-  const { isLoggedIn } = useSession();
-  const getFormComponent = (): JSX.Element => {
-    if (showLoginForm) {
-      return <LoginForm />;
-    }
-    if (showSignupForm) {
-      return <SignUpForm />;
-    }
-    if (showResetPasswordForm) {
-      return <ResetPass />;
-    }
-    return <></>;
-  };
   return (
     <>
       <PrincipalSection />
       <News />
       <MiniSection />
-      {isLoggedIn === false ? (
-        <CustomModal>{getFormComponent()}</CustomModal>
-      ) : (
-        <div></div>
-      )}
       <LeagueTable />
+      <MiniSectionBottom />
     </>
   );
 }
