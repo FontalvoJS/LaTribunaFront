@@ -74,7 +74,7 @@ export default function LoginForm(): JSX.Element {
       >
         <div className={styles.formBody} style={{ top: "45%" }}>
           <div className={styles.welcomeLines}>
-            <div className={styles.welcomeLine1}>LA TRIBUNA </div>
+            <div className={styles.welcomeLine1}>LA TRIBUNA</div>
             <div className={styles.welcomeLine2}>
               Para amantes del fútbol colombiano
             </div>
@@ -122,8 +122,9 @@ export default function LoginForm(): JSX.Element {
                 control={control}
                 render={({ field }) => (
                   <input
+                    {...field}
                     type="checkbox"
-                    id={"rememberMe"}
+                    id="rememberMe"
                     className={styles.checkbox + " " + styles.rememberMe}
                   />
                 )}
@@ -164,7 +165,12 @@ export function SignUpForm(): JSX.Element {
     handlerForm("reset");
   };
   const onSubmit = async (data: UserDataSignup): Promise<void> => {
-    // await SignUpService(data);
+    const dataForTest = { ...data };
+    dataForTest.verifyReg = true;
+    const resSign = await SignUpService(dataForTest);
+    if (!resSign) {
+      return;
+    }
     localStorage.setItem("verifyng_data", JSON.stringify(data));
     const alert = alertify.loading(
       "Espere mientras se envía el codigo de verificación al email asociado..."
@@ -199,7 +205,7 @@ export function SignUpForm(): JSX.Element {
       <form onSubmit={handleSubmit(throttledSubmit)} className={styles.form}>
         <div className={styles.formBody}>
           <div className={styles.welcomeLines}>
-            <div className={styles.welcomeLine1}>LA TRIBUNA </div>
+            <div className={styles.welcomeLine1}>LA TRIBUNA</div>
             <div className={styles.welcomeLine2}>
               Para amantes del fútbol colombiano
             </div>
@@ -346,7 +352,7 @@ export function ResetPass(): JSX.Element {
       <form onSubmit={handleSubmit(throttledSubmit)} className={styles.form}>
         <div className={styles.formBody}>
           <div className={styles.welcomeLines}>
-            <div className={styles.welcomeLine1}>LA TRIBUNA </div>
+            <div className={styles.welcomeLine1}>LA TRIBUNA</div>
             <div className={styles.welcomeLine2}>
               Para amantes del futbol colombiano
             </div>
@@ -455,7 +461,7 @@ export function EmailVerify(): JSX.Element {
       >
         <div className={styles.formBody} style={{ top: "45%" }}>
           <div className={styles.welcomeLines}>
-            <div className={styles.welcomeLine1}>LA TRIBUNA </div>
+            <div className={styles.welcomeLine1}>LA TRIBUNA</div>
             <div className={styles.welcomeLine2}>
               Ingresa el codigo que enviamos a tu correo para continuar tu
               registro
@@ -536,16 +542,16 @@ export function ContactMe(): JSX.Element {
   return (
     <div className={styles.formUi}>
       <form onSubmit={handleSubmit(throttledSubmit)} className={styles.form}>
-          <Image
-            src="/images/logos/logo.png"
-            width={100}
-            height={100}
-            alt="Logo la tribuna"
-            style={{display:"block", margin:"auto"}}
-          />
+        <Image
+          src="/images/logos/logo.png"
+          width={100}
+          height={100}
+          alt="Logo la tribuna"
+          style={{ display: "block", margin: "auto" }}
+        />
         <div className={styles.formBody}>
           <div className={styles.welcomeLines}>
-            <div className={styles.welcomeLine1}>LA TRIBUNA </div>
+            <div className={styles.welcomeLine1}>LA TRIBUNA</div>
             <div className={styles.welcomeLine2}>
               Para amantes del fútbol colombiano
             </div>

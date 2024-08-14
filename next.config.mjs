@@ -29,9 +29,14 @@ const nextConfig = {
           "http://localhost/beerclub_backend/public/api/profile/:path*",
       },
       {
-        source: "/api/admin/:path*",
+        source: "/api/articles/:path*",
         destination:
-          "http://localhost/beerclub_backend/public/api/admin/:path*",
+          "http://localhost/beerclub_backend/public/api/articles/:path*",
+      },
+      {
+        source: "/api/article-reactions/:path*",
+        destination:
+          "http://localhost/beerclub_backend/public/api/article-reactions/:path*",
       },
     ];
   },

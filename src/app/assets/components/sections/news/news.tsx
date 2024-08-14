@@ -62,8 +62,10 @@ const NewsComponent: React.FC = () => {
         if (latestPosts) {
           setPosts(latestPosts);
           setDisplayNew(latestPosts[0].title);
-        }else{
-          alertify.error("Hubo un problema con la carga de los artículos, intente nuevamente y reporte si el problema persiste");
+        } else {
+          alertify.error(
+            "Hubo un problema con la carga de los artículos, intente nuevamente y reporte si el problema persiste"
+          );
         }
       } catch (error) {
         console.error("Error fetching posts:", error);
@@ -144,7 +146,7 @@ const NewsComponent: React.FC = () => {
                     <h6 className={styles.articleCategory}>{post.category}</h6>
                     <h5 className={styles.articleTitle}>{post.title}</h5>
                     <p className={styles.articleDate}>
-                      {formatDate(post.date)}
+                      {formatDate(post.date, true)}
                     </p>
                   </div>
                 </div>
@@ -188,7 +190,7 @@ const NewsComponent: React.FC = () => {
                     <h6 className={styles.articleCategory}>{post.category}</h6>
                     <h5 className={styles.articleTitle}>{post.title}</h5>
                     <p className={styles.articleDate}>
-                      {formatDate(post.date)}
+                      {formatDate(post.date, true)}
                     </p>
                   </div>
                 </div>

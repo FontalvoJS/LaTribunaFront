@@ -14,8 +14,7 @@ export default function Footer(): JSX.Element {
     <footer ref={footerRef} id={styles.footer}>
       <div className="container">
         <div className={styles.copyright}>
-          By:
-          <strong> FontalvoJS</strong>
+          <strong>Para amantes del fútbol colombiano</strong>
         </div>
       </div>
     </footer>

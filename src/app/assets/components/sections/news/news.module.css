@@ -36,11 +36,17 @@
 .content_card_title {
   padding: 3%;
 }
+
 .alert_dark {
-  background-image: radial-gradient(circle farthest-corner at 48.4% 47.5%, #bf0b21 0%, #0b0e11 90%);
+  background-image: radial-gradient(
+    circle farthest-corner at 48.4% 47.5%,
+    #bf0b21 0%,
+    #0b0e11 90%
+  );
   border: none;
   color: white;
 }
+
 .alert_dark b {
   color: #ff596e;
 }
@@ -64,7 +70,7 @@
   border: none;
   border-radius: 0.5rem;
   overflow: hidden;
-  cursor:pointer;
+  cursor: pointer;
 }
 
 .mainCardContent {
@@ -127,7 +133,6 @@
   font-size: 12px;
 }
 
-
 /* .typingEffect {
   display: inline-block;
   white-space: nowrap;
@@ -145,3 +150,8 @@
   from, to { border-color: transparent; }
   50% { border-color: black; }
 } */
+@media screen and (max-width: 768px) {
+  .alert_dark span {
+    font-size: 12px;
+  }
+}

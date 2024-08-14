@@ -14,7 +14,7 @@
   color: #173b6c;
 }
 #never_ever {
-  color: #ffc107;
+  color: #f0903a;
 }
 .title_primary_section {
   position: absolute;
@@ -29,7 +29,7 @@
 }
 
 #about {
-  background-color: #ffffff;
+  background-color: whitesmoke;
   margin-bottom: 0;
   background-image: url(/images/backgrounds/banner2.jpg);
   background-size: cover;
@@ -86,7 +86,7 @@
   margin-bottom: 20px;
   padding-bottom: 20px;
   position: relative;
-  color: #ffffff;
+  color: whitesmoke;
 }
 @media (min-width: 1200px) {
   .logos_card {
@@ -154,7 +154,7 @@
   display: block;
   width: 50px;
   height: 3px;
-  background: #ffc107;
+  background: #f0903a;
   bottom: 0;
   left: 0;
 }

@@ -30,7 +30,7 @@ export const LoginService = async (
     return false;
   }
 };
-export const SignUpService = async (data: UserDataSignup): Promise<void> => {
+export const SignUpService = async (data: UserDataSignup): Promise<boolean | void> => {
   try {
     const endpoint = "/auth/register";
     const response = await custom_axios(endpoint, {
@@ -38,11 +38,13 @@ export const SignUpService = async (data: UserDataSignup): Promise<void> => {
       headers: { "Content-Type": "application/json", Accept: "application/json" },
       data: JSON.stringify(data),
     });
-    if (response.status === 201) {
+    if (response.status === 202) {
       alertify.success(
-        "¡Gracias por registrarte, espera mientras cargamos todo!"
+        "¡Validamos tu información, solo debes confirmar el correo.!"
       );
-      localStorage.setItem("tk_id", response.data.token);
+      return true;
+    } else {
+      false
     }
   } catch (error: any) {
     if (error.response.status >= 400 && error.response.data.error?.length > 0) {
@@ -58,6 +60,7 @@ export const SignUpService = async (data: UserDataSignup): Promise<void> => {
         });
       }
     }
+    return false;
   }
 };
 export const forgotPassService = async (data: ForgotPass): Promise<void> => {

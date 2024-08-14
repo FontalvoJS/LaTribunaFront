@@ -11,7 +11,6 @@ import { faUserEdit } from "@fortawesome/free-solid-svg-icons";
 import { useThrottle } from "../../assets/components/hooks/useThrottle";
 import { useParams } from "next/navigation";
 import { getPostBySlug, removePostBySlug } from "../../assets/services/posts";
-// Dynamic import for Editor component
 const DynamicEditor = dynamic(
   () => import("@/app/assets/components/editor/editor"),
   { ssr: false }
@@ -34,6 +33,8 @@ const schema = yup.object().shape({
 
 export default function Page(): JSX.Element {
   const router = useRouter();
+  const { article } = useParams();
+
   const {
     control,
     handleSubmit,
@@ -54,7 +55,6 @@ export default function Page(): JSX.Element {
       content: "",
     },
   });
-  const { article } = useParams();
 
   const [previewTitle, setPreviewTitle] = useState<string>("");
   const [previewImage, setPreviewImage] = useState<string | ArrayBuffer | null>(
@@ -67,14 +67,14 @@ export default function Page(): JSX.Element {
   const watchContent = watch("content");
   const watchTitle = watch("title");
   const watchDescription = watch("description");
-  // const watchTags = watch("tags");
   const watchAuthor = watch("author");
-  // const watchCategory = watch("category");
+
   const changeTitle = article ? (
     <h1 className="text-light">Modifica el artículo</h1>
   ) : (
     <h1 className="text-light">Crea una nueva publicación</h1>
   );
+
   useEffect(() => {
     setPreviewTitle(watchTitle || "");
   }, [watchTitle]);
@@ -98,38 +98,48 @@ export default function Page(): JSX.Element {
 
   useEffect(() => {
     const fetch_data = async () => {
-      if (article && article.length > 0 && article.includes("-")) {
-        const res = await getPostBySlug(article);
-        if (res) {
-          const contentForEdit =
-            "<b>Portada actual: </b> <br/> <img src='" +
-            res.Slug.image +
-            "' width='500px' height='500px'/><br/>" +
-            res.Slug.content;
-          reset({
-            title: res.Slug.title,
-            description: res.Slug.description,
-            tags: res.Slug.tags,
-            image: undefined,
-            author: res.Slug.author,
-            category: res.Slug.category,
-            content: contentForEdit,
-            editing: true,
-          });
-          setArticleLoaded(true);
+      if (
+        article &&
+        article.length > 0 &&
+        article.includes("-") &&
+        !articleLoaded
+      ) {
+        try {
+          const res = await getPostBySlug(article as string);
+          if (res) {
+            const contentForEdit =
+              "<b>Portada actual: </b> <br/> <img src='" +
+              res.Slug.image +
+              "' width='500px' height='500px'/><br/>" +
+              res.Slug.content;
+            reset({
+              title: res.Slug.title,
+              description: res.Slug.description,
+              tags: res.Slug.tags,
+              image: undefined,
+              author: res.Slug.author,
+              category: res.Slug.category,
+              content: contentForEdit,
+              editing: true,
+            });
+            setArticleLoaded(true);
+          }
+        } catch (error) {
+          console.error("Error fetching article data:", error);
         }
       }
     };
-    if (article && !articleLoaded) {
-      fetch_data();
-    }
-  }, [article, reset, articleLoaded]);
+
+    fetch_data();
+  }, [article, articleLoaded, reset]);
+
   const deleteArticle = async () => {
     if (article && article.length > 0 && article.includes("-")) {
       await removePostBySlug(article);
       router.push("/");
     }
   };
+
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     data.content = previewContent;
     const newData = new FormData();
@@ -156,7 +166,9 @@ export default function Page(): JSX.Element {
       category: "",
     });
   };
+
   const throttledFunction = useThrottle(onSubmit, 1000);
+
   return (
     <div className="container">
       <div className="row mt-5">
@@ -242,12 +254,10 @@ export default function Page(): JSX.Element {
             <label className="form-label labels">Categoría</label>
             <select className="form-select" {...register("category")}>
               <option value="">Selecciona una categoría</option>
-              <option value="resultados_futbolisticos">
-                Analisis de resultados
-              </option>
-              <option value="farandula">Farándula</option>
-              <option value="chismes">Chismes</option>
-              <option value="criticas">Críticas</option>
+              <option value="Analisis">Analisis</option>
+              <option value="Rumores">Rumores</option>
+              <option value="Criticas">Críticas</option>
+              <option value="Criticas">Pronostico</option>
             </select>
             {errors.category && (
               <p className="text-danger">{errors.category.message}</p>

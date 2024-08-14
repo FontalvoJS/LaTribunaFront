@@ -11,7 +11,7 @@ export const uploadContact = async (data: ContactMeProps): Promise<void> => {
   };
 
   try {
-    const endpoint: string = "/admin/contact";
+    const endpoint: string = "/articles/contact";
     const response: any = await custom_axios(endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json", Accept: "application/json" },

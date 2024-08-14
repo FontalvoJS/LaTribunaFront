@@ -1,28 +1,28 @@
-
 #mini_section h3 {
   padding: 3%;
-  font-size:2.5rem;
+  font-size: 2.5rem;
   text-align: left;
   font-weight: 600;
   color: #fff;
   text-shadow: 0px 4px #2b1c0e7e;
-  line-height:3.2rem;
+  line-height: 3.2rem;
 }
 #mini_section h3 b {
-  color: #ffc107;
+  color: #f0903a;
 }
 .logo_uefa {
   background-image: url("/images/logos/uefa.png");
   background-position: center;
-  height:100%;
+  height: 100%;
   background-repeat: no-repeat;
   filter: brightness(0.5);
-  background-size:contain;
+  background-size: contain;
 }
 .logo_old {
   background-image: url("/images/logos/viejo.jpeg");
   background-position: center;
-  height:100%;
+  height: 100%;
   background-repeat: no-repeat;
-  background-size:contain;
+  background-size: contain;
+  border-radius: 100%;
 }

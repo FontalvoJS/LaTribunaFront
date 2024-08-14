@@ -1,5 +1,5 @@
 "use client";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -7,66 +7,124 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPoll,
   faUserEdit,
+  faSpinner,
   faEdit,
   faArrowAltCircleUp,
   faArrowAltCircleDown,
   faList,
 } from "@fortawesome/free-solid-svg-icons";
 import styles from "./page.module.css"; // Asegúrate de ajustar el path si es necesario
-import { getPostBySlug } from "@/app/assets/services/posts";
+import {
+  getPostBySlug,
+  getPostReactions,
+  postReaction,
+} from "@/app/assets/services/posts";
 import Matches from "@/app/assets/components/matches/matches";
 import { useSession } from "@/app/assets/context/session";
-import { Post } from "@/app/assets/types/types";
-const pollOptions = [
-  { value: "like", percentage: 60 },
-  { value: "dislike", percentage: 40 },
-];
-const categories = [
-  "Analisis",
-  "Liga Betplay",
-  "Premier League",
-  "UEFA",
-  "Libertadores",
-];
-interface Votes {
-  option: string,
-  article: string
-}
+import { Post, Votes, PollOptionsProps } from "@/app/assets/types/types";
+import { categories } from "@/app/assets/utils/constants";
+import { useThrottle } from "@/app/assets/components/hooks/useThrottle";
+import { useRouter } from "next/navigation";
+import Comments from "@/app/assets/components/comments/comments";
+import { formatDate } from "@/app/assets/utils/format_date";
+import SocialShare from "@/app/assets/components/socialshare/socialshare";
 export default function Page() {
   const { view } = useParams();
+  const router = useRouter();
   const [vote, setVote] = useState<string | null>(null);
   const [post, setPost] = useState<Post | null>(null);
+  const [totalVotes, setTotalVotes] = useState<number>(0);
+  const [pollOptions, setPollOptions] = useState<PollOptionsProps[]>([
+    {
+      value: "like",
+      percentage: 0,
+      userVote: false,
+    },
+    {
+      value: "dislike",
+      percentage: 0,
+      userVote: false,
+    },
+  ]);
   const [latestPosts, setLatestPosts] = useState<Post[]>([]);
-  const { role } = useSession();
+  const [postLoaded, setPostLoaded] = useState<boolean>(false);
+  const [reactionsLoaded, setReactionsLoaded] = useState<boolean>(false);
+  const { role, isLoggedIn } = useSession();
   const handleVote = (option: string) => {
     setVote(option);
   };
-  useEffect(() => {
-    const data = {
-      option: vote,
-      article: view,
-    };
-  }, [vote, view]);
+  const throttledHandleVote = useThrottle(handleVote, 1000);
 
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const fetchedPost = await getPostBySlug(view);
-        console.log(fetchedPost);
-        setPost(fetchedPost.Slug);
-        setLatestPosts(fetchedPost.More);
+        const data: Votes = {
+          option: vote,
+          article: view as string,
+        };
+        if (data.option && isLoggedIn) {
+          await postReaction(data);
+        }
+        if (!reactionsLoaded || data.option !== null) {
+          if (isLoggedIn) {
+            const reactions = await getPostReactions(view as string);
+            setTotalVotes(reactions.total);
+            const pollData = [
+              {
+                value: "like",
+                percentage: totalVotes > 0 ? reactions.likes : 0,
+                userVote: reactions.userVote,
+              },
+              {
+                value: "dislike",
+                percentage: totalVotes > 0 ? reactions.dislikes : 0,
+                userVote: reactions.userVote,
+              },
+            ];
+            setPollOptions(pollData);
+            setVote(reactions.userVote);
+            setReactionsLoaded(true);
+          }
+        }
+        if (!postLoaded) {
+          const fetchedPost = await getPostBySlug(view as string);
+          if (fetchedPost && fetchedPost.Slug) {
+            setPost(fetchedPost.Slug);
+            setLatestPosts(fetchedPost.More);
+            setPostLoaded(true);
+          }
+        }
       } catch (error) {
         console.error(error);
       }
     };
 
-    if (view.length > 0) {
+    if (view) {
       fetchPost();
     }
-  }, [view]);
+  }, [
+    view,
+    isLoggedIn,
+    postLoaded,
+    reactionsLoaded,
+    vote,
+    post,
+    setPost,
+    totalVotes,
+  ]);
 
   if (!post) {
-    return <div>Loading...</div>;
+    return (
+      <div className={styles.loading_container}>
+        <FontAwesomeIcon
+          icon={faSpinner}
+          spin
+          width={50}
+          className={styles.loading_spinner}
+        />
+        <div className={styles.loading_text}>Cargando...</div>
+      </div>
+    );
   }
 
   return (
@@ -98,7 +156,11 @@ export default function Page() {
                   <div className="media">
                     <div className={styles.calendar_text + " text-uppercase"}>
                       <strong>PUBLICADO:</strong>
-                      {new Date(post.created_at).toLocaleDateString()} <br />
+                      {formatDate(
+                        new Date(post.created_at).toLocaleDateString(),
+                        true
+                      )}{" "}
+                      <br />
                       <strong>NOTA:</strong> CONTENIDO GENERADO POR INTELIGENCIA
                       ARTIFICIAL <br />
                       <strong>AUTOR:</strong> {post.author} <br />
@@ -134,59 +196,14 @@ export default function Page() {
                   ))}
                 </div>
               </article>
-              <div
-                className={`${styles.contact_form} ${styles.article_comment}`}
-              >
-                <h4>Leave a Reply</h4>
-                <form id="contact-form" method="POST">
-                  <div className="row">
-                    <div className="col-md-6">
-                      <div className="form-group">
-                        <input
-                          name="Name"
-                          id="name"
-                          placeholder="Name *"
-                          className="form-control"
-                          type="text"
-                        />
-                      </div>
-                    </div>
-                    <div className="col-md-6">
-                      <div className="form-group">
-                        <input
-                          name="Email"
-                          id="email"
-                          placeholder="Email *"
-                          className="form-control"
-                          type="email"
-                        />
-                      </div>
-                    </div>
-                    <div className="col-md-12">
-                      <div className="form-group">
-                        <textarea
-                          name="message"
-                          id="message"
-                          placeholder="Your message *"
-                          rows={4}
-                          className="form-control"
-                        ></textarea>
-                      </div>
-                    </div>
-                    <div className="col-md-12">
-                      <div className="send">
-                        <button className="px-btn theme">
-                          <span>Enviar</span> <i className="arrow"></i>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </div>
+              <Comments article={view as string} />
               <Matches />
             </div>
             {/* Sidebar */}
             <div className="col-lg-4 m-15px-tb">
+              {/* social share */}
+              <SocialShare url={window.location.href} />
+
               {/* Encuesta */}
               <div
                 className={`bg_side_color ${styles.widget} ${styles.widget_poll}`}
@@ -212,9 +229,9 @@ export default function Page() {
                     <div key={option.value} className={styles.poll_option}>
                       <label>
                         <FontAwesomeIcon
-                          color={"#ff953d"}
+                          color={vote === option.value ? "#f0903a" : "#535f73"}
                           icon={
-                            option.value === "yes"
+                            option.value === "like"
                               ? faArrowAltCircleUp
                               : faArrowAltCircleDown
                           }
@@ -227,7 +244,7 @@ export default function Page() {
                           hidden
                           value={option.value}
                           checked={vote === option.value}
-                          onChange={() => setVote(option.value)}
+                          onChange={() => throttledHandleVote(option.value)}
                         />
                       </label>
                       <div className={styles.poll_progress}>
@@ -246,7 +263,12 @@ export default function Page() {
                     type="button"
                     className="btn btn-outline-success btn-block w-100"
                   >
-                    <span>Enviar</span> <i className="arrow"></i>
+                    <span>
+                      {" "}
+                      {totalVotes > 0
+                        ? `${totalVotes} votos en total`
+                        : "Vota para ver resultado"}{" "}
+                    </span>
                   </button>
                 </form>
               </div>
@@ -338,7 +360,7 @@ export default function Page() {
                           {post.title}
                         </h4>
                         <small className={styles.latest_post_date}>
-                          {new Date(post.created_at).toLocaleDateString()}
+                          {formatDate(post.created_at, true)}
                         </small>
                       </div>
                     </Link>

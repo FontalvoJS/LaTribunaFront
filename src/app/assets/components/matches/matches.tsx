@@ -15,7 +15,7 @@ const Matches: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
-        "https://wopta.dimayor.com.co/clausura24?fecha=4"
+        "https://wopta.dimayor.com.co/clausura24?fecha=5"
       );
       const data = await response.json();
       if (data) {
@@ -124,7 +124,7 @@ const Matches: React.FC = () => {
                         bottom: "2px",
                       }}
                     />
-                    {formatDate(match.date)}
+                    {formatDate(match.date, true)}
                   </small>
                   <div
                     className={`card-body d-flex flex-column align-items-center justify-content-between p-2`}
@@ -139,7 +139,6 @@ const Matches: React.FC = () => {
                           width={50}
                           height={50}
                         />
-                        <span>1</span>
                         <p className={`text-light ${styles.teamName}`}>
                           {match.home.name}
                         </p>

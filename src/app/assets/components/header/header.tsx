@@ -151,7 +151,7 @@ export default function Header(): JSX.Element {
             className="img-fluid rounded-circle"
           />
           <h1 className="text-light">
-            <Link href="/">LA TRIBUNA </Link>
+            <Link href="/">LA TRIBUNA</Link>
           </h1>
 
           {parche !== "" && (

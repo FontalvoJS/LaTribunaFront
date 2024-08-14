@@ -33,6 +33,11 @@ export interface PreviewPost {
   date: string;
   slug: string;
 }
+export interface PollOptionsProps {
+  value: string;
+  percentage: number;
+  userVote: boolean | string;
+}
 export interface Post {
   title: string;
   content: string;
@@ -44,6 +49,10 @@ export interface Post {
   updated_at: string;
   slug: string;
   image: string;
+}
+export interface Votes {
+  option: string | null;
+  article: string;
 }
 export interface Teams {
   text: string;
@@ -111,6 +120,10 @@ export interface UserDataLogin {
   password: string;
   remember?: string;
 }
+export interface CommentsTypes {
+  message: string;
+  article: string;
+}
 export interface EmailVerifyProps {
   email: string;
   code: string;
@@ -121,6 +134,7 @@ export interface UserDataSignup {
   email_confirmation: string;
   password: string;
   password_confirmation: string;
+  verifyReg?: boolean;
 }
 export interface ContactMeProps {
   name: string;

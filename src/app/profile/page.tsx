@@ -169,7 +169,11 @@ export default function Page(): JSX.Element {
                   render={({ field }) => (
                     <select className="form-control" {...field}>
                       {teams.map((team) => (
-                        <option key={team.value} value={team.value}>
+                        <option
+                          key={team.value}
+                          selected={team.value === "ignore"}
+                          value={team.value}
+                        >
                           {team.text}
                         </option>
                       ))}
