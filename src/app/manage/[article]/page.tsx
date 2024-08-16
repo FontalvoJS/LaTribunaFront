@@ -108,7 +108,7 @@ export default function Page(): JSX.Element {
           const res = await getPostBySlug(article as string);
           if (res) {
             const contentForEdit =
-              "<b>Portada actual: </b> <br/> <img src='" +
+              "<b>Portada actual: </b> <br/> <img src='https://latribuna.ddns.net/LaTribunaBack/storage/app/public/" +
               res.Slug.image +
               "' width='500px' height='500px'/><br/>" +
               res.Slug.content;
@@ -281,7 +281,10 @@ export default function Page(): JSX.Element {
                   <Image
                     height={500}
                     width={500}
-                    src={previewImage as string}
+                    src={
+                      ("https://latribuna.ddns.net/LaTribunaBack/storage/app/public/" +
+                        previewImage) as string
+                    }
                     alt="Preview"
                     className="mb-3"
                   />
