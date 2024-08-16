@@ -200,7 +200,7 @@ export default function Comments({ article }: { article: string }) {
                   <Image
                     src={`/images/clubes/${setImageUserComment(comment.club, teams)}`}
                     width={20}
-                    alt=""
+                    alt={comment.user_name}
                     quality={50}
                     height={20}
                   />

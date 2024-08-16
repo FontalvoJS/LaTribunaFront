@@ -137,6 +137,7 @@ const Matches: React.FC = () => {
                           src={`/images/clubes/${getTeamLogo(match.home.name)}`}
                           alt={match.home.name}
                           width={50}
+                          quality={60}
                           height={50}
                         />
                         <p className={`text-light ${styles.teamName}`}>
@@ -149,6 +150,7 @@ const Matches: React.FC = () => {
                           alt={match.away.name}
                           width={50}
                           height={50}
+                          quality={60}
                         />
                         <p className={`text-light ${styles.teamName}`}>
                           {match.away.name}

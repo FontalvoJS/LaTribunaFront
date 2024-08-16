@@ -141,7 +141,7 @@ export default function Page() {
                     layout="responsive"
                     width={1000}
                     height={1000}
-                    quality={100}
+                    quality={50}
                     style={{ width: "100%", height: "auto" }}
                   />
                 </div>
