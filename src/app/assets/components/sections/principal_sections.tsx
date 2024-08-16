@@ -12,18 +12,21 @@ export default function PrincipalSection(): JSX.Element {
                 src="/images/logos/betplay.webp"
                 alt="LA TRIBUNA"
                 width={500}
+                quality={50}
                 height={500}
               />
               <Image
                 src="/images/logos/uefa.png"
                 alt="LA TRIBUNA"
                 width={500}
+                quality={50}
                 height={500}
               />
               <Image
                 src="/images/logos/premier.png"
                 alt="LA TRIBUNA"
                 width={500}
+                quality={50}
                 height={500}
               />
             </div>

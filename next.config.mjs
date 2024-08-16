@@ -21,22 +21,22 @@ const nextConfig = {
     return [
       {
         source: "/api/auth/:path*",
-        destination: "http://localhost/beerclub_backend/public/api/auth/:path*",
+        destination: "http://18.207.127.28/LaTribunaBack/public/api/auth/:path*",
       },
       {
         source: "/api/profile/:path*",
         destination:
-          "http://localhost/beerclub_backend/public/api/profile/:path*",
+          "http://18.207.127.28/LaTribunaBack/public/api/profile/:path*",
       },
       {
         source: "/api/articles/:path*",
         destination:
-          "http://localhost/beerclub_backend/public/api/articles/:path*",
+          "http://18.207.127.28/LaTribunaBack/public/api/articles/:path*",
       },
       {
         source: "/api/article-reactions/:path*",
         destination:
-          "http://localhost/beerclub_backend/public/api/article-reactions/:path*",
+          "http://18.207.127.28/LaTribunaBack/public/api/article-reactions/:path*",
       },
     ];
   },

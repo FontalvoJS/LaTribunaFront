@@ -140,6 +140,7 @@ const NewsComponent: React.FC = () => {
                     className={styles.articleImage}
                     width={300}
                     height={200}
+                    quality={50}
                     alt={post.title}
                   />
                   <div className={styles.articleContent}>
@@ -184,6 +185,7 @@ const NewsComponent: React.FC = () => {
                     className={styles.articleImage}
                     width={300}
                     height={200}
+                    quality={50}
                     alt={post.title}
                   />
                   <div className={styles.articleContent}>
