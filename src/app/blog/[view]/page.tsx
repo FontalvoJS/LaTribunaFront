@@ -1,4 +1,5 @@
 "use client";
+import Head from "next/head";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
@@ -129,6 +130,20 @@ export default function Page() {
 
   return (
     <>
+      <Head>
+        <title>{post.title}</title>
+        <meta name="description" content={post.description} />
+        <meta property="og:title" content={post.title} />
+        <meta property="og:description" content={post.description} />
+        <meta
+          property="og:image"
+          content={
+            "https://latribuna.ddns.net/LaTribunaBack/storage/app/public/" +
+            post.image
+          }
+        />
+        <meta property="og:url" content={window.location.href} />
+      </Head>
       <div className={`${styles.blog_single} gray-bg`}>
         <div className="container">
           <div className="row align-items-start">
