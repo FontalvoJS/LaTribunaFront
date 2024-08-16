@@ -116,7 +116,7 @@ const NewsComponent: React.FC = () => {
                 <div
                   className={`card ${styles.mainCard}`}
                   style={{
-                    backgroundImage: `url(${firstColumnPosts[0].image})`,
+                    backgroundImage: `url(https://latribuna.ddns.net/LaTribunaBack/public/${firstColumnPosts[0].image})`,
                   }}
                   onClick={() => getPost(firstColumnPosts[0])}
                 >
@@ -136,7 +136,7 @@ const NewsComponent: React.FC = () => {
                   onClick={() => getPost(post)}
                 >
                   <Image
-                    src={post.image}
+                    src={"latribuna.ddns.net/LaTribunaBack/public/" + post.image}
                     className={styles.articleImage}
                     width={300}
                     height={200}
@@ -181,7 +181,7 @@ const NewsComponent: React.FC = () => {
                   onClick={() => getPost(post)}
                 >
                   <Image
-                    src={post.image}
+                    src={"latribuna.ddns.net/LaTribunaBack/public/" + post.image}
                     className={styles.articleImage}
                     width={300}
                     height={200}
