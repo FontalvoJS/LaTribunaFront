@@ -136,7 +136,10 @@ export default function Page() {
               <article className={`${styles.article}`}>
                 <div className={`${styles.article_img}`}>
                   <Image
-                    src={post.image}
+                    src={
+                      "https://latribuna.ddns.net/LaTribunaBack/storage/app/public/" +
+                      post.image
+                    }
                     alt={post.title}
                     layout="responsive"
                     width={1000}
@@ -159,7 +162,7 @@ export default function Page() {
                       {formatDate(
                         new Date(post.created_at).toLocaleDateString(),
                         true
-                      )}{" "}
+                      )}
                       <br />
                       <strong>NOTA:</strong> CONTENIDO GENERADO POR INTELIGENCIA
                       ARTIFICIAL <br />
@@ -264,10 +267,9 @@ export default function Page() {
                     className="btn btn-outline-success btn-block w-100"
                   >
                     <span>
-                      {" "}
                       {totalVotes > 0
                         ? `${totalVotes} votos en total`
-                        : "Vota para ver resultado"}{" "}
+                        : "Vota para ver resultado"}
                     </span>
                   </button>
                 </form>
@@ -347,7 +349,10 @@ export default function Page() {
                       className={styles.latest_post_item}
                     >
                       <Image
-                        src={post.image}
+                        src={
+                          "https://latribuna.ddns.net/LaTribunaBack/storage/app/public/" +
+                          post.image
+                        }
                         alt={post.title}
                         width={50}
                         height={50}
