@@ -116,7 +116,7 @@ const NewsComponent: React.FC = () => {
                 <div
                   className={`card ${styles.mainCard}`}
                   style={{
-                    backgroundImage: `url(https://latribuna.ddns.net/LaTribunaBack/public/${firstColumnPosts[0].image})`,
+                    backgroundImage: `url(https://latribuna.ddns.net/LaTribunaBack/storage/app/public/${firstColumnPosts[0].image})`,
                   }}
                   onClick={() => getPost(firstColumnPosts[0])}
                 >
@@ -136,7 +136,7 @@ const NewsComponent: React.FC = () => {
                   onClick={() => getPost(post)}
                 >
                   <Image
-                    src={"latribuna.ddns.net/LaTribunaBack/public/" + post.image}
+                    src={"https://latribuna.ddns.net/LaTribunaBack/storage/app/public/" + post.image}
                     className={styles.articleImage}
                     width={300}
                     height={200}
@@ -161,7 +161,7 @@ const NewsComponent: React.FC = () => {
                 <div
                   className={`card ${styles.mainCard}`}
                   style={{
-                    backgroundImage: `url(${secondColumnPosts[0].image})`,
+                    backgroundImage: `url(https://latribuna.ddns.net/LaTribunaBack/storage/app/public/${secondColumnPosts[0].image})`,
                   }}
                   onClick={() => getPost(secondColumnPosts[0])}
                 >
@@ -181,7 +181,7 @@ const NewsComponent: React.FC = () => {
                   onClick={() => getPost(post)}
                 >
                   <Image
-                    src={"latribuna.ddns.net/LaTribunaBack/public/" + post.image}
+                    src={"https://latribuna.ddns.net/LaTribunaBack/storage/app/public/" + post.image}
                     className={styles.articleImage}
                     width={300}
                     height={200}
