@@ -4,11 +4,13 @@ import alertify from "../notifications/toast/alert_service";
 import { CommentsTypes, Votes } from "../types/types";
 
 export const returnToHome = (error: any) => {
-    if (error.response.status >= 400 && error.response.status !== 401) return alertify.error(error.response.data.error);
-    if (error.response.status === 401) alertify.error(error.response.data.error);
-    setTimeout(() => {
-        window.location.href = "/";
-    }, 2000);
+    if (error.response) {
+        if (error.response?.status >= 400 && error.response?.status !== 401) return alertify.error(error.response.data.error);
+        if (error.response?.status === 401) alertify.error(error.response.data.error);
+        setTimeout(() => {
+            window.location.href = "/";
+        }, 2000);
+    }
 }
 export const uploadContentImagesService = async (
     data: FormData

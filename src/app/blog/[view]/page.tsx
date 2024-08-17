@@ -1,5 +1,4 @@
 "use client";
-import Head from "next/head";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
@@ -25,13 +24,11 @@ import { useSession } from "@/app/assets/context/session";
 import { Post, Votes, PollOptionsProps } from "@/app/assets/types/types";
 import { categories } from "@/app/assets/utils/constants";
 import { useThrottle } from "@/app/assets/components/hooks/useThrottle";
-import { useRouter } from "next/navigation";
 import Comments from "@/app/assets/components/comments/comments";
 import { formatDate } from "@/app/assets/utils/format_date";
 import SocialShare from "@/app/assets/components/socialshare/socialshare";
 export default function Page() {
   const { view } = useParams();
-  const router = useRouter();
   const [vote, setVote] = useState<string | null>(null);
   const [post, setPost] = useState<Post | null>(null);
   const [totalVotes, setTotalVotes] = useState<number>(0);
@@ -130,20 +127,6 @@ export default function Page() {
 
   return (
     <>
-      <Head>
-        <title>{post.title}</title>
-        <meta name="description" content={post.description} />
-        <meta property="og:title" content={post.title} />
-        <meta property="og:description" content={post.description} />
-        <meta
-          property="og:image"
-          content={
-            "https://latribuna.ddns.net/LaTribunaBack/storage/app/public/" +
-            post.image
-          }
-        />
-        <meta property="og:url" content={window.location.href} />
-      </Head>
       <div className={`${styles.blog_single} gray-bg`}>
         <div className="container">
           <div className="row align-items-start">
@@ -152,14 +135,13 @@ export default function Page() {
                 <div className={`${styles.article_img}`}>
                   <Image
                     src={
-                      "https://latribuna.ddns.net/LaTribunaBack/storage/app/public/" +
+                      "http://18.207.127.28/LaTribunaBack/storage/app/public/" +
                       post.image
                     }
                     alt={post.title}
                     layout="responsive"
                     width={1000}
                     height={1000}
-                    quality={50}
                     style={{ width: "100%", height: "auto" }}
                   />
                 </div>
@@ -365,7 +347,7 @@ export default function Page() {
                     >
                       <Image
                         src={
-                          "https://latribuna.ddns.net/LaTribunaBack/storage/app/public/" +
+                          "http://18.207.127.28/LaTribunaBack/storage/app/public/" +
                           post.image
                         }
                         alt={post.title}
@@ -407,3 +389,4 @@ export default function Page() {
     </>
   );
 }
+
