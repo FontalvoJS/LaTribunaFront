@@ -10,7 +10,7 @@ export async function generateMetadata({
     `http://18.207.127.28/LaTribunaBack/public/api/articles/get-one-post/${view}`,
     {
       method: "GET",
-      headers: {
+      headers: { 
         "Content-Type": "application/json",
         Accept: "application/json",
       },
