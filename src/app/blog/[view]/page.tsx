@@ -135,7 +135,7 @@ export default function Page() {
                 <div className={`${styles.article_img}`}>
                   <Image
                     src={
-                      "http://18.207.127.28/LaTribunaBack/storage/app/public/" +
+                      "https://latribuna.ddns.net/LaTribunaBack/storage/app/public/" +
                       post.image
                     }
                     alt={post.title}
@@ -347,7 +347,7 @@ export default function Page() {
                     >
                       <Image
                         src={
-                          "http://18.207.127.28/LaTribunaBack/storage/app/public/" +
+                          "https://latribuna.ddns.net/LaTribunaBack/storage/app/public/" +
                           post.image
                         }
                         alt={post.title}
@@ -389,4 +389,3 @@ export default function Page() {
     </>
   );
 }
-
